@@ -1,9 +1,11 @@
 import express from "express";
-import {getAllRoom, getAllRoomWithQuery} from '../controllers/room.js'
-
+import { get, getWithQuery,EditRoom } from "../controllers/room.js";
 const router = express.Router();
 
-router.get("/",getAllRoom);
-router.get("/query",getAllRoomWithQuery);
+router.get("/", getWithQuery);
+router.get("/", get);
+router.post("/post", EditRoom);
+
+// lấy kèm query
 
 export default router;

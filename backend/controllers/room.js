@@ -1,18 +1,48 @@
 import db from "../db.js";
 
-export const getAllRoom = async (req, res) => {
-  console.log("all room",req.params.id);
+export const get = async (req, res) => {
   try {
-    // Thực hiện truy vấn để lấy tất cả các phòng từ cơ sở dữ liệu
-    const rooms = await db(`SELECT * FROM ChuDe WHERE id = ${req.query.id} `);
-    res.json(rooms);
-    // In ra kết quả
-    console.log(rooms);
+    const data = await db("SELECT * FROM Room");
+    res.json(data);
   } catch (err) {
-    console.error("Error:", err);
+    console.log(err);
   }
 };
 
-export const getAllRoomWithQuery = (req, res) => {
-  res.json(`get all room: ${req.query.customerid === ""}`);
+export const getWithQuery = async (req, res) => {
+  let { roomid, roomtypeid } = req.query;
+  // cách nào cũng dc
+  let roomId = req.query.roomid;
+  // handle query đến sql server
+  let finalQ = `SELECT * FROM Room WHERE`;
+  if (roomid) {
+    finalQ += ` RoomId = '${roomid}';`;
+  }
+  if (roomtypeid) {
+    finalQ += ` RoomTypeId = ${roomtypeid};`;
+  }
+  console.log(finalQ);
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const EditRoom = async (req, res) => {
+  let item = req.body.item;
+  let finalQ = `UPDATE Room
+    SET 
+        RoomTypeId = ${item.RoomTypeId},
+        Status = ${item.Status},
+        Phone = '${item.Phone}'
+    WHERE RoomId ='${item.RoomId}';`;
+console.log(finalQ);
+  try {
+    const data = await db(finalQ);
+    res.json(`Update item: ${item.RoomId} success!!! `);
+  } catch (err) {
+    console.log(err);
+  }
 };
