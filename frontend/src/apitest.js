@@ -11,6 +11,7 @@ const Apitest = () => {
         console.log(err);
       });
   };
+  
   const postData = () => {
     axios
       .post("http://localhost:3000/api/room/post", {
@@ -29,6 +30,10 @@ const Apitest = () => {
       });
   };
 
+
+
+  // query handle
+  
   return (
     <div>
       <button
