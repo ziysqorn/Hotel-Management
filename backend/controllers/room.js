@@ -55,7 +55,7 @@ export const add = async (req, res) => {
       VALUES
         ('${item.RoomId}',${item.RoomTypeId},${item.Status},'${item.Phone}');
   `;
-  // console.log(finalQ);
+   console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(`Add item : ${item.RoomId} `);
