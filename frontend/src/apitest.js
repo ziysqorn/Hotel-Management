@@ -3,7 +3,7 @@ import axios from "axios";
 const Apitest = () => {
   const getData = () => {
     axios
-      .get("http://localhost:3000/api/room?roomtypeid=1")
+      .get("http://localhost:4000/api/room?roomtypeid=1")
       .then((response) => {
         console.log(response.data);
       })
@@ -11,12 +11,12 @@ const Apitest = () => {
         console.log(err);
       });
   };
-  
+
   const postData = () => {
     axios
-      .post("http://localhost:3000/api/room/post", {
+      .post("http://localhost:4000/api/room/post", {
         item: {
-          RoomId:"P102",
+          RoomId: "P102",
           RoomTypeId: 1,
           Status: 1,
           Phone: "0900000000",
@@ -30,10 +30,26 @@ const Apitest = () => {
       });
   };
 
-
+  const addData = () => {
+    axios
+      .post("http://localhost:4000/api/room/add", {
+        item: {
+          RoomId: "P406",
+          RoomTypeId: 3,
+          Status: 1,
+          Phone: "0900082400",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // query handle
-  
+
   return (
     <div>
       <button
@@ -42,8 +58,7 @@ const Apitest = () => {
           getData();
         }}
       >
-        {" "}
-        test{" "}
+        Test
       </button>
     </div>
   );

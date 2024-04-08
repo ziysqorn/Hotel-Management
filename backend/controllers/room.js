@@ -38,11 +38,28 @@ export const EditRoom = async (req, res) => {
         Status = ${item.Status},
         Phone = '${item.Phone}'
     WHERE RoomId ='${item.RoomId}';`;
-console.log(finalQ);
+  console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(`Update item: ${item.RoomId} success!!! `);
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const add = async (req, res) => {
+  let { item } = req.body;
+  let finalQ = `
+      INSERT INTO Room
+        (RoomId,RoomTypeId,Status,Phone)
+      VALUES
+        ('${item.RoomId}',${item.RoomTypeId},${item.Status},'${item.Phone}');
+  `;
+  // console.log(finalQ);
+  try {
+    const data = await db(finalQ);
+    res.json(`Add item : ${item.RoomId} `);
+  } catch (err) {
+    console.log("err", err);
   }
 };
