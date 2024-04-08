@@ -48,6 +48,22 @@ const Apitest = () => {
       });
   };
 
+  const getDataWithCustomer = () => {
+    axios
+      .get("http://localhost:4000/api/room/getRoomWithDate", {
+        params: {
+          CheckInDate: "2024-04-20",
+          ExpectedCheckOutDate: "2024-04-30",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   // query handle
 
   return (
