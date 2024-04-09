@@ -43,6 +43,15 @@ GO
 
 
 
+ALTER TABLE Customer
+ADD Type INT NOT NULL;
+GO 
+
+
+ALTER TABLE Customer ALTER COLUMN Phone VARCHAR(100);
+
+
+
 
 CREATE TABLE Users
 (

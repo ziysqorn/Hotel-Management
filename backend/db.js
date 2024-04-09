@@ -4,8 +4,8 @@ const config = {
   server: "localhost",
   port: 1433,
   database: "hotel_management",
-  user: "SA",
-  password: "Password123",
+  user: "sa",
+  password: "Sigma1207",
   options: {
     encrypt: true, // Bật mã hóa
     trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
@@ -24,11 +24,10 @@ async function db(queryString, parameters = []) {
     await sql.close();
 
     // Trả về kết quả
-    return result.recordset;
+    return result;
   } catch (err) {
     console.error("Error executing query:", err);
     throw err;
   }
 }
-
-export default db;
+export default db
