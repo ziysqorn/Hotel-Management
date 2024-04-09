@@ -36,8 +36,9 @@ CREATE TABLE Customer
     CustomerId INT IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
     PersonalId VARCHAR(100) NOT NULL,
-    Phone VARCHAR(100) NOT NULL,
-    Address NVARCHAR(255)
+    Phone VARCHAR(100) ,
+    Address NVARCHAR(255),
+    Type INT NOT NULL
 )
 GO
 
@@ -138,3 +139,9 @@ CREATE TABLE ServiceForRoom
     FOREIGN KEY (RoomTypeId) REFERENCES RoomType(RoomTypeId),
 )
 GO
+
+
+
+ALTER TABLE Customer
+ADD COLUMN Type INT NOT NULL;
+GO 
