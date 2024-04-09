@@ -14,12 +14,12 @@ export const getWithQuery = async (req, res) => {
   // cách nào cũng dc
   let roomId = req.query.roomid;
   // handle query đến sql server
-  let finalQ = `SELECT * FROM Room WHERE`;
+  let finalQ = `SELECT * FROM Room WHERE NOT(Room.RoomId IS NULL)`;
   if (roomid) {
-    finalQ += ` RoomId = '${roomid}';`;
+    finalQ += `AND RoomId = '${roomid}'`;
   }
   if (roomtypeid) {
-    finalQ += ` RoomTypeId = ${roomtypeid};`;
+    finalQ += `AND RoomTypeId = ${roomtypeid}`;
   }
   console.log(finalQ);
   try {
@@ -55,12 +55,16 @@ export const add = async (req, res) => {
       VALUES
         ('${item.RoomId}',${item.RoomTypeId},${item.Status},'${item.Phone}');
   `;
-   console.log(finalQ);
+
+  console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(`Add item : ${item.RoomId} `);
   } catch (err) {
-    console.log("err", err);
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: err.message });
   }
 };
 
@@ -71,9 +75,15 @@ export const OrderRoom = async (req, res) => {
       INSERT INTO OrderRoom
         (CustomerId,StayCustomerId,UserId,RoomId,CheckInDate,ExpectedCHeckOutDate)
       VALUES
-        (1, 1, 1, 'P101', '2024-04-06', '2024-04-10')
+        (${item.CustomerId},${item.StayCustomerId},${item.UserId},'${item.RoomId}', '${item.CheckInDate}', '${item.ExpectedCHeckOutDate}')
   `;
-  console.log(finalQ);
+  try {
+    const data = await db(finalQ);
+    res.json("Order Room success");
+  } catch (err) {
+    console.log("err", err);
+  }
+  // res.json(finalQ);
 };
 
 // ==================END OF BASIC =============
@@ -100,6 +110,9 @@ export const getRoomWithDate = async (req, res) => {
   } catch (err) {
     console.log("err", err);
   }
+};
 
-  // res.json(finalQ);
+export const getCustomerInRoom = (req, res) => {
+  let { RoomId, Time } = req.query;
+  
 };

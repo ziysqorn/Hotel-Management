@@ -3,7 +3,12 @@ import axios from "axios";
 const Apitest = () => {
   const getData = () => {
     axios
-      .get("http://localhost:4000/api/room?roomtypeid=1")
+      .get("http://localhost:4000/api/room",{
+        query:{
+          RoomId:"P101",
+          RoomTypeId:1
+        }
+      })
       .then((response) => {
         console.log(response.data);
       })
@@ -63,9 +68,25 @@ const Apitest = () => {
         console.log(err);
       });
   };
-  const OrderRoom=()=>{
-    console.log('should work');
-  }
+  const OrderRoom = () => {
+    axios
+      .post("http://localhost:4000/api/room/orderRoom", {
+        item: {
+          CustomerId:1,
+          StayCustomerId:1,
+          UserId:1,
+          RoomId:"P105",
+          CheckInDate:'2024-04-20',
+          ExpectedCHeckOutDate:'2024-04-30'
+        },
+      })
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   // query handle
 
   return (
@@ -73,7 +94,7 @@ const Apitest = () => {
       <button
         style={{ width: 100, height: 100 }}
         onClick={() => {
-          getData();
+          addData();
         }}
       >
         Test
