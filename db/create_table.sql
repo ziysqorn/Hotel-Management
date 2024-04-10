@@ -35,9 +35,10 @@ CREATE TABLE Customer
 (
     CustomerId INT IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
-    PersonalId VARCHAR(100) NOT NULL,
-    Phone VARCHAR(100) NOT NULL,
-    Address NVARCHAR(255)
+    PersonalId VARCHAR(100) NOT NULL UNIQUE,
+    Phone VARCHAR(100),
+    Address NVARCHAR(255),
+	Type INT NOT NULL
 )
 GO
 
@@ -76,16 +77,14 @@ CREATE TABLE UseService
 (
     ServiceId INT NOT NULL,
     CustomerId INT NOT NULL,
-    CustomerUseId INT NOT NULL,
     UserId INT NOT NULL,
-    Amount INT NOT NULL,
     CheckInDate DATETIME NOT NULL,
     FOREIGN KEY (ServiceId) REFERENCES Service(ServiceId),
     FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId),
-    FOREIGN KEY (CustomerUseId) REFERENCES Customer(CustomerId),
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 )
 Go
+
 
 
 
