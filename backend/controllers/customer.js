@@ -23,9 +23,15 @@ export async function  CreateCustomer(req, res){
       res.send("Số CCCD đã tồn tại trong hệ thống")
       return
     }
-    if(data.Phone && !/^\d{10,11}$/.test(data.Phone)){
-      res.send("Số điện thoại của khách hàng chỉ chứa chữ số và có độ dài tối thiểu là 10 kí tự và tối đa 11 kí tự")
-      return
+    if(data.Phone){
+      if(!/^\d{10,11}$/.test(data.Phone)){
+        res.send("Số điện thoại của khách hàng chỉ chứa chữ số và có độ dài tối thiểu là 10 kí tự và tối đa 11 kí tự")
+        return
+      }
+      if(parseInt((await db(`Select COUNT(*) as 'Count' from Customer where Phone = '${data.Phone}'`)).recordset[0].Count) > 0){
+        res.send("Số điện thoại đã tồn tại trong hệ thống")
+        return
+      }
     }
     if(!/^[1-3]$/.test(data.Type)){
       res.send("Loại khách hàng chỉ chứa 1 chữ số có giá trị từ 1 đến 3")
@@ -194,9 +200,15 @@ export async function UpdateCustomer(req, res){
           return
         }
       }
-      if(newData.Phone && !/^\d{10,11}$/.test(newData.Phone)){
-        res.send("Số điện thoại của khách hàng chỉ chứa chữ số và có độ dài tối thiểu là 10 kí tự và tối đa 11 kí tự")
-        return
+      if(newData.Phone){
+        if(!/^\d{10,11}$/.test(newData.Phone)){
+          res.send("Số điện thoại của khách hàng chỉ chứa chữ số và có độ dài tối thiểu là 10 kí tự và tối đa 11 kí tự")
+          return
+        }
+        if(parseInt((await db(`Select COUNT(*) as 'Count' from Customer where Phone = '${newData.Phone}'`)).recordset[0].Count) > 0){
+          res.send("Số điện thoại đã tồn tại trong hệ thống")
+          return
+        }
       }
       if(newData.Type && !/^[1-3]$/.test(data.Type)){
         res.send("Loại khách hàng chỉ chứa 1 chữ số có giá trị từ 1 đến 3")
