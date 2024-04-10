@@ -17,14 +17,14 @@ GO
 CREATE TABLE Employee
 (
     EmployeeId INT IDENTITY(1,1) PRIMARY KEY,
-    image VARBINARY(MAX),
+    Image VARBINARY(MAX),
     FullName NVARCHAR(100) NOT NULL,
     PersonalId VARCHAR(100) NOT NULL,
     Phone VARCHAR(100) NOT NULL,
     BirthDay DATETIME NOT NULL,
-    FristDay DATETIME NOT NULL,
+    FirstDay DATETIME NOT NULL,
     Address NVARCHAR(100) NOT NULL,
-    position NVARCHAR(100) NOT NULL,
+    Position NVARCHAR(100) NOT NULL,
     RolesId INT NOT NULL,
     FOREIGN KEY (RolesId) REFERENCES Roles(RolesId)
 )
@@ -36,22 +36,12 @@ CREATE TABLE Customer
     CustomerId INT IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
     PersonalId VARCHAR(100) NOT NULL UNIQUE,
-    Phone VARCHAR(100),
+    Phone VARCHAR(100) UNIQUE,
     Address NVARCHAR(255),
 	Type INT NOT NULL
 )
 GO
-
-
-
-ALTER TABLE Customer
-ADD Type INT NOT NULL;
-GO 
-
-
-ALTER TABLE Customer ALTER COLUMN Phone VARCHAR(100);
-
-
+                         
 
 
 CREATE TABLE Users
@@ -62,6 +52,7 @@ CREATE TABLE Users
     FOREIGN KEY (EmployeeId) REFERENCES Employee(EmployeeId),
 )
 GO
+
 
 
 CREATE TABLE Service
@@ -84,9 +75,6 @@ CREATE TABLE UseService
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 )
 Go
-
-
-
 
 
 CREATE TABLE RoomType
@@ -146,3 +134,16 @@ CREATE TABLE ServiceForRoom
     FOREIGN KEY (RoomTypeId) REFERENCES RoomType(RoomTypeId),
 )
 GO
+
+
+drop table Customer
+drop table Users
+drop table UseService
+drop table Room
+drop table OrderRoom
+drop table Roles
+drop table Employee
+drop table Bill
+drop table RoomType
+drop table ServiceForRoom
+drop table Service
