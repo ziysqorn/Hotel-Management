@@ -6,7 +6,9 @@ import {
   add,
   OrderRoom,
   getRoomWithDate,
-  getCustomerInRoom
+  getCustomerInRoom,
+  deleteOrderRoom,
+  editOrderRoom
 } from "../controllers/room.js";
 const router = express.Router();
 
@@ -16,7 +18,9 @@ router.post("/edit", EditRoom);
 router.post("/add", add);
 router.post("/orderRoom", OrderRoom);
 router.get("/getRoomWithDate", getRoomWithDate);
-router.get("/getCustomerInRoom",getCustomerInRoom)
+router.get("/getCustomerInRoom", getCustomerInRoom);
+router.post("/deleteOrderRoom", deleteOrderRoom);
+router.post("/editOrderRoom", editOrderRoom);
 
 // lấy kèm query
 

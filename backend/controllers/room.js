@@ -1,5 +1,6 @@
 import db from "../db.js";
 
+// =========================STart of room
 export const get = async (req, res) => {
   try {
     const data = await db("SELECT * FROM Room");
@@ -10,7 +11,7 @@ export const get = async (req, res) => {
 };
 
 export const getWithQuery = async (req, res) => {
-  let { roomid, roomtypeid } = req.query;
+  let { roomid, roomtypeid, RoomName } = req.query;
   // cách nào cũng dc
   let roomId = req.query.roomid;
   // handle query đến sql server
@@ -21,7 +22,14 @@ export const getWithQuery = async (req, res) => {
   if (roomtypeid) {
     finalQ += `AND RoomTypeId = ${roomtypeid}`;
   }
+  if (RoomName) {
+    finalQ += `AND Room.RoomId LIKE '%${RoomName}%'`;
+  }
+
+  finalQ += `;`;
   console.log(finalQ);
+
+  // gửi query về db
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -68,6 +76,10 @@ export const add = async (req, res) => {
   }
 };
 
+// ==================END OF ROOM =============
+
+// Nhận vào các giá trị tương ứng để insert
+
 export const OrderRoom = async (req, res) => {
   let { item } = req.body;
   console.log(`getRoomWithDate item : `, item);
@@ -85,24 +97,24 @@ export const OrderRoom = async (req, res) => {
   }
   // res.json(finalQ);
 };
-
-// ==================END OF BASIC =============
 // lấy room nào còn phòng và cho thời gian cụ thể
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
-  let { CheckInDate, ExpectedCheckOutDate } = req.query;
+  let { CheckInDate, ExpectedCheckOutDate, RoomName } = req.query;
 
   console.log(`getRoomWithDate item : `, req.query);
   let finalQ = `     
-  SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
-  FROM Room
-      LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
-  WHERE ((OrderRoom.CheckInDate IS NULL)
-      OR NOT (
-            (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-          AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-        )) ;
+        SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
+        FROM Room
+            LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
+        WHERE ((OrderRoom.CheckInDate IS NULL)
+            OR NOT (
+                  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+                AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+              )) 
   `;
+  finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
+  finalQ += `;`;
   //  chạy query
   try {
     const data = await db(finalQ);
@@ -110,9 +122,76 @@ export const getRoomWithDate = async (req, res) => {
   } catch (err) {
     console.log("err", err);
   }
+  // res.json(finalQ)
 };
 
-export const getCustomerInRoom = (req, res) => {
-  let { RoomId, Time } = req.query;
-  
+// Get các customer có trong phòng có hoặc không có time
+export const getCustomerInRoom = async (req, res) => {
+  //allTime true nghĩa là all khách đã từng ở phòng đó
+  let { RoomId, CurrentTime, allTime } = req.query;
+  console.log(CurrentTime);
+  let finalQ = `SELECT * FROM OrderRoom 
+                WHERE ('${CurrentTime}' BETWEEN CheckInDate AND ExpectedCHeckOutDate) 
+                      AND RoomId= '${RoomId}';`;
+
+  if (allTime) {
+    finalQ = `SELECT DISTINCT StayCustomerId
+              FROM OrderRoom WHERE RoomId='${RoomId}';`;
+  }
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//delete
+export const deleteOrderRoom = async (req, res) => {
+  let { item } = req.body;
+
+  let finalQ = `DELETE FROM OrderRoom
+                  WHERE 
+                      CustomerId = ${item.CustomerId} AND
+                      StayCustomerId = ${item.StayCustomerId} AND
+                      UserId = ${item.UserId} AND
+                      RoomId = '${item.RoomId}' AND
+                      CheckInDate = '${item.CheckInDate}' AND
+                      ExpectedCHeckOutDate = '${item.ExpectedCHeckOutDate}';
+  `;
+
+  try {
+    const data = await db(finalQ);
+    res.json(`Order Room Delete success`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editOrderRoom = async (req, res) => {
+  let { OldItem, NewItem } = req.body;
+  console.log(OldItem, NewItem);
+  let finalQ = `UPDATE OrderRoom
+                  SET 
+                    CustomerId = ${NewItem.CustomerId} ,
+                    StayCustomerId = ${NewItem.StayCustomerId} ,
+                    UserId = ${NewItem.UserId} ,
+                    RoomId = '${NewItem.RoomId}' ,
+                    CheckInDate = '${NewItem.CheckInDate}' ,
+                    ExpectedCHeckOutDate = '${NewItem.ExpectedCHeckOutDate}'
+                  WHERE
+                      CustomerId = ${OldItem.CustomerId} AND
+                      StayCustomerId = ${OldItem.StayCustomerId} AND
+                      UserId = ${OldItem.UserId} AND
+                      RoomId = '${OldItem.RoomId}' AND
+                      CheckInDate = '${OldItem.CheckInDate}' AND
+                      ExpectedCHeckOutDate = '${OldItem.ExpectedCHeckOutDate}';
+  `;
+  try {
+    const data = await db(finalQ);
+    res.json(`Order Room Update success`);
+  } catch (err) {
+    console.log(err);
+  }
+  // res.json(finalQ);
 };

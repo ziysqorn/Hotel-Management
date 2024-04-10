@@ -121,11 +121,11 @@ VALUES
 GO
 
 INSERT INTO UseService
-    (CustomerId,CustomerUseId,UserId,ServiceId,CheckInDate,Amount)
+    (CustomerId,UserId,ServiceId,CheckInDate)
 VALUES
-    (1, 1, 1, 1, '2024-04-06', 1),
-    (2, 2, 2, 2, '2024-04-06', 1),
-    (3, 3, 1, 3, '2024-04-06', 1)
+    (1, 1, 1, '2024-04-06'),
+    (2, 2, 2, '2024-04-06'),
+    (3, 1, 3, '2024-04-06')
 GO
 
 
@@ -140,11 +140,11 @@ GO
 INSERT INTO ServiceForRoom
     (ServiceId,RoomTypeId)
 VALUES
-    (1,1),
-    (1,2),
-    (1,3),
-    (2,1),
-    (2,3)
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 1),
+    (2, 3)
 GO
 
 

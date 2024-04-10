@@ -67,13 +67,10 @@ CREATE TABLE UseService
 (
     ServiceId INT NOT NULL,
     CustomerId INT NOT NULL,
-    CustomerUseId INT NOT NULL,
     UserId INT NOT NULL,
-    Amount INT NOT NULL,
     CheckInDate DATETIME NOT NULL,
     FOREIGN KEY (ServiceId) REFERENCES Service(ServiceId),
     FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId),
-    FOREIGN KEY (CustomerUseId) REFERENCES Customer(CustomerId),
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 )
 Go
@@ -138,3 +135,6 @@ CREATE TABLE ServiceForRoom
     FOREIGN KEY (RoomTypeId) REFERENCES RoomType(RoomTypeId),
 )
 GO
+
+
+

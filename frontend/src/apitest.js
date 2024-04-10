@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
+
 const Apitest = () => {
   const getData = () => {
     axios
-      .get("http://localhost:4000/api/room",{
-        query:{
-          RoomId:"P101",
-          RoomTypeId:1
-        }
+      .get("http://localhost:4000/api/room/query", {
+        params: {
+          RoomName: "P1",
+        },
       })
       .then((response) => {
         console.log(response.data);
@@ -53,12 +53,13 @@ const Apitest = () => {
       });
   };
 
-  const getDataWithCustomer = () => {
+  const getDataWithDate = () => {
     axios
       .get("http://localhost:4000/api/room/getRoomWithDate", {
         params: {
           CheckInDate: "2024-04-20",
           ExpectedCheckOutDate: "2024-04-30",
+          RoomName: "P101",
         },
       })
       .then((response) => {
@@ -72,29 +73,92 @@ const Apitest = () => {
     axios
       .post("http://localhost:4000/api/room/orderRoom", {
         item: {
-          CustomerId:1,
-          StayCustomerId:1,
-          UserId:1,
-          RoomId:"P105",
-          CheckInDate:'2024-04-20',
-          ExpectedCHeckOutDate:'2024-04-30'
+          CustomerId: 3,
+          StayCustomerId: 1,
+          UserId: 1,
+          RoomId: "P102",
+          CheckInDate: "2024-04-20",
+          ExpectedCHeckOutDate: "2024-04-30",
         },
       })
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   // query handle
+  const getCustomerInRoom = () => {
+    axios
+      .get("http://localhost:4000/api/room/getCustomerInRoom", {
+        params: {
+          RoomId: "P102",
+          CurrentTime: "2024-04-25",
+          // allTime: true,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  const deleteOrderRoom = () => {
+    axios
+      .post("http://localhost:4000/api/room/deleteOrderRoom", {
+        item: {
+          CustomerId: 3,
+          StayCustomerId: 2,
+          UserId: 1,
+          RoomId: "P102",
+          CheckInDate: "2024-04-20",
+          ExpectedCHeckOutDate: "2024-04-30",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const editOrderRoom = () => {
+    axios
+      .post("http://localhost:4000/api/room/editOrderRoom", {
+        OldItem: {
+          CustomerId: 3,
+          StayCustomerId: 2,
+          UserId: 1,
+          RoomId: "P102",
+          CheckInDate: "2024-04-20",
+          ExpectedCHeckOutDate: "2024-04-30",
+        },
+        NewItem: {
+          CustomerId: 3,
+          StayCustomerId: 3,
+          UserId: 1,
+          RoomId: "P103",
+          CheckInDate: "2024-05-01",
+          ExpectedCHeckOutDate: "2024-05-08",
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <button
         style={{ width: 100, height: 100 }}
         onClick={() => {
-          addData();
+          editOrderRoom();
         }}
       >
         Test
