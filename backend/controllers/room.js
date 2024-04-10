@@ -10,6 +10,7 @@ export const get = async (req, res) => {
   }
 };
 
+
 export const getWithQuery = async (req, res) => {
   let { roomid, roomtypeid, RoomName } = req.query;
   // cách nào cũng dc
