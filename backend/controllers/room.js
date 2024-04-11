@@ -10,7 +10,6 @@ export const get = async (req, res) => {
   }
 };
 
-
 export const getWithQuery = async (req, res) => {
   let { roomid, roomtypeid, RoomName } = req.query;
   // cách nào cũng dc
@@ -77,6 +76,27 @@ export const add = async (req, res) => {
   }
 };
 
+// lấy thông tin như doanh thu của phòng front end sử lý trả về các order room kèm loại phòng để tính tiền
+export const getRoomInComeWithRoomId = async (req, res) => {
+  let { RoomId } = req.query;
+  let finalQ = `
+  SELECT o.CustomerId, o.StayCustomerId, o.UserId, o.RoomId, o.CheckInDate, o.ExpectedCHeckOutDate,
+         r.RoomId, r.RoomTypeId, r.Status, r.Phone,
+         rt.RoomTypeId, rt.Type, rt.Price, rt.Description
+  FROM OrderRoom o
+  JOIN Room r ON o.RoomId = r.RoomId
+  JOIN RoomType rt ON r.RoomTypeId = rt.RoomTypeId where r.RoomId='${RoomId}';`;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: err.message });
+  }
+};
+
 // ==================END OF ROOM =============
 
 // Nhận vào các giá trị tương ứng để insert
@@ -101,7 +121,8 @@ export const OrderRoom = async (req, res) => {
 // lấy room nào còn phòng và cho thời gian cụ thể
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
-  let { CheckInDate, ExpectedCheckOutDate, RoomName } = req.query;
+  let { CheckInDate, ExpectedCheckOutDate, RoomName, StayCustomerId } =
+    req.query;
 
   console.log(`getRoomWithDate item : `, req.query);
   let finalQ = `     
@@ -114,7 +135,9 @@ export const getRoomWithDate = async (req, res) => {
                 AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
               )) 
   `;
-  finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
+  if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
+  if (StayCustomerId)
+    finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
   finalQ += `;`;
   //  chạy query
   try {
@@ -124,6 +147,15 @@ export const getRoomWithDate = async (req, res) => {
     console.log("err", err);
   }
   // res.json(finalQ)
+};
+
+export const getOrderRoomWithStayCustomerId = (req, res) => {
+  let { StayCustomerId } = req.query;
+  let finalQ = `SELECT *
+                  FROM OrderRoom
+                  ORDER BY CheckInDate DESC;
+                  WHERE StayCustomerId = ${StayCustomerId}`;
+  
 };
 
 // Get các customer có trong phòng có hoặc không có time

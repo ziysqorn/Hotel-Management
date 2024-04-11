@@ -57,11 +57,11 @@ VALUES
 GO
 
 INSERT INTO Customer
-    (FullName, PersonalId, Phone, Address)
+    (FullName, PersonalId, Phone, Address,Type)
 VALUES
-    (N'John Doe', '123456789', '123-456-789', N'123 Main St, City, Country'),
-    (N'Jane Smith', '987654321', '987-654-321', N'456 Elm St, City, Country'),
-    (N'Michael Johnson', '555666777', '555-666-777', NULL);
+    (N'John Doe', '123456789', '123-456-789', N'123 Main St, City, Country',0),
+    (N'Jane Smith', '987654321', '987-654-321', N'456 Elm St, City, Country',0),
+    (N'Michael Johnson', '555666777', '555-666-777', NULL,0);
 GO
 
 
