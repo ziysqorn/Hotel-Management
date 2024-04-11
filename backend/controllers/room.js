@@ -77,7 +77,7 @@ export const add = async (req, res) => {
 };
 
 // lấy thông tin như doanh thu của phòng front end sử lý trả về các order room kèm loại phòng để tính tiền
-export const getRoomInComeWithRoomId = async (req, res) => {
+export const getRoomInfoComeWithRoomId = async (req, res) => {
   let { RoomId } = req.query;
   let finalQ = `
   SELECT o.CustomerId, o.StayCustomerId, o.UserId, o.RoomId, o.CheckInDate, o.ExpectedCHeckOutDate,
@@ -149,13 +149,19 @@ export const getRoomWithDate = async (req, res) => {
   // res.json(finalQ)
 };
 
-export const getOrderRoomWithStayCustomerId = (req, res) => {
+export const getOrderRoomWithStayCustomerId = async (req, res) => {
   let { StayCustomerId } = req.query;
   let finalQ = `SELECT *
                   FROM OrderRoom
+                  WHERE StayCustomerId = ${StayCustomerId}
                   ORDER BY CheckInDate DESC;
-                  WHERE StayCustomerId = ${StayCustomerId}`;
-  
+                  `;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log("err", err);
+  }
 };
 
 // Get các customer có trong phòng có hoặc không có time

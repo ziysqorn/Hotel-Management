@@ -94,8 +94,8 @@ const Apitest = () => {
       .get("http://localhost:4000/api/room/getCustomerInRoom", {
         params: {
           RoomId: "P102",
-          CurrentTime: "2024-04-25",
-          // allTime: true,
+          // CurrentTime: "2024-04-25",
+          allTime: true,
         },
       })
       .then((response) => {
@@ -144,7 +144,7 @@ const Apitest = () => {
           RoomId: "P103",
           CheckInDate: "2024-05-01",
           ExpectedCHeckOutDate: "2024-05-08",
-        }
+        },
       })
       .then((response) => {
         console.log(response.data);
@@ -153,12 +153,43 @@ const Apitest = () => {
         console.log(err);
       });
   };
+  const getOrderRoomWithStayCustomerId = () => {
+    axios
+      .get("http://localhost:4000/api/room/getOrderRoomWithStayCustomerId", {
+        params: {
+          StayCustomerId: 1,
+          // allTime: true,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getRoomInfoComeWithRoomId = () => {
+    axios
+      .get("http://localhost:4000/api/room/getRoomInfoComeWithRoomId", {
+        params: {
+          RoomId: "P102",
+          // allTime: true,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <button
         style={{ width: 100, height: 100 }}
         onClick={() => {
-          editOrderRoom();
+          getCustomerInRoom();
         }}
       >
         Test
