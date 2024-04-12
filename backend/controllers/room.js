@@ -32,6 +32,7 @@ export const getWithQuery = async (req, res) => {
   // gửi query về db
   try {
     const data = await db(finalQ);
+    
     res.json(data);
   } catch (err) {
     console.log(err);
