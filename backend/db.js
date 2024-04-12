@@ -1,5 +1,7 @@
-import sql, { query } from "mssql";
-import { config } from "./config";
+import sql from "mssql";
+import { config } from "./config.js";
+
+
 // test ignore stuff
 async function db(queryString, parameters = []) {
   try {
