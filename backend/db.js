@@ -1,4 +1,4 @@
-import sql from "mssql";
+import sql, { query } from "mssql";
 
 const config = {
   server: "localhost",
@@ -11,11 +11,12 @@ const config = {
     trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
   },
 };
-
+// test ignore stuff
 async function db(queryString, parameters = []) {
   try {
     // Kết nối đến cơ sở dữ liệu
     await sql.connect(config);
+    console.log(`Execute ${queryString}`);
 
     // Thực thi truy vấn
     const result = await sql.query(queryString, ...parameters);
