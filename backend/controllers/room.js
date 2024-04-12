@@ -236,3 +236,8 @@ export const editOrderRoom = async (req, res) => {
   // res.json(finalQ);
   // commit change 
 };
+
+
+export const tempfunction = ()=>{
+    console.log("work");
+}
