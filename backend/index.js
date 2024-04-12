@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use("/api/room", roomRoute);
-app.use("/customer", customerRoute);
+app.use("/api/customer", customerRoute);
 
 
 app.listen(3000, () => {
