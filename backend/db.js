@@ -1,22 +1,11 @@
 import sql, { query } from "mssql";
-
-const config = {
-  server: "localhost",
-  port: 1433,
-  database: "hotel_management",
-  user: "SA",
-  password: "Password123",
-  options: {
-    encrypt: true, // Bật mã hóa
-    trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
-  },
-};
+import { config } from "./config";
 // test ignore stuff
 async function db(queryString, parameters = []) {
   try {
     // Kết nối đến cơ sở dữ liệu
     await sql.connect(config);
-    console.log(`Execute 4 ${queryString}`);
+    console.log(`Execute 5 ${queryString}`);
 
     // Thực thi truy vấn
     const result = await sql.query(queryString, ...parameters);
