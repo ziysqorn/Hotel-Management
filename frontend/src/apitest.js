@@ -64,6 +64,17 @@ const Apitest = () => {
       });
   };
 
+  const GetEmployeeData = () => {
+    axios
+    .get("http://localhost:4000/api/employee?rolesid=2", {
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
   // query handle
 
   return (
@@ -72,6 +83,7 @@ const Apitest = () => {
         style={{ width: 100, height: 100 }}
         onClick={() => {
           getData();
+          GetEmployeeData();
         }}
       >
         Test
