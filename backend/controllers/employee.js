@@ -35,4 +35,30 @@ export const get = async (req, res) => {
     
 };
 
+export const AddEmployee = async (req, res) => {
+    let {item} = req.body;
 
+    let FinalQuery = `INSERT INTO Employee
+    ( FullName, PersonalId, Phone, BirthDay, FristDay, Address, position, RolesId)
+    VALUES
+        (
+            
+            '${item.FullName}',
+            '${item.PersonalId}',
+            '${item.Phone}',
+            '${item.BirthDay}',
+            '${item.FristDay}',
+            '${item.Address}',
+            '${item.Position}',
+            '${item.RolesId}'
+        );
+        SELECT * FROM Employee WHERE PersonalId = '${item.PersonalId}' `;
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(data);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
