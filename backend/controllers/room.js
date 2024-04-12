@@ -4,7 +4,7 @@ import db from "../db.js";
 export const get = async (req, res) => {
   try {
     const data = await db("SELECT * FROM Room");
-    res.json(data);
+    res.send(data);
   } catch (err) {
     console.log(err);
   }
@@ -32,7 +32,7 @@ export const getWithQuery = async (req, res) => {
   // gửi query về db
   try {
     const data = await db(finalQ);
-    
+
     res.json(data);
   } catch (err) {
     console.log(err);
@@ -58,6 +58,7 @@ export const EditRoom = async (req, res) => {
 
 export const add = async (req, res) => {
   let { item } = req.body;
+
   let finalQ = `
       INSERT INTO Room
         (RoomId,RoomTypeId,Status,Phone)
@@ -65,10 +66,14 @@ export const add = async (req, res) => {
         ('${item.RoomId}',${item.RoomTypeId},${item.Status},'${item.Phone}');
   `;
 
-  console.log(finalQ);
+  let validationQ = `SELECT * FROM Room WHERE RoomId = '${item.RoomId}'`;
   try {
-    const data = await db(finalQ);
-    res.json(`Add item : ${item.RoomId} `);
+    if (((await db(validationQ)).length = 0)) {
+      const data = await db(finalQ);
+      res.json(`Add item : ${item.RoomId} `);
+    } else {
+      res.status(500).json(`Missing in error`);
+    }
   } catch (err) {
     console.log(err);
     res
@@ -98,6 +103,17 @@ export const getRoomInfoComeWithRoomId = async (req, res) => {
   }
 };
 
+
+export const deleteRoom = async (req,res)=>{
+    let {RoomId} = item.query
+    let finalQ = `DELETE FROM Room WHERE RoomId = ${RoomId}`
+    try {
+      const data = await db(finalQ);
+      res.json("Delete Room success");
+    } catch (err) {
+      console.log("err", err);
+    }
+}
 // ==================END OF ROOM =============
 
 // Nhận vào các giá trị tương ứng để insert
@@ -234,10 +250,9 @@ export const editOrderRoom = async (req, res) => {
     console.log(err);
   }
   // res.json(finalQ);
-  // commit change 
+  // commit change
 };
 
-
-export const tempfunction = ()=>{
-    console.log("work");
-}
+export const tempfunction = () => {
+  console.log("work");
+};
