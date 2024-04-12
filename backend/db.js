@@ -16,7 +16,7 @@ async function db(queryString, parameters = []) {
   try {
     // Kết nối đến cơ sở dữ liệu
     await sql.connect(config);
-    console.log(`Execute 2 ${queryString}`);
+    console.log(`Execute 3 ${queryString}`);
 
     // Thực thi truy vấn
     const result = await sql.query(queryString, ...parameters);
