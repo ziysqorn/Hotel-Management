@@ -3,19 +3,19 @@ import db from "../db.js";
 //get with query
 export const getWithQuery = async (req, res) =>{
     let {employid, rolesid} = req.query
-    let FinalQuery = 'SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL'
+    let FinalQuery = 'SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)'
 
     if (employid) {
-        FinalQuery += `AND EmployeeId = ${employid}`;
+        FinalQuery += ` AND EmployeeId = ${employid}`;
     }
     if (rolesid) {
-        FinalQuery += `AND RolesId = ${rolesid}`;
+        FinalQuery += ` AND RolesId = ${rolesid}`;
     }
     FinalQuery += `;`;
     console.table(FinalQuery);
     
     try {
-        const data = await db(finalQ);
+        const data = await db(FinalQuery);
         
         res.json(data);
       } catch (err) {
