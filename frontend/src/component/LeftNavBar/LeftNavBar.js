@@ -11,7 +11,13 @@ import { Link } from "react-router-dom";
 import { faFaceAngry } from "@fortawesome/free-regular-svg-icons";
 
 export const LeftNavBar = () => {
-  const [selectedList, setSeletectList] = useState([true, false, false, false,false]);
+  const [selectedList, setSeletectList] = useState([
+    true,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const changeRoute = (index) => {
     console.log(index, selectedList);
@@ -57,12 +63,12 @@ export const LeftNavBar = () => {
             icon={faChartSimple}
             style={{
               fontSize: "20px",
-              color: "#B0B0B0",
+              color: selectedList[0] ? "#00FFF5" : "#B0B0B0",
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: "#B0B0B0", fontWeight: 600 }}>
+          <p style={{ fontSize: "20px", color: selectedList[0] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
             Analytics
           </p>
         </div>
@@ -87,12 +93,12 @@ export const LeftNavBar = () => {
             icon={faTv}
             style={{
               fontSize: "20px",
-              color: "#B0B0B0",
+              color: selectedList[1] ? "#00FFF5" : "#B0B0B0",//00FFF5
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: "#B0B0B0", fontWeight: 600 }}>
+          <p style={{ fontSize: "20px", color: selectedList[1] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
             Rooms
           </p>
         </div>
@@ -117,12 +123,12 @@ export const LeftNavBar = () => {
             icon={faUserGraduate}
             style={{
               fontSize: "20px",
-              color: "#B0B0B0",
+              color: selectedList[2] ? "#00FFF5" : "#B0B0B0",
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: "#B0B0B0", fontWeight: 600 }}>
+          <p style={{ fontSize: "20px", color: selectedList[2] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
             Customers
           </p>
         </div>
@@ -148,12 +154,12 @@ export const LeftNavBar = () => {
             icon={faCubes}
             style={{
               fontSize: "20px",
-              color: "#B0B0B0",
+              color: selectedList[3] ? "#00FFF5" : "#B0B0B0",
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: "#B0B0B0", fontWeight: 600 }}>
+          <p style={{ fontSize: "20px", color: selectedList[3] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
             Analytics
           </p>
         </div>
@@ -178,12 +184,18 @@ export const LeftNavBar = () => {
             icon={faFaceAngry}
             style={{
               fontSize: "20px",
-              color: "#B0B0B0",
+              color: selectedList[4] ? "#00FFF5" : "#B0B0B0",
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: "#B0B0B0", fontWeight: 600 }}>
+          <p
+            style={{
+              fontSize: "20px",
+              color: `${selectedList[4] ? "#FFFFFF" : "#B0B0B0"}`,
+              fontWeight: 600,
+            }}
+          >
             Employees
           </p>
         </div>
