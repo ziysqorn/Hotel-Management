@@ -106,6 +106,7 @@ const Apitest = () => {
       });
   };
 
+<<<<<<< HEAD
   const deleteOrderRoom = () => {
     axios
       .post("http://localhost:4000/api/room/deleteOrderRoom", {
@@ -183,13 +184,32 @@ const Apitest = () => {
         console.log(err);
       });
   };
+=======
+  const GetEmployeeData = () => {
+    axios
+    .get("http://localhost:4000/api/employee?rolesid=2", {
+    })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+  // query handle
+>>>>>>> Hung
 
   return (
     <div>
       <button
         style={{ width: 100, height: 100 }}
         onClick={() => {
+<<<<<<< HEAD
           getCustomerInRoom();
+=======
+          getData();
+          GetEmployeeData();
+>>>>>>> Hung
         }}
       >
         Test

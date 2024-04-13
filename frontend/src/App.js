@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Apitest from "./Apitest.js";
+import Apitest from "./apitest.js";
 
 function App() {
   return (
