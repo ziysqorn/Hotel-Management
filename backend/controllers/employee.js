@@ -34,7 +34,7 @@ export const get = async (req, res) => {
     }
     
 };
-
+//Thêm nhân viên
 export const AddEmployee = async (req, res) => {
     let {item} = req.body;
 
@@ -57,6 +57,40 @@ export const AddEmployee = async (req, res) => {
     {
         const data = await db(FinalQuery);
         res.json(data);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+// chỉnh sửa thông tin
+export const EditEmployee = async (req, res) => {
+    let {item} = req.body;
+    let FinalQuery = `UPDATE Employee
+    SET Phone = '${item.Phone}',
+        Address = '${item.Address}',
+        Position = '${item.Position}' 
+    WHERE EmployeeId = '${item.EmployeeId}'`;
+
+    console.table(FinalQuery);
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(`Update Employee ${item.EmployeeId} success`);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+export const DeleteEmployee = async (req, res) => {
+    let {item} = req.body;
+    let FinalQuery = ` DELETE FROM Employee WhERE EmployeeId = ${item.EmployeeId} `;
+    console.table(FinalQuery);
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(`Delete Employee success`);
     }
     catch (err) {
         console.log(err);
