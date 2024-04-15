@@ -34,7 +34,7 @@ function App() {
           width: "80%",
           minHeight: "80%",
           // backgroundColor: "white",
-          border:"1px solid white",
+          border: "1px solid white",
           position: "absolute",
           top: "150px",
           left: "400px",

@@ -12,7 +12,12 @@ export const Floor = ({ ...props }) => {
       style={{
         width: "639px",
         height: "410px",
+        margin:"10px",
         borderRadius: "10px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: myAppColor.Black.TopNavBackground,
       }}
     >
@@ -22,29 +27,64 @@ export const Floor = ({ ...props }) => {
           width: "100%",
           paddingTop: "0px",
           display: "flex",
-          flexDirection:"row",
+          flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-        //   background: "white",
+          //   background: "white",
         }}
       >
-        <FontAwesomeIcon style={{marginLeft:"10px",fontSize:"30px",color:"white"}} icon={faBed} />
+        <FontAwesomeIcon
+          style={{ marginLeft: "10px", fontSize: "30px", color: "white" }}
+          icon={faBed}
+        />
         <p
           style={{
             color: "white",
             backgroundColor: "black",
-            maxWidth: 100,
+            maxWidth: 150,
+            fontSize: "20px",
+            fontWeight: 600,
             // margin: "auto",
-            alignSelf:"center",
-            transform:"translate(-10%,0)",
+            alignSelf: "center",
+            transform: "translate(-10%,0)",
             textAlign: "center",
-            padding: "5px",
+            padding: "7px",
             borderRadius: "3px",
           }}
         >
-          Floor No. {`07`}
+          Floor No. {`01`}
         </p>
         <div></div>
+      </div>
+
+      <div
+        style={{
+          flex: "1",
+          // backgroundColor: "white",
+
+          display: "flex",
+
+          flexWrap: "wrap",
+        }}
+      >
+        {props.data.map((item, index) => (
+          <div
+            key={index}
+            style={{
+              width: "53px",
+              cursor:"pointer",
+              height: "36px",
+              backgroundColor: item.Status?"#111111":"#FF0000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "1px 5px",
+              borderRadius: "3px",
+            }}
+          >
+            <p style={{ color:item.Status?"#B0B0B0":"white" }}>{item.RoomName}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
