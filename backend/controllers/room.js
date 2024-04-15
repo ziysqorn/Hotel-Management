@@ -4,7 +4,7 @@ import db from "../db.js";
 export const get = async (req, res) => {
   try {
     const data = await db("SELECT * FROM Room;SELECT * FROM OrderRoom");
-    res.json(data.recordsets);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }
@@ -68,7 +68,7 @@ export const add = async (req, res) => {
 
   let validationQ = `SELECT * FROM Room WHERE RoomId = '${item.RoomId}'`;
   try {
-    if (((await db(validationQ)).recordset.length == 0)) {
+    if ((await db(validationQ)).recordset.length == 0) {
       const data = await db(finalQ);
       res.json(data);
     } else {
