@@ -50,7 +50,7 @@ export const EditRoom = async (req, res) => {
   console.log(finalQ);
   try {
     const data = await db(finalQ);
-    res.json(`Update item: ${item.RoomId} success!!! `);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }
@@ -68,9 +68,9 @@ export const add = async (req, res) => {
 
   let validationQ = `SELECT * FROM Room WHERE RoomId = '${item.RoomId}'`;
   try {
-    if (((await db(validationQ)).length = 0)) {
+    if (((await db(validationQ)).recordset.length == 0)) {
       const data = await db(finalQ);
-      res.json(`Add item : ${item.RoomId} `);
+      res.json(data);
     } else {
       res.status(500).json(`Missing in error`);
     }
@@ -104,11 +104,11 @@ export const getRoomInfoComeWithRoomId = async (req, res) => {
 };
 
 export const deleteRoom = async (req, res) => {
-  let { RoomId } = item.query;
-  let finalQ = `DELETE FROM Room WHERE RoomId = ${RoomId}`;
+  let { RoomId } = req.query;
+  let finalQ = `DELETE FROM Room WHERE RoomId = '${RoomId}'`;
   try {
     const data = await db(finalQ);
-    res.json("Delete Room success");
+    res.json(data);
   } catch (err) {
     console.log("err", err);
   }
@@ -128,7 +128,7 @@ export const OrderRoom = async (req, res) => {
   `;
   try {
     const data = await db(finalQ);
-    res.json("Order Room success");
+    res.json(data);
   } catch (err) {
     console.log("err", err);
   }

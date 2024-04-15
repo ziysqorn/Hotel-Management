@@ -11,6 +11,7 @@ import {
   editOrderRoom,
   getOrderRoomWithStayCustomerId,
   getRoomInfoComeWithRoomId,
+  deleteRoom,
 } from "../controllers/room.js";
 const router = express.Router();
 
@@ -18,6 +19,8 @@ router.get("/", get);
 router.get("/query", getWithQuery);
 router.post("/edit", EditRoom);
 router.post("/add", add);
+router.get("/delete", deleteRoom);
+
 router.get("/getRoomWithDate", getRoomWithDate);
 router.get("/getRoomInfoComeWithRoomId", getRoomInfoComeWithRoomId);
 
