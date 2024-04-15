@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import appLogo from "../../app-logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faL, faUser } from "@fortawesome/free-solid-svg-icons";
 import { myAppColor } from "../../colors.js";
 // import Fonta
 export const TopNavBar = () => {
+  const [isHover, setIsHover] = useState([false, false, false]);
+
   return (
     <div
       style={{
@@ -50,17 +52,29 @@ export const TopNavBar = () => {
           Del Luna
         </p>
       </div>
+      {/* Start of top nav  */}
       <div className="Right" style={{ display: "flex", marginRight: "30px" }}>
         <div
+          onMouseEnter={() => {
+            setIsHover([true, false, false]);
+          }}
+          onMouseLeave={() => {
+            setIsHover([false, false, false]);
+          }}
           style={{
             width: "62px",
             height: "62px",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
+            cursor: "pointer",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: "50%",
             margin: "10px",
+            // hover stuff
+            transform: `translateY(${isHover[0] ? "-5px" : "0"})`,
+            opacity: isHover[0] ? 1 : 0.8,
+            transition: "all 0.3s ease-in-out",
           }}
         >
           <FontAwesomeIcon
@@ -69,15 +83,26 @@ export const TopNavBar = () => {
           />
         </div>
         <div
+          onMouseEnter={() => {
+            setIsHover([false, true, false]);
+          }}
+          onMouseLeave={() => {
+            setIsHover([false, false, false]);
+          }}
           style={{
             width: "62px",
             height: "62px",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
+            cursor: "pointer",
             alignItems: "center",
             borderRadius: "50%",
             margin: "10px",
+            // hover stuf
+            transform: `translateY(${isHover[1] ? "-5px" : "0"})`,
+            opacity: isHover[1] ? 1 : 0.8,
+            transition: "all 0.3s ease-in-out",
           }}
         >
           <FontAwesomeIcon
@@ -86,15 +111,26 @@ export const TopNavBar = () => {
           />
         </div>
         <div
+          onMouseEnter={() => {
+            setIsHover([false, false, true]);
+          }}
+          onMouseLeave={() => {
+            setIsHover([false, false, false]);
+          }}
           style={{
             width: "62px",
             height: "62px",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
+            cursor: "pointer",
             alignItems: "center",
             borderRadius: "50%",
             margin: "10px",
+            // hover stuf
+            transform: `translateY(${isHover[2] ? "-5px" : "0"})`,
+            opacity: isHover[2] ? 1 : 0.8,
+            transition: "all 0.3s ease-in-out",
           }}
         >
           <FontAwesomeIcon
@@ -103,6 +139,7 @@ export const TopNavBar = () => {
           />
         </div>
       </div>
+      {/* end of top nav  */}
     </div>
   );
 };

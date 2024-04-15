@@ -12,7 +12,7 @@ export const Floor = ({ ...props }) => {
       style={{
         width: "639px",
         height: "410px",
-        margin:"10px",
+        margin: "10px",
         borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
@@ -67,24 +67,29 @@ export const Floor = ({ ...props }) => {
           flexWrap: "wrap",
         }}
       >
-        {props.data.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              width: "53px",
-              cursor:"pointer",
-              height: "36px",
-              backgroundColor: item.Status?"#111111":"#FF0000",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "1px 5px",
-              borderRadius: "3px",
-            }}
-          >
-            <p style={{ color:item.Status?"#B0B0B0":"white" }}>{item.RoomName}</p>
-          </div>
-        ))}
+        {props.data.map(
+          (item, index) =>
+            item.RoomId.includes(props.floorIndex) && (
+              <div
+                key={index}
+                style={{
+                  width: "53px",
+                  cursor: "pointer",
+                  height: "36px",
+                  backgroundColor: item.Status ? "#111111" : "#FF0000",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "1px 5px",
+                  borderRadius: "3px",
+                }}
+              >
+                <p style={{ color: item.Status ? "#B0B0B0" : "white" }}>
+                  {item.RoomId}
+                </p>
+              </div>
+            )
+        )}
       </div>
     </div>
   );

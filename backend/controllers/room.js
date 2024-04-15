@@ -4,7 +4,7 @@ import db from "../db.js";
 export const get = async (req, res) => {
   try {
     const data = await db("SELECT * FROM Room");
-    res.send(data);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }

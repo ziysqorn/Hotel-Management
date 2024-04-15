@@ -16,7 +16,7 @@ async function db(queryString, parameters = []) {
     await sql.close();
 
     // Trả về kết quả
-    return result;
+    return result.recordset;
   } catch (err) {
     console.error("Error executing query:", err);
     throw err;

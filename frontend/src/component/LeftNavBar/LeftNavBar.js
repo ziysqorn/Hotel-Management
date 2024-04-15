@@ -6,7 +6,7 @@ import {
   faTv,
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { faFaceAngry } from "@fortawesome/free-regular-svg-icons";
 
@@ -18,6 +18,21 @@ export const LeftNavBar = () => {
     false,
     false,
   ]);
+
+  useEffect(() => {
+    console.log(window.location.href);
+    const url = window.location.href;
+    if (url.includes("analytics"))
+      setSeletectList([true, false, false, false, false]);
+    if (url.includes("rooms"))
+      setSeletectList([false, true, false, false, false]);
+    if (url.includes("customers"))
+      setSeletectList([false, false, true, false, false]);
+    if (url.includes("services"))
+      setSeletectList([false, false, false, true, false]);
+    if (url.includes("employees"))
+      setSeletectList([false, false, false, false, true]);
+  },[]);
 
   const changeRoute = (index) => {
     console.log(index, selectedList);
@@ -68,7 +83,13 @@ export const LeftNavBar = () => {
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: selectedList[0] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
+          <p
+            style={{
+              fontSize: "20px",
+              color: selectedList[0] ? "#FFFFFF" : "#B0B0B0",
+              fontWeight: 600,
+            }}
+          >
             Analytics
           </p>
         </div>
@@ -93,12 +114,18 @@ export const LeftNavBar = () => {
             icon={faTv}
             style={{
               fontSize: "20px",
-              color: selectedList[1] ? "#00FFF5" : "#B0B0B0",//00FFF5
+              color: selectedList[1] ? "#00FFF5" : "#B0B0B0", //00FFF5
               marginLeft: "20px",
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: selectedList[1] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
+          <p
+            style={{
+              fontSize: "20px",
+              color: selectedList[1] ? "#FFFFFF" : "#B0B0B0",
+              fontWeight: 600,
+            }}
+          >
             Rooms
           </p>
         </div>
@@ -128,7 +155,13 @@ export const LeftNavBar = () => {
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: selectedList[2] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
+          <p
+            style={{
+              fontSize: "20px",
+              color: selectedList[2] ? "#FFFFFF" : "#B0B0B0",
+              fontWeight: 600,
+            }}
+          >
             Customers
           </p>
         </div>
@@ -159,7 +192,13 @@ export const LeftNavBar = () => {
               marginRight: "15px",
             }}
           />
-          <p style={{ fontSize: "20px", color: selectedList[3] ? "#FFFFFF" : "#B0B0B0", fontWeight: 600 }}>
+          <p
+            style={{
+              fontSize: "20px",
+              color: selectedList[3] ? "#FFFFFF" : "#B0B0B0",
+              fontWeight: 600,
+            }}
+          >
             Analytics
           </p>
         </div>
