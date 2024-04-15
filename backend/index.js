@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import roomRoute from "./routes/room.js";
+import serviceRoute from "./routes/service.js";
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/room", roomRoute);
 app.use("/api/employee", roomRoute);
-app.use("/api/service", roomRoute);
+app.use("/api/service", serviceRoute);
 app.use("/api/customer", roomRoute);
 
 
