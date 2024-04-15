@@ -140,6 +140,23 @@ export async function ReadCustomerTotalSpent(req, res){
 }
 
 
+//Read customer by name
+export async function ReadCustomerByName(req, res){
+  try{
+    const customerName = req.query.customerName
+    if(!customerName){
+      res.send("Chưa truyền vào tên của khách hàng muốn tìm")
+      return
+    }
+    const result = await db(`Select * from Customer where FullName LIKE N'%${customerName}%'`)
+    res.send(result.recordset)
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
 //Delete customer data by customerId
 export async function DeleteCustomer(req, res){
   try{
