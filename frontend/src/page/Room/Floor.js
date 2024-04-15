@@ -6,12 +6,12 @@ import { faBed } from "@fortawesome/free-solid-svg-icons";
 export const Floor = ({ ...props }) => {
   useEffect(() => {
     console.log(props.data);
-  });
+  },[]);
   return (
     <div
       style={{
-        width: "639px",
-        height: "410px",
+        width: "80%",//80%
+        height: "30vh",
         margin: "10px",
         borderRadius: "10px",
         display: "flex",
@@ -63,7 +63,7 @@ export const Floor = ({ ...props }) => {
           // backgroundColor: "white",
 
           display: "flex",
-
+          justifyContent:"center",
           flexWrap: "wrap",
         }}
       >
@@ -73,9 +73,9 @@ export const Floor = ({ ...props }) => {
               <div
                 key={index}
                 style={{
-                  width: "53px",
+                  width: "9%",//53px
                   cursor: "pointer",
-                  height: "36px",
+                  height: "40px",
                   backgroundColor: item.Status ? "#111111" : "#FF0000",
                   display: "flex",
                   alignItems: "center",
@@ -84,7 +84,7 @@ export const Floor = ({ ...props }) => {
                   borderRadius: "3px",
                 }}
               >
-                <p style={{ color: item.Status ? "#B0B0B0" : "white" }}>
+                <p style={{ color: item.Status ? "#B0B0B0" : "white", fontSize:"20px" }}>
                   {item.RoomId}
                 </p>
               </div>

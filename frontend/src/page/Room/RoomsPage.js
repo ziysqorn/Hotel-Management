@@ -21,7 +21,26 @@ export const RoomsPage = () => {
       className={`fade-in ${isVisible ? "visible" : ""}`}
       style={{ display: "flex", flexWrap: "wrap" }}
     >
-      {data && <Floor data={data} floorIndex={'P1'} />}
+      {data && (
+        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
+      {data && (
+        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
+      {data && (
+        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
+      {data && (
+        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
     </div>
   );
 };
