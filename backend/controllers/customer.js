@@ -64,7 +64,7 @@ export async function  CreateCustomer(req, res){
 export async function ReadAllCustomer(req,res){
     try {
         const data = await db("SELECT * FROM Customer");
-        res.send(data.recordset)
+        res.send(data)//.recordset)
       } catch (err) {
         console.log(err);
         res.send(err)

@@ -3,8 +3,8 @@ import db from "../db.js";
 // =========================STart of room
 export const get = async (req, res) => {
   try {
-    const data = await db("SELECT * FROM Room");
-    res.json(data);
+    const data = await db("SELECT * FROM Room;SELECT * FROM OrderRoom");
+    res.json(data.recordsets);
   } catch (err) {
     console.log(err);
   }
