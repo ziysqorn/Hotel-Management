@@ -10,7 +10,7 @@ export const RoomsPage = () => {
       .get("http://localhost:4000/api/room")
       .then((item) => {
         console.log(item.data);
-        setData(item.data);
+        setData(item.data.recordset);
       })
       .catch((err) => {
         console.log(err);
