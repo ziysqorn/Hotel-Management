@@ -7,14 +7,21 @@ import Apitest from "./apitest.js";
 import { TopNavBar } from "./component/TopNavbar/TopNavBar";
 import { LeftNavBar } from "./component/LeftNavBar/LeftNavBar";
 import { AnalyticsPage } from "./page/AnalyticsPage";
-import { RoomsPage } from "./page/RoomsPage";
+import { RoomsPage } from "./page/Room/RoomsPage.js";
 import { CustomersPage } from "./page/CustomersPage";
 import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/EmployeesPage";
+import { myAppColor } from "./colors";
 
 function App() {
   return (
-    <div className="App" style={{ position: "relative" }}>
+    <div
+      className="App"
+      style={{
+        position: "relative",
+        backgroundColor: myAppColor.Black.WindowBackground,
+      }}
+    >
       {/* Start of top nav  */}
       {/* END of top nav  */}
       {/* Start of left nav  */}
@@ -24,12 +31,13 @@ function App() {
 
       <div
         style={{
-          width: "100px",
-          height: "100px",
-          backgroundColor: "white",
+          width: "80%",
+          minHeight: "80%",
+          // backgroundColor: "white",
+          border:"1px solid white",
           position: "absolute",
           top: "150px",
-          left: "500px",
+          left: "400px",
         }}
       >
         <Routes>

@@ -1,0 +1,404 @@
+import React from "react";
+import { Floor } from "./Floor.js";
+
+export const RoomsPage = () => {
+  const data = [
+    {
+      RoomName:"P101",
+      RoomType:3
+  },
+{
+      RoomName:"P102",
+      RoomType:1
+  },
+{
+      RoomName:"P103",
+      RoomType:2
+  },
+{
+      RoomName:"P104",
+      RoomType:2
+  },
+{
+      RoomName:"P105",
+      RoomType:3
+  },
+{
+      RoomName:"P106",
+      RoomType:3
+  },
+{
+      RoomName:"P107",
+      RoomType:2
+  },
+{
+      RoomName:"P108",
+      RoomType:3
+  },
+{
+      RoomName:"P109",
+      RoomType:2
+  },
+{
+      RoomName:"P110",
+      RoomType:3
+  },
+{
+      RoomName:"P111",
+      RoomType:1
+  },
+{
+      RoomName:"P112",
+      RoomType:1
+  },
+{
+      RoomName:"P113",
+      RoomType:1
+  },
+{
+      RoomName:"P114",
+      RoomType:3
+  },
+{
+      RoomName:"P115",
+      RoomType:2
+  },
+{
+      RoomName:"P116",
+      RoomType:1
+  },
+{
+      RoomName:"P117",
+      RoomType:2
+  },
+{
+      RoomName:"P118",
+      RoomType:2
+  },
+{
+      RoomName:"P119",
+      RoomType:1
+  },
+{
+      RoomName:"P120",
+      RoomType:2
+  },
+{
+      RoomName:"P121",
+      RoomType:1
+  },
+{
+      RoomName:"P122",
+      RoomType:2
+  },
+{
+      RoomName:"P123",
+      RoomType:3
+  },
+{
+      RoomName:"P124",
+      RoomType:1
+  },
+{
+      RoomName:"P125",
+      RoomType:2
+  },
+{
+      RoomName:"P126",
+      RoomType:2
+  },
+{
+      RoomName:"P127",
+      RoomType:1
+  },
+{
+      RoomName:"P128",
+      RoomType:2
+  },
+{
+      RoomName:"P129",
+      RoomType:3
+  },
+{
+      RoomName:"P130",
+      RoomType:1
+  },
+{
+      RoomName:"P131",
+      RoomType:2
+  },
+{
+      RoomName:"P132",
+      RoomType:3
+  },
+{
+      RoomName:"P133",
+      RoomType:1
+  },
+{
+      RoomName:"P134",
+      RoomType:3
+  },
+{
+      RoomName:"P135",
+      RoomType:1
+  },
+{
+      RoomName:"P136",
+      RoomType:3
+  },
+{
+      RoomName:"P137",
+      RoomType:2
+  },
+{
+      RoomName:"P138",
+      RoomType:2
+  },
+{
+      RoomName:"P139",
+      RoomType:2
+  },
+{
+      RoomName:"P140",
+      RoomType:2
+  },
+{
+      RoomName:"P141",
+      RoomType:1
+  },
+{
+      RoomName:"P142",
+      RoomType:1
+  },
+{
+      RoomName:"P143",
+      RoomType:3
+  },
+{
+      RoomName:"P144",
+      RoomType:1
+  },
+{
+      RoomName:"P145",
+      RoomType:1
+  },
+{
+      RoomName:"P146",
+      RoomType:1
+  },
+{
+      RoomName:"P147",
+      RoomType:3
+  },
+{
+      RoomName:"P148",
+      RoomType:3
+  },
+{
+      RoomName:"P149",
+      RoomType:3
+  },
+{
+      RoomName:"P150",
+      RoomType:1
+  },
+{
+      RoomName:"P151",
+      RoomType:2
+  },
+{
+      RoomName:"P152",
+      RoomType:1
+  },
+{
+      RoomName:"P153",
+      RoomType:2
+  },
+{
+      RoomName:"P154",
+      RoomType:2
+  },
+{
+      RoomName:"P155",
+      RoomType:2
+  },
+{
+      RoomName:"P156",
+      RoomType:1
+  },
+{
+      RoomName:"P157",
+      RoomType:3
+  },
+{
+      RoomName:"P158",
+      RoomType:1
+  },
+{
+      RoomName:"P159",
+      RoomType:2
+  },
+{
+      RoomName:"P160",
+      RoomType:1
+  },
+{
+      RoomName:"P161",
+      RoomType:1
+  },
+{
+      RoomName:"P162",
+      RoomType:2
+  },
+{
+      RoomName:"P163",
+      RoomType:3
+  },
+{
+      RoomName:"P164",
+      RoomType:1
+  },
+{
+      RoomName:"P165",
+      RoomType:2
+  },
+{
+      RoomName:"P166",
+      RoomType:1
+  },
+{
+      RoomName:"P167",
+      RoomType:1
+  },
+{
+      RoomName:"P168",
+      RoomType:1
+  },
+{
+      RoomName:"P169",
+      RoomType:3
+  },
+{
+      RoomName:"P170",
+      RoomType:2
+  },
+{
+      RoomName:"P171",
+      RoomType:1
+  },
+{
+      RoomName:"P172",
+      RoomType:1
+  },
+{
+      RoomName:"P173",
+      RoomType:1
+  },
+{
+      RoomName:"P174",
+      RoomType:3
+  },
+{
+      RoomName:"P175",
+      RoomType:1
+  },
+{
+      RoomName:"P176",
+      RoomType:3
+  },
+{
+      RoomName:"P177",
+      RoomType:1
+  },
+{
+      RoomName:"P178",
+      RoomType:3
+  },
+{
+      RoomName:"P179",
+      RoomType:2
+  },
+{
+      RoomName:"P180",
+      RoomType:1
+  },
+{
+      RoomName:"P181",
+      RoomType:3
+  },
+{
+      RoomName:"P182",
+      RoomType:2
+  },
+{
+      RoomName:"P183",
+      RoomType:3
+  },
+{
+      RoomName:"P184",
+      RoomType:3
+  },
+{
+      RoomName:"P185",
+      RoomType:3
+  },
+{
+      RoomName:"P186",
+      RoomType:1
+  },
+{
+      RoomName:"P187",
+      RoomType:1
+  },
+{
+      RoomName:"P188",
+      RoomType:3
+  },
+{
+      RoomName:"P189",
+      RoomType:3
+  },
+{
+      RoomName:"P190",
+      RoomType:3
+  },
+{
+      RoomName:"P191",
+      RoomType:1
+  },
+{
+      RoomName:"P192",
+      RoomType:1
+  },
+{
+      RoomName:"P193",
+      RoomType:1
+  },
+{
+      RoomName:"P194",
+      RoomType:1
+  },
+{
+      RoomName:"P195",
+      RoomType:2
+  },
+{
+      RoomName:"P196",
+      RoomType:1
+  },
+{
+      RoomName:"P197",
+      RoomType:2
+  },
+{
+      RoomName:"P198",
+      RoomType:2
+  }
+  ]
+  return (
+    <div>
+      <Floor data = {data} />
+    </div>
+  );
+};

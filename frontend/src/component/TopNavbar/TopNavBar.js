@@ -2,7 +2,8 @@ import React from "react";
 import appLogo from "../../app-logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { faBell,faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
+import { myAppColor } from "../../colors.js";
 // import Fonta
 export const TopNavBar = () => {
   return (
@@ -10,7 +11,7 @@ export const TopNavBar = () => {
       style={{
         height: "130px",
         width: "100%",
-        backgroundColor: "#202020",
+        backgroundColor: myAppColor.Black.TopNavBackground,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -49,12 +50,12 @@ export const TopNavBar = () => {
           Del Luna
         </p>
       </div>
-      <div className="Right" style={{ display: "flex" ,marginRight:"30px"}}>
+      <div className="Right" style={{ display: "flex", marginRight: "30px" }}>
         <div
           style={{
             width: "62px",
             height: "62px",
-            backgroundColor: "#2F2F2F",
+            backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -71,7 +72,7 @@ export const TopNavBar = () => {
           style={{
             width: "62px",
             height: "62px",
-            backgroundColor: "#2F2F2F",
+            backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -88,7 +89,7 @@ export const TopNavBar = () => {
           style={{
             width: "62px",
             height: "62px",
-            backgroundColor: "#2F2F2F",
+            backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
