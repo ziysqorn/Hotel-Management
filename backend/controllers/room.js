@@ -103,17 +103,16 @@ export const getRoomInfoComeWithRoomId = async (req, res) => {
   }
 };
 
-
-export const deleteRoom = async (req,res)=>{
-    let {RoomId} = item.query
-    let finalQ = `DELETE FROM Room WHERE RoomId = ${RoomId}`
-    try {
-      const data = await db(finalQ);
-      res.json("Delete Room success");
-    } catch (err) {
-      console.log("err", err);
-    }
-}
+export const deleteRoom = async (req, res) => {
+  let { RoomId } = item.query;
+  let finalQ = `DELETE FROM Room WHERE RoomId = ${RoomId}`;
+  try {
+    const data = await db(finalQ);
+    res.json("Delete Room success");
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 // ==================END OF ROOM =============
 
 // Nhận vào các giá trị tương ứng để insert
