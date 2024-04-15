@@ -157,6 +157,20 @@ export async function ReadCustomerByName(req, res){
 }
 
 
+//Read current customers in hotel
+export async function ReadCurrentCustomersInHotel(req, res){
+  try{
+    const result = await db(`Select Customer.CustomerId, FullName, PersonalId, Phone, Type, RoomId, CheckInDate, ExpectedCHeckOutDate from Customer
+    join OrderRoom on OrderRoom.StayCustomerId = Customer.CustomerId
+    where GETDATE() between CheckInDate and ExpectedCHeckOutDate`)
+    res.send(result.recordset)
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
 //Delete customer data by customerId
 export async function DeleteCustomer(req, res){
   try{
