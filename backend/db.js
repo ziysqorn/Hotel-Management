@@ -1,14 +1,15 @@
 import sql from "mssql";
 
 const config = {
-  server: "localhost",
+  server: "localhost\\CSSQL05",
   port: 1433,
   database: "hotel_management",
-  user: "SA",
-  password: "Password123",
+  user: "sa",
+  password: "123456",
   options: {
-    encrypt: true, // Bật mã hóa
-    trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
+    encrypt: false, // Bật mã hóa
+    trustServerCertificate: true,
+    trustedConnection: true // Tin tưởng chứng chỉ máy chủ
   },
 };
 
