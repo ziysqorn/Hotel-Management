@@ -180,6 +180,12 @@ export const getOrderRoomWithStayCustomerId = async (req, res) => {
   }
 };
 
+export const getAllCusomterInRoom = (req, res) => {
+  let { CurrentTime } = req.query;
+  let finalQ = `SELECT * FROM OrderRoom 
+  WHERE ('${CurrentTime}' BETWEEN CheckInDate AND ExpectedCHeckOutDate) `;
+};
+
 // Get các customer có trong phòng có hoặc không có time
 export const getCustomerInRoom = async (req, res) => {
   //allTime true nghĩa là all khách đã từng ở phòng đó
