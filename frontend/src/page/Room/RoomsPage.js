@@ -7,7 +7,7 @@ export const RoomsPage = () => {
   const [data, setData] = useState([]);
   useState(() => {
     axios
-      .get("http://localhost:4000/api/room")
+      .get("http://localhost:4000/api/room/get")
       .then((item) => {
         console.log(item.data);
         setData(item.data.recordset);
