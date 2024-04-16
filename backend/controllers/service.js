@@ -1,6 +1,6 @@
 import db from "../db.js";
 
-//Lấy service
+//Lấy service --Đậu
 export const get = async (req, res) => {
     try {
       const data = await db("SELECT * FROM Service");
@@ -30,63 +30,63 @@ export const get = async (req, res) => {
       }
 }
 
-
-  //Thêm dịch vụ
+  //Thêm dịch vụ --Đậu
   export const AddService = async (req, res) => {
-    let {item} = req.body;
+    let { item } = req.body;
 
-    let FinalQuery = `INSERT INTO Service
-    ( ServiceId, Name, Price, Description)
-    VALUES
-        (   
-            '${item.ServiceId}',
-            '${item.Name}',
-            '${item.Price}',
-            '${item.Description}' 
-        );
-        SELECT * FROM Service WHERE ServiceId = '${item.ServiceId}' `;
-    try
-    {
-        const data = await db(FinalQuery);
-        res.json(data);
-    }
-    catch (err) {
+    let finalQ = `INSERT INTO Service (Name, Price, Description)
+                  VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;
+
+    let validationQ = `SELECT * FROM Service WHERE ServiceId = '${item.ServiceId}'`;
+
+    try {
+        const validationRes = await db(validationQ);
+        if (validationRes.recordset.length === 0) {
+            const data = await db(finalQ);
+            res.json(data);
+        } else {
+            res.status(500).json("ServiceId already exists");
+        }
+    } catch (err) {
         console.log(err);
+        res.status(500).json({ error: "Internal Server Error", message: err.message });
     }
 }
 
-//Sửa dịch vụ
+
+
+//Sửa dịch vụ --Đậu
 export const EditService = async (req, res) => {
     let item = req.body.item;
     let finalQ = `UPDATE Service
       SET 
-          ServiceId = ${item.ServiceId},
-          Name = ${item.Name},
+          Name = '${item.Name}',
           Price = '${item.Price}',
-          Description = '${item.Description}',
-      WHERE ServiceId ='${item.ServiceId}';`;
+          Description = '${item.Description}'
+      WHERE ServiceId =${item.ServiceId};`;
     console.log(finalQ);
     try {
       const data = await db(finalQ);
-      res.json(`Update item: ${item.ServiceId} success!!! `);
+      res.json(data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  //Xóa dịch vụ
+  //Xóa dịch vụ --Đậu
   export const deleteService = async (req,res)=>{
-    let {ServiceId} = item.query
-    let finalQ = `DELETE FROM Service WHERE ServiceId = ${ServiceId}`
+    let {ServiceId} = req.query
+    let finalQ = `DELETE FROM Service WHERE ServiceId = ${ServiceId}`;
+    // res.json(finalQ)
     try {
       const data = await db(finalQ);
-      res.json("Delete Service success");
+      res.json(data);
     } catch (err) {
       console.log("err", err);
     }
 }
 
-//Lấy UseService
+//Lấy UseService --Đậu
 
 export const getAllUseService = async (req, res) => {
   try {
@@ -118,7 +118,7 @@ export const getUseService = async (req,res) => {
       }
 }
 
-//chỉnh sửa UseService
+//chỉnh sửa UseService --Đậu
 export const EditUseService = async (req, res) => {
     let item = req.body.item;
     let finalQ = `UPDATE UseService
@@ -143,30 +143,32 @@ export const EditUseService = async (req, res) => {
   
     let finalQ = `
         INSERT INTO UseService
-          (ServiceId,CustomerId,UserID,CheckInDate)
+          (CustomerId, UserID, CheckInDate)
         VALUES
-          ('${item.ServiceId}',${item.CustomerId},${item.UserID},'${item.CheckInDate}');
+          (${item.CustomerId}, ${item.UserID}, '${item.CheckInDate}');
     `;
   
     let validationQ = `SELECT * FROM UseService WHERE ServiceId = '${item.ServiceId}'`;
     try {
-      if (((await db(validationQ)).length = 0)) {
-        const data = await db(finalQ);
-        res.json(`Add item : ${item.ServiceId} `);
+      const validationRes = await db(validationQ);
+      if (validationRes.recordset.length === 0) {
+          const data = await db(finalQ);
+          res.json(data);
       } else {
-        res.status(500).json(`Missing in error`);
+          res.status(500).json("ServiceId already exists");
       }
-    } catch (err) {
+  } catch (err) {
       console.log(err);
-      res
-        .status(500)
-        .json({ error: "Internal Server Error", message: err.message });
-    }
-  };
+      res.status(500).json({ error: "Internal Server Error", message: err.message });
+  }
+}
 
+
+
+  
 //Xóa UseService
   export const deleteUseService = async (req,res)=>{
-    let {ServiceId} = item.query
+    let {ServiceId} = req.query
     let finalQ = `DELETE FROM UseService WHERE ServiceId = ${ServiceId}`
     try {
       const data = await db(finalQ);
