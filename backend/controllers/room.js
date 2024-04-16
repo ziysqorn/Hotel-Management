@@ -137,8 +137,13 @@ export const OrderRoom = async (req, res) => {
 // lấy room nào còn phòng và cho thời gian cụ thể
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
-  let { CheckInDate, ExpectedCheckOutDate, RoomName, StayCustomerId } =
-    req.query;
+  let {
+    CheckInDate,
+    ExpectedCheckOutDate,
+    RoomName,
+    StayCustomerId,
+    CustomerId,
+  } = req.query;
 
   console.log(`getRoomWithDate item : `, req.query);
   let finalQ = `     
@@ -152,8 +157,13 @@ export const getRoomWithDate = async (req, res) => {
               )) 
   `;
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
-  if (StayCustomerId)
-    finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
+  if (roomtypeid) {
+    finalQ += `AND RoomTypeId = ${roomtypeid}`;
+  }
+
+  // if (RoomName) finalQ += ` AND OrderRoom.CustomerId LIKE '%${RoomName}%' `;
+  // if (StayCustomerId)
+  //   finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
   finalQ += `;`;
   //  chạy query
   try {
@@ -163,6 +173,23 @@ export const getRoomWithDate = async (req, res) => {
     console.log("err", err);
   }
   // res.json(finalQ)
+};
+
+export const getOrderRoomWithQuery = async(req, res) => {
+  let { CheckInDate, ExpectedCheckOutDate, CustomerId, StayCustomerId } =
+    req.query;
+
+  let finalQ = `SELECT * FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `;
+  if (CustomerId) finalQ += ` AND CustomerId = ${CustomerId}`;
+  if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
+  finalQ += `;`;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log("err", err);
+  }
 };
 
 export const getOrderRoomWithStayCustomerId = async (req, res) => {
@@ -179,11 +206,19 @@ export const getOrderRoomWithStayCustomerId = async (req, res) => {
     console.log("err", err);
   }
 };
-
-export const getAllCusomterInRoom = (req, res) => {
+// lấy all khách đang ở trong phòng
+export const getAllCusomterInRoom = async (req, res) => {
   let { CurrentTime } = req.query;
-  let finalQ = `SELECT * FROM OrderRoom 
-  WHERE ('${CurrentTime}' BETWEEN CheckInDate AND ExpectedCHeckOutDate) `;
+  let finalQ = `SELECT DISTINCT Customer.*
+  FROM Customer
+  INNER JOIN OrderRoom ON Customer.CustomerId = OrderRoom.StayCustomerId
+  WHERE '${CurrentTime}' BETWEEN OrderRoom.CheckInDate AND OrderRoom.ExpectedCheckOutDate;`;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // Get các customer có trong phòng có hoặc không có time
@@ -258,6 +293,3 @@ export const editOrderRoom = async (req, res) => {
   // commit change
 };
 
-export const tempfunction = () => {
-  console.log("work");
-};
