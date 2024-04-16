@@ -22,8 +22,8 @@ import {
 } from "../controllers/room.js";
 const router = express.Router();
 // room
-router.get("/get", get);
 router.get("/query", getWithQuery);
+router.get("/get", get);
 router.post("/UpdateRoom", UpdateRoom);
 router.post("/CreateRoom", CreateRoom);
 router.get("/DeleteRoom", DeleteRoom);

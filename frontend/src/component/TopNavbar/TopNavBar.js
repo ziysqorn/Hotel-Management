@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { faBell, faL, faUser } from "@fortawesome/free-solid-svg-icons";
 import { myAppColor } from "../../colors.js";
+import "./style.css";
 // import Fonta
 export const TopNavBar = () => {
   const [isHover, setIsHover] = useState([false, false, false]);

@@ -57,19 +57,11 @@ VALUES
 GO
 
 INSERT INTO Customer
-<<<<<<< HEAD
     (FullName, PersonalId, Phone, Address,Type)
 VALUES
     (N'John Doe', '123456789', '123-456-789', N'123 Main St, City, Country',0),
     (N'Jane Smith', '987654321', '987-654-321', N'456 Elm St, City, Country',0),
     (N'Michael Johnson', '555666777', '555-666-777', NULL,0);
-=======
-    (FullName, PersonalId, Phone, Address, Type)
-VALUES
-    (N'John Doe', '123456789', '123-456-789', N'123 Main St, City, Country', 3),
-    (N'Jane Smith', '987654321', '987-654-321', N'456 Elm St, City, Country', 3),
-    (N'Michael Johnson', '555666777', '555-666-777', NULL, 3);
->>>>>>> Quan
 GO
 
 

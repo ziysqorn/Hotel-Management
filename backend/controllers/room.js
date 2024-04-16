@@ -12,19 +12,23 @@ export const get = async (req, res) => {
 };
 
 export const getWithQuery = async (req, res) => {
-  let { roomid, roomtypeid, RoomName } = req.query;
+  let { roomid, RoomTypeId, RoomName, Status } = req.query;
   // cách nào cũng dc
   let roomId = req.query.roomid;
   // handle query đến sql server
-  let finalQ = `SELECT * FROM Room WHERE NOT(Room.RoomId IS NULL)`;
+  let finalQ = `SELECT * FROM Room WHERE NOT(Room.RoomId IS NULL) `;
   if (roomid) {
-    finalQ += `AND RoomId = '${roomid}'`;
+    finalQ += ` AND RoomId = '${roomid}'`;
   }
-  if (roomtypeid) {
-    finalQ += `AND RoomTypeId = ${roomtypeid}`;
+  if (RoomTypeId) {
+    finalQ += ` AND RoomTypeId = ${RoomTypeId}`;
   }
+  if (Status) {
+    finalQ += ` AND Status = ${Status} `;
+  }
+
   if (RoomName) {
-    finalQ += `AND Room.RoomId LIKE '%${RoomName}%'`;
+    finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
   }
 
   finalQ += `;`;
@@ -145,6 +149,7 @@ export const getRoomWithDate = async (req, res) => {
     RoomName,
     StayCustomerId,
     CustomerId,
+    RoomTypeId,
   } = req.query;
 
   let finalQ = `     
@@ -158,9 +163,7 @@ export const getRoomWithDate = async (req, res) => {
               )) 
   `;
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
-  if (roomtypeid) {
-    finalQ += `AND RoomTypeId = ${roomtypeid}`;
-  }
+  if (RoomTypeId) finalQ += `AND RoomTypeId = ${RoomTypeId} `;
 
   if (StayCustomerId)
     finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
@@ -175,15 +178,21 @@ export const getRoomWithDate = async (req, res) => {
   }
   // res.json(finalQ)
 };
-
+// thường dùng để lấy các orderRoom để tính tiền thanh toán
 export const getOrderRoomWithQuery = async (req, res) => {
-  let { CheckInDate, ExpectedCheckOutDate, CustomerId, StayCustomerId } =
-    req.query;
+  let {
+    CheckInDate,
+    ExpectedCheckOutDate,
+    CustomerId,
+    StayCustomerId,
+    RoomName,
+  } = req.query;
 
   let finalQ = `SELECT * FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-  AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `;
+  AND (OrderRoom.ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `;
   if (CustomerId) finalQ += ` AND CustomerId = ${CustomerId}`;
   if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
+  if (RoomName) finalQ += ` AND RoomId Like '%${RoomName}%'`;
   finalQ += `;`;
   try {
     const data = await db(finalQ);
