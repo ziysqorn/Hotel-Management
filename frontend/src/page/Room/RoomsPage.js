@@ -19,25 +19,35 @@ export const RoomsPage = () => {
   return (
     <div
       className={`fade-in ${isVisible ? "visible" : ""}`}
-      style={{ display: "flex", flexWrap: "wrap" }}
+      style={{ display: "flex", flexWrap: "wrap", width: "100%" }}
     >
       {data && (
-        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
           <Floor data={data} floorIndex={"P1"} />
         </div>
       )}
       {data && (
-        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
           <Floor data={data} floorIndex={"P1"} />
         </div>
       )}
       {data && (
-        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
           <Floor data={data} floorIndex={"P1"} />
         </div>
       )}
       {data && (
-        <div style={{ flex: "0 0 calc(50% - 20px)", margin: "10px" }}>
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
+      {data && (
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          <Floor data={data} floorIndex={"P1"} />
+        </div>
+      )}
+      {data && (
+        <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
           <Floor data={data} floorIndex={"P1"} />
         </div>
       )}

@@ -20,6 +20,8 @@ function App() {
       style={{
         position: "relative",
         backgroundColor: myAppColor.Black.WindowBackground,
+        minHeight:"100vh",
+
       }}
     >
       {/* Start of top nav  */}
@@ -33,8 +35,10 @@ function App() {
         style={{
           width: "80%",
           minHeight: "80%",
+
+
           // backgroundColor: "white",
-          border: "1px solid white",
+          border: "1px solid red",
           position: "absolute",
           top: "150px",
           left: "400px",

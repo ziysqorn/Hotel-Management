@@ -10,7 +10,7 @@ export const Floor = ({ ...props }) => {
   return (
     <div
       style={{
-        width: "80%",//80%
+        width: "100%",//80%
         height: "30vh",
         margin: "10px",
         borderRadius: "10px",
