@@ -136,7 +136,7 @@ export const EditUseService = async (req, res) => {
   console.log(finalQ);
   try {
     const data = await db(finalQ);
-    res.json(`Update item: ${item.RoomId} success!!! `);
+    res.json(`Update item: ${oldItem.RoomId} success!!! `);
   } catch (err) {
     console.log(err);
   }
@@ -171,14 +171,32 @@ export const addUseService = async (req, res) => {
 };
 
 //Xóa UseService
+// export const deleteUseService = async (req, res) => {
+//   let { ServiceId } = req.query;
+//   let finalQ = `DELETE FROM UseService WHERE ServiceId = ${ServiceId}`;
+//   try {
+//     const data = await db(finalQ);
+//     res.json("Delete UseService success");
+//   } catch (err) {
+//     console.log("err", err);
+//   }
+// };
 export const deleteUseService = async (req, res) => {
-  let { ServiceId } = req.query;
-  let finalQ = `DELETE FROM UseService WHERE ServiceId = ${ServiceId}`;
+  let { item } = req.body;
+
+  let finalQ = `DELETE FROM UseService 
+                  WHERE 
+                      ServiceId = ${item.ServiceId} AND
+                      CustomerId = ${item.CustomerId} AND
+                      UserId = ${item.UserId} AND
+                      CheckInDate = '${item.CheckInDate}'; 
+  `;
+
   try {
     const data = await db(finalQ);
-    res.json("Delete UseService success");
+    res.json(`Order UseService Delete success`);
   } catch (err) {
-    console.log("err", err);
+    console.log(err);
   }
 };
 
