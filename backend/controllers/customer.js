@@ -114,7 +114,7 @@ export async function ReadCustomerByPhoneNumber(req, res){
       res.send("Chưa truyền vào số điện thoại của khách hàng muốn tìm")
       return
     }
-    const result = await db(`SELECT * FROM Customer where Phone = '${phoneNumber}'`)
+    const result = await db(`SELECT * FROM Customer where Phone LIKE '%${phoneNumber}%'`)
     res.send(result.recordset)
   } catch (err) {
     console.log(err)
@@ -134,6 +134,54 @@ export async function ReadCustomerTotalSpent(req, res){
     const result = await db(`SELECT SUM(TotalPrice) AS TotalSpent from Bill where CustomerId = ${customerId}`);
     res.send(result.recordset[0])
   } catch (err){
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
+//Read customer by name
+export async function ReadCustomerByName(req, res){
+  try{
+    const customerName = req.query.customerName
+    if(!customerName){
+      res.send("Chưa truyền vào tên của khách hàng muốn tìm")
+      return
+    }
+    const result = await db(`Select * from Customer where FullName LIKE N'%${customerName}%'`)
+    res.send(result.recordset)
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
+//Read current customers in hotel
+export async function ReadCurrentCustomersInHotel(req, res){
+  try{
+    const result = await db(`Select Customer.CustomerId, FullName, PersonalId, Phone, Type, RoomId, CheckInDate, ExpectedCHeckOutDate from Customer
+    join OrderRoom on OrderRoom.StayCustomerId = Customer.CustomerId
+    where GETDATE() between CheckInDate and ExpectedCHeckOutDate`)
+    res.send(result.recordset)
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
+//Read customer by customer type
+export async function ReadCustomerByType(req, res){
+  try{
+    const customerType = req.query.customerType
+    if(!customerType){
+      res.send("Chưa truyền vào loại khách hàng muốn tìm")
+      return
+    }
+    const result = await db(`Select * from Customer where Type = ${customerType}`)
+    res.send(result.recordset)
+  } catch (err) {
     console.log(err)
     res.send(err)
   }

@@ -120,6 +120,12 @@ VALUES
     (3, 3, 1, 'P102', '2024-04-06', '2024-04-12')
 GO
 
+select Customer.CustomerId, FullName, PersonalId, Phone, Type, RoomId, CheckInDate, ExpectedCHeckOutDate from Customer
+join OrderRoom on OrderRoom.StayCustomerId = Customer.CustomerId
+where GETDATE() between CheckInDate and ExpectedCHeckOutDate
+
+
+
 INSERT INTO UseService
     (CustomerId,UserId,ServiceId,CheckInDate)
 VALUES
