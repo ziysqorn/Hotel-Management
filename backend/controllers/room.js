@@ -2,15 +2,18 @@ import db from "../db.js";
 
 // =========================STart of room
 // ============BASIC CURD=============
+
+// lấy all từ bản Room
 export const get = async (req, res) => {
   try {
-    const data = await db("SELECT * FROM Room;SELECT * FROM OrderRoom");
+    const data = await db("SELECT * FROM Room;");
     res.json(data);
   } catch (err) {
     console.log(err);
   }
 };
 
+// lấy all từ Room và có thể có điều kiện như có kèm RoomId,RoomTypeId, RoomName(nhập 1 phàn roomId)
 export const getWithQuery = async (req, res) => {
   let { roomid, RoomTypeId, RoomName, Status } = req.query;
   // cách nào cũng dc
@@ -44,6 +47,7 @@ export const getWithQuery = async (req, res) => {
   }
 };
 
+// Update MỘT Hàng Room
 export const UpdateRoom = async (req, res) => {
   let item = req.body.item;
   let finalQ = `UPDATE Room
@@ -61,6 +65,7 @@ export const UpdateRoom = async (req, res) => {
   }
 };
 
+// Tạo 1 Hàng Room
 export const CreateRoom = async (req, res) => {
   let { item } = req.body;
 
@@ -86,6 +91,8 @@ export const CreateRoom = async (req, res) => {
       .json({ error: "Internal Server Error", message: err.message });
   }
 };
+
+// Xóa 1 hàng Room bằng RoomId
 export const DeleteRoom = async (req, res) => {
   let { RoomId } = req.query;
   let finalQ = `DELETE FROM Room WHERE RoomId = '${RoomId}'`;
@@ -98,7 +105,7 @@ export const DeleteRoom = async (req, res) => {
 };
 
 // ============END OF BASIC CURD=============
-// lấy thông tin như doanh thu của phòng front end sử lý trả về các order room kèm loại phòng để tính tiền
+//Lấy gộp 3 bản và search theo RoomId
 export const getRoomInfoComeWithRoomId = async (req, res) => {
   let { RoomId } = req.query;
   let finalQ = `
@@ -122,7 +129,6 @@ export const getRoomInfoComeWithRoomId = async (req, res) => {
 // ==================END OF ROOM =============
 
 // Nhận vào các giá trị tương ứng để insert
-
 export const CreateOrderRoom = async (req, res) => {
   let { item } = req.body;
   console.log(`getRoomWithDate item : `, item);
@@ -140,15 +146,15 @@ export const CreateOrderRoom = async (req, res) => {
   }
   // res.json(finalQ);
 };
-// lấy room nào còn phòng và cho thời gian cụ thể
+// lấy room nào CÒN PHÒNG và cho thời gian cụ thể, có các filter thêm như RoomId và RoomTypeId
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
   let {
     CheckInDate,
     ExpectedCheckOutDate,
     RoomName,
-    StayCustomerId,
-    CustomerId,
+    // StayCustomerId,
+    // CustomerId,
     RoomTypeId,
   } = req.query;
 
@@ -165,9 +171,9 @@ export const getRoomWithDate = async (req, res) => {
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
   if (RoomTypeId) finalQ += `AND RoomTypeId = ${RoomTypeId} `;
 
-  if (StayCustomerId)
-    finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
-  if (CustomerId) finalQ += ` AND OrderRoom.CustomerId LIKE '%${CustomerId}%' `;
+  // if (StayCustomerId)
+  //   finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
+  // if (CustomerId) finalQ += ` AND OrderRoom.CustomerId LIKE '%${CustomerId}%' `;
   finalQ += `;`;
   //  chạy query
   try {
@@ -186,14 +192,18 @@ export const getOrderRoomWithQuery = async (req, res) => {
     CustomerId,
     StayCustomerId,
     RoomName,
+    getAll,
   } = req.query;
 
-  let finalQ = `SELECT * FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  let finalQ = `SELECT ${
+    getAll ? `*` : `DISTINCT OrderRoom.RoomId, CheckInDate, ExpectedCHeckOutDat`
+  } FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
   AND (OrderRoom.ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `;
   if (CustomerId) finalQ += ` AND CustomerId = ${CustomerId}`;
   if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
   if (RoomName) finalQ += ` AND RoomId Like '%${RoomName}%'`;
   finalQ += `;`;
+  // console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -371,3 +381,4 @@ export const DeleteRoomType = async (req, res) => {
     console.log(err);
   }
 };
+

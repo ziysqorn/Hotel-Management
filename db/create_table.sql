@@ -98,6 +98,7 @@ CREATE TABLE Room
 go
 
 
+
 CREATE TABLE OrderRoom
 (
     CustomerId INT NOT NULL,
@@ -112,7 +113,6 @@ CREATE TABLE OrderRoom
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 )
 GO
-
 
 CREATE TABLE Bill
 (
