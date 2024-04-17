@@ -371,6 +371,7 @@ export const UpdateRoomType = async (req, res) => {
     console.log(err);
   }
 };
+
 export const DeleteRoomType = async (req, res) => {
   let { RoomTypeId } = req.body.item;
   let finalQ = `DELETE FROM RoomType WHERE RoomTypeId = ${RoomTypeId} `;
