@@ -159,7 +159,6 @@ DELETE from Customer;
 GO
 
 
-
 DELETE from Users;
 GO
 
