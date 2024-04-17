@@ -10,9 +10,12 @@ import {
   addUseService,
   EditUseService,
   deleteUseService,
-  OrderService,
-  deleteOrderService,
-  editOrderService 
+  createServiceForRoom,
+  deleteServiceForRoom,
+  editServiceForRoom 
+  // OrderService,
+  // deleteOrderService,
+  // editOrderService 
 
 } from "../controllers/service.js";
 const router = express.Router();
@@ -30,8 +33,8 @@ router.post("/addUseService",addUseService );
 router.post("/edit/useservice", EditUseService);
 router.post("/delete/useservice", deleteUseService);
 
-router.post("/orderUseService", OrderService);
-router.post("/deleteOrderService", deleteOrderService);
-router.post("/editOrderService",editOrderService );
+router.post("/createServiceForRoom", createServiceForRoom);
+router.post("/deleteServiceForRoom", deleteServiceForRoom);
+router.post("/editServiceForRoom",editServiceForRoom );
 
 export default router;

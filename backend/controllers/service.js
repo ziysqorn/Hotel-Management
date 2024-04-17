@@ -37,7 +37,7 @@ export const AddService = async (req, res) => {
   let finalQ = `INSERT INTO Service (Name, Price, Description)
                   VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;
 
-  let validationQ = `SELECT * FROM Service WHERE ServiceId = '${item.ServiceId}'`;
+  //let validationQ = `SELECT * FROM Service WHERE ServiceId = '${item.ServiceId}'`;
 
   try {
     const validationRes = await db(validationQ);
@@ -201,7 +201,7 @@ export const deleteUseService = async (req, res) => {
 };
 
 //Order Services
-export const OrderService = async (req, res) => {
+export const createServiceForRoom = async (req, res) => {
   let { item } = req.body;
   let finalQ = `     
         INSERT INTO ServiceForRoom
@@ -219,7 +219,7 @@ export const OrderService = async (req, res) => {
 };
 
 //delete
-export const deleteOrderService = async (req, res) => {
+export const deleteServiceForRoom = async (req, res) => {
   let { item } = req.body;
 
   let finalQ = `DELETE FROM ServiceForRoom
@@ -236,7 +236,7 @@ export const deleteOrderService = async (req, res) => {
 };
 
 //edit order service
-export const editOrderService = async (req, res) => {
+export const editServiceForRoom = async (req, res) => {
   let { OldItem, NewItem } = req.body;
   console.log(OldItem, NewItem);
   let finalQ = `UPDATE ServiceForRoom
