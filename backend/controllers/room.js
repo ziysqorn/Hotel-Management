@@ -346,6 +346,7 @@ export const CreateRoomType = async (req, res) => {
     console.log(err);
   }
 };
+
 export const ReadRoomType = async (req, res) => {
   let finalQ = `SELECT * FROM RoomType;`;
   try {
@@ -355,6 +356,7 @@ export const ReadRoomType = async (req, res) => {
     console.log(err);
   }
 };
+
 export const UpdateRoomType = async (req, res) => {
   let { RoomTypeId, Type, Price, Description } = req.body.item;
   let finalQ = `UPDATE RoomType 
