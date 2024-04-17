@@ -27,8 +27,8 @@ router.post("/add", AddService);
 router.post("/edit", EditService);
 router.post("/delete", deleteService);
 
-router.get("/useService", getUseService);
-router.get("/getAll", getAllUseService);
+router.get("/getAllUseService", getAllUseService);
+router.get("/getUseService", getUseService);
 router.post("/addUseService",addUseService );
 router.post("/edit/useservice", EditUseService);
 router.post("/delete/useservice", deleteUseService);

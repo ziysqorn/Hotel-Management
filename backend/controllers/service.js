@@ -30,23 +30,16 @@ export const getWithQuery = async (req, res) => {
   }
 };
 
-//Thêm dịch vụ --Đậu
+//Thêm dịch vụ --Đậu --Khang duyệt
 export const AddService = async (req, res) => {
   let { item } = req.body;
 
   let finalQ = `INSERT INTO Service (Name, Price, Description)
                   VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;
 
-  //let validationQ = `SELECT * FROM Service WHERE ServiceId = '${item.ServiceId}'`;
-
   try {
-    const validationRes = await db(validationQ);
-    if (validationRes.recordset.length === 0) {
-      const data = await db(finalQ);
-      res.json(data);
-    } else {
-      res.status(500).json("ServiceId already exists");
-    }
+    const data = await db(finalQ);
+    res.json(data);
   } catch (err) {
     console.log(err);
     res
@@ -55,7 +48,7 @@ export const AddService = async (req, res) => {
   }
 };
 
-//Sửa dịch vụ --Đậu
+//Sửa dịch vụ --Đậu --Khang duyệt
 export const EditService = async (req, res) => {
   let item = req.body.item;
   let finalQ = `UPDATE Service
@@ -64,7 +57,7 @@ export const EditService = async (req, res) => {
           Price = '${item.Price}',
           Description = '${item.Description}'
       WHERE ServiceId =${item.ServiceId};`;
-  console.log(finalQ);
+
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -73,7 +66,7 @@ export const EditService = async (req, res) => {
   }
 };
 
-//Xóa dịch vụ --Đậu
+//Xóa dịch vụ --Đậu --Khang duyệt http://localhost:4000/api/service/delete?ServiceId=1004
 export const deleteService = async (req, res) => {
   let { ServiceId } = req.query;
   let finalQ = `DELETE FROM Service WHERE ServiceId = ${ServiceId}`;
@@ -86,8 +79,7 @@ export const deleteService = async (req, res) => {
   }
 };
 
-//Lấy UseService --Đậu
-
+//Lấy UseService --Đậu  -- Khang duyệt http://localhost:4000/api/service/getAllUseService
 export const getAllUseService = async (req, res) => {
   try {
     const data = await db("SELECT * FROM UseService");
@@ -96,7 +88,7 @@ export const getAllUseService = async (req, res) => {
     console.log(err);
   }
 };
-
+// lấy vs query -- Khang duyệt http://localhost:4000/api/service/getUseService?serviceid=1
 export const getUseService = async (req, res) => {
   let { serviceid, customerid } = req.query;
   let FinalQuery =
@@ -148,20 +140,14 @@ export const addUseService = async (req, res) => {
 
   let finalQ = `
         INSERT INTO UseService
-          (CustomerId, UserID, CheckInDate)
+          (ServiceId,CustomerId, UserID, CheckInDate)
         VALUES
-          (${item.CustomerId}, ${item.UserID}, '${item.CheckInDate}');
+          (${item.ServiceId},${item.CustomerId}, ${item.UserId}, '${item.CheckInDate}');
     `;
 
-  let validationQ = `SELECT * FROM UseService WHERE ServiceId = '${item.ServiceId}'`;
   try {
-    const validationRes = await db(validationQ);
-    if (validationRes.recordset.length === 0) {
-      const data = await db(finalQ);
-      res.json(data);
-    } else {
-      res.status(500).json("ServiceId already exists");
-    }
+    const data = await db(finalQ);
+    res.json(data);
   } catch (err) {
     console.log(err);
     res
@@ -170,17 +156,7 @@ export const addUseService = async (req, res) => {
   }
 };
 
-//Xóa UseService
-// export const deleteUseService = async (req, res) => {
-//   let { ServiceId } = req.query;
-//   let finalQ = `DELETE FROM UseService WHERE ServiceId = ${ServiceId}`;
-//   try {
-//     const data = await db(finalQ);
-//     res.json("Delete UseService success");
-//   } catch (err) {
-//     console.log("err", err);
-//   }
-// };
+
 export const deleteUseService = async (req, res) => {
   let { item } = req.body;
 
