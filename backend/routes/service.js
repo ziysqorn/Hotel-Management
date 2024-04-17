@@ -12,14 +12,13 @@ import {
   deleteUseService,
   createServiceForRoom,
   deleteServiceForRoom,
-  editServiceForRoom 
+  editServiceForRoom,
+  getServiceForRoom,
   // OrderService,
   // deleteOrderService,
-  // editOrderService 
-
+  // editOrderService
 } from "../controllers/service.js";
 const router = express.Router();
-
 
 router.get("/", get);
 router.get("/query", getWithQuery);
@@ -29,12 +28,13 @@ router.post("/delete", deleteService);
 
 router.get("/getAllUseService", getAllUseService);
 router.get("/getUseService", getUseService);
-router.post("/addUseService",addUseService );
-router.post("/edit/useservice", EditUseService);
-router.post("/delete/useservice", deleteUseService);
+router.post("/addUseService", addUseService);
+router.post("/EditUseService", EditUseService);
+router.post("/deleteUseService", deleteUseService);
 
+router.get("/getServiceForRoom", getServiceForRoom);
 router.post("/createServiceForRoom", createServiceForRoom);
 router.post("/deleteServiceForRoom", deleteServiceForRoom);
-router.post("/editServiceForRoom",editServiceForRoom );
+router.post("/editServiceForRoom", editServiceForRoom);
 
 export default router;

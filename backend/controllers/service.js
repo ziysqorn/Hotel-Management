@@ -111,7 +111,7 @@ export const getUseService = async (req, res) => {
   }
 };
 
-//chỉnh sửa UseService --Đậu
+//chỉnh sửa UseService --Đậu -- Khang temp work
 export const EditUseService = async (req, res) => {
   let oldItem = req.body.oldItem;
   let newItem = req.body.newItem;
@@ -155,8 +155,7 @@ export const addUseService = async (req, res) => {
       .json({ error: "Internal Server Error", message: err.message });
   }
 };
-
-
+// -- Khang duyệt http://localhost:4000/api/service/deleteUseService
 export const deleteUseService = async (req, res) => {
   let { item } = req.body;
 
@@ -170,7 +169,26 @@ export const deleteUseService = async (req, res) => {
 
   try {
     const data = await db(finalQ);
-    res.json(`Order UseService Delete success`);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getServiceForRoom = async (req, res) => {
+  let finalQ = `SELECT * FROM ServiceForRoom WHERE NOT(ServiceForRoom.RoomTypeId IS  NULL) `;
+  let { ServiceId, RoomTypeId } = req.query;
+
+  if (ServiceId) {
+    finalQ += ` AND ServiceId = ${ServiceId}`;
+  }
+  if (RoomTypeId) {
+    finalQ += ` AND RoomTypeId = ${RoomTypeId}`;
+  }
+  finalQ += `;`;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }
@@ -200,8 +218,8 @@ export const deleteServiceForRoom = async (req, res) => {
 
   let finalQ = `DELETE FROM ServiceForRoom
                     WHERE 
-                        ServiceId = ${item.CustomerId} AND
-                        RoomTypeId = ${item.StayCustomerId};
+                        ServiceId = ${item.ServiceId} AND
+                        RoomTypeId = ${item.RoomTypeId};
     `;
   try {
     const data = await db(finalQ);
@@ -214,7 +232,6 @@ export const deleteServiceForRoom = async (req, res) => {
 //edit order service
 export const editServiceForRoom = async (req, res) => {
   let { OldItem, NewItem } = req.body;
-  console.log(OldItem, NewItem);
   let finalQ = `UPDATE ServiceForRoom
                     SET 
                       ServiceId = ${NewItem.ServiceId} ,
@@ -225,14 +242,10 @@ export const editServiceForRoom = async (req, res) => {
     `;
   try {
     const data = await db(finalQ);
-    res.json(`Order Service Update success`);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }
   // res.json(finalQ);
   // commit change
-};
-
-export const tempfunction = () => {
-  console.log("work");
 };
