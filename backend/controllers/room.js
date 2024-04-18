@@ -38,7 +38,6 @@ export const EditRoom = async (req, res) => {
         Status = ${item.Status},
         Phone = '${item.Phone}'
     WHERE RoomId ='${item.RoomId}';`;
-  console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(`Update item: ${item.RoomId} success!!! `);
