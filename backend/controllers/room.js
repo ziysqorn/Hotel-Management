@@ -56,7 +56,6 @@ export const UpdateRoom = async (req, res) => {
   Status = ${item.Status},
   Phone = '${item.Phone}'
   WHERE RoomId ='${item.RoomId}';`;
-  console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -131,7 +130,6 @@ export const getRoomInfoComeWithRoomId = async (req, res) => {
 // Nhận vào các giá trị tương ứng để insert
 export const CreateOrderRoom = async (req, res) => {
   let { item } = req.body;
-  console.log(`getRoomWithDate item : `, item);
   let finalQ = `     
       INSERT INTO OrderRoom
         (CustomerId,StayCustomerId,UserId,RoomId,CheckInDate,ExpectedCHeckOutDate)
@@ -153,8 +151,6 @@ export const getRoomWithDate = async (req, res) => {
     CheckInDate,
     ExpectedCheckOutDate,
     RoomName,
-    // StayCustomerId,
-    // CustomerId,
     RoomTypeId,
   } = req.query;
 
@@ -171,18 +167,13 @@ export const getRoomWithDate = async (req, res) => {
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
   if (RoomTypeId) finalQ += `AND RoomTypeId = ${RoomTypeId} `;
 
-  // if (StayCustomerId)
-  //   finalQ += ` AND OrderRoom.StayCustomerId LIKE '%${StayCustomerId}%' `;
-  // if (CustomerId) finalQ += ` AND OrderRoom.CustomerId LIKE '%${CustomerId}%' `;
   finalQ += `;`;
-  //  chạy query
   try {
     const data = await db(finalQ);
     res.json(data);
   } catch (err) {
     console.log("err", err);
   }
-  // res.json(finalQ)
 };
 // thường dùng để lấy các orderRoom để tính tiền thanh toán
 export const getOrderRoomWithQuery = async (req, res) => {
@@ -203,7 +194,6 @@ export const getOrderRoomWithQuery = async (req, res) => {
   if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
   if (RoomName) finalQ += ` AND RoomId Like '%${RoomName}%'`;
   finalQ += `;`;
-  // console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -309,8 +299,6 @@ export const UpdateOrderRoom = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-  // res.json(finalQ);
-  // commit change
 };
 
 export const ReadOrderRoom = async (req, res) => {
@@ -330,8 +318,6 @@ export const CreateRoomType = async (req, res) => {
                   (Type,Price,description)
                   VALUES
                   ('${Type}',${Price},'${Description}');  `;
-  // res.json(finalQ)
-  // console.log(finalQ);
   try {
     if (
       (await db(`SELECT * FROM RoomType WHERE Type = '${Type}'`))
@@ -365,7 +351,6 @@ export const UpdateRoomType = async (req, res) => {
                   Price = ${Price},
                   Description = '${Description}'
                   WHERE RoomTypeId = ${RoomTypeId};`;
-  // console.log(finalQ);
   try {
     const data = await db(finalQ);
     res.json(data);

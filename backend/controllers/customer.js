@@ -3,8 +3,9 @@ import db from "../db.js"
 
 
 
-//Create customer data
+//Create customer data -- Khang duyệt NOTE:insert ko để type bằng 0 được http://localhost:4000/api/customer/create
 export async function  CreateCustomer(req, res){
+
   try{
     const data = req.body;
     if(!data.FullName || !data.PersonalId || !data.Type){
@@ -60,7 +61,7 @@ export async function  CreateCustomer(req, res){
 }
 
 
-//Read all customer data
+//Read all customer data -- Khang duyệt http://localhost:4000/api/customer/get/all
 export async function ReadAllCustomer(req,res){
     try {
         const data = await db("SELECT * FROM Customer");
@@ -72,7 +73,7 @@ export async function ReadAllCustomer(req,res){
 }
 
 
-//Read customer data by customerId
+//Read customer data by customerId -- Khang duyệt -- http://localhost:4000/api/customer/get/byId?customerId=1
 export async function ReadCustomerById(req, res){
   try {
     const customerId = req.query.customerId
@@ -89,7 +90,7 @@ export async function ReadCustomerById(req, res){
 }
 
 
-//Read customer data by personalId
+//Read customer data by personalId -- Khang Duyệt -- http://localhost:4000/api/customer/get/byPersonalId?personalId=123456789
 export async function ReadCustomerByPersonalId(req, res){
   try{
     const personalId = req.query.personalId
@@ -106,7 +107,7 @@ export async function ReadCustomerByPersonalId(req, res){
 }
 
 
-//Read customer data by phone number
+//Read customer data by phone number -- Khang duyệt -- http://localhost:4000/api/customer/get/byPhoneNumber?phoneNumber=123-456-789
 export async function ReadCustomerByPhoneNumber(req, res){
   try{
     const phoneNumber = req.query.phoneNumber
@@ -123,7 +124,7 @@ export async function ReadCustomerByPhoneNumber(req, res){
 }
 
 
-//Read revenue from a customer
+//Read revenue from a customer -- Khang duyệt -- http://localhost:4000/api/customer/get/totalSpent?customerId=1
 export async function ReadCustomerTotalSpent(req, res){
   try{
     const customerId = req.query.customerId
@@ -140,7 +141,7 @@ export async function ReadCustomerTotalSpent(req, res){
 }
 
 
-//Read customer by name
+//Read customer by name -- Khang duyệt-- http://localhost:4000/api/customer/get/byName?customerName=John
 export async function ReadCustomerByName(req, res){
   try{
     const customerName = req.query.customerName
@@ -171,7 +172,7 @@ export async function ReadCurrentCustomersInHotel(req, res){
 }
 
 
-//Read customer by customer type
+//Read customer by customer type -- Khang duyệt -- http://localhost:4000/api/customer/get/byType?customerType=0
 export async function ReadCustomerByType(req, res){
   try{
     const customerType = req.query.customerType
@@ -188,7 +189,7 @@ export async function ReadCustomerByType(req, res){
 }
 
 
-//Read customer by many filters
+//Read customer by many filters -- chưa duyệt nhưng thấy đúng =))
 export async function ReadCustomerByManyFilters(req, res){
   try{
     const data = req.body
