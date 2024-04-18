@@ -194,7 +194,7 @@ export const getServiceForRoom = async (req, res) => {
   }
 };
 
-//Order Services
+//Order Services ---Đậu
 export const createServiceForRoom = async (req, res) => {
   let { item } = req.body;
   let finalQ = `     
@@ -212,7 +212,7 @@ export const createServiceForRoom = async (req, res) => {
   // res.json(finalQ);
 };
 
-//delete
+//delete --- Đậu
 export const deleteServiceForRoom = async (req, res) => {
   let { item } = req.body;
 
@@ -246,6 +246,4 @@ export const editServiceForRoom = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-  // res.json(finalQ);
-  // commit change
 };
