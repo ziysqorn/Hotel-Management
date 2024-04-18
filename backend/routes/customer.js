@@ -7,6 +7,7 @@ import {
     ReadCustomerByPhoneNumber, 
     ReadCustomerByName, 
     ReadCustomerByType,
+    ReadCustomerByManyFilters,
     ReadCurrentCustomersInHotel, 
     ReadCustomerTotalSpent, 
     DeleteCustomer, 
@@ -21,6 +22,7 @@ router.get("/get/byPersonalId", ReadCustomerByPersonalId);
 router.get("/get/byPhoneNumber", ReadCustomerByPhoneNumber);
 router.get("/get/byName", ReadCustomerByName);
 router.get("/get/byType", ReadCustomerByType)
+router.get("/get/byManyFilters", ReadCustomerByManyFilters)
 router.get("/get/currentInHotel", ReadCurrentCustomersInHotel)
 router.get("/get/totalSpent", ReadCustomerTotalSpent);
 router.post("/update", UpdateCustomer);

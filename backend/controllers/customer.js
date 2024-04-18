@@ -97,7 +97,7 @@ export async function ReadCustomerByPersonalId(req, res){
       res.send("Chưa truyền vào số CCCD của khách hàng muốn tìm")
       return
     }
-    const result = await db(`SELECT * FROM Customer where PersonalId = '${personalId}'`)
+    const result = await db(`SELECT * FROM Customer where PersonalId LIKE '%${personalId}%'`)
     res.send(result.recordset)
   } catch (err){
     console.log(err)
@@ -180,6 +180,32 @@ export async function ReadCustomerByType(req, res){
       return
     }
     const result = await db(`Select * from Customer where Type = ${customerType}`)
+    res.send(result.recordset)
+  } catch (err) {
+    console.log(err)
+    res.send(err)
+  }
+}
+
+
+//Read customer by many filters
+export async function ReadCustomerByManyFilters(req, res){
+  try{
+    const data = req.body
+    if(!data){
+      res.send("Chưa truyền thông tin nào của khách hàng muốn tìm")
+      return
+    }
+    var query = `Select * from Customer where 
+    ${data.CustomerId ? `CustomerId = ${data.CustomerId} and ` : ``}
+    ${data.FullName ? `FullName LIKE N'%${data.FullName}%' and ` : ``}
+    ${data.PersonalId ? `PersonalId LIKE '%${data.PersonalId}%' and ` : ``}
+    ${data.Phone ? `Phone LIKE '%${data.Phone}%' and ` : ``}
+    ${data.Address ? `Address LIKE N'%${data.Address}%' and ` : ``}
+    ${data.Type ? `Type = ${data.Type} and ` : ``}`
+    var finalQuery = query.substring(0, query.length - 4)
+    console.log(finalQuery)
+    const result = await db(finalQuery)
     res.send(result.recordset)
   } catch (err) {
     console.log(err)
