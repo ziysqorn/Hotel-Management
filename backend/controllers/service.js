@@ -140,7 +140,7 @@ export const addUseService = async (req, res) => {
 
   let finalQ = `
         INSERT INTO UseService
-          (ServiceId,CustomerId, UserID, CheckInDate)
+          (ServiceId,CustomerId, UserId, CheckInDate)
         VALUES
           (${item.ServiceId},${item.CustomerId}, ${item.UserId}, '${item.CheckInDate}');
     `;
