@@ -1,6 +1,18 @@
 import sql from "mssql";
 import { config } from "./config.js";
 
+const config = {
+  server: "localhost\\CSSQL05",
+  port: 1433,
+  database: "hotel_management",
+  user: "sa",
+  password: "123456",
+  options: {
+    encrypt: false, // Bật mã hóa
+    trustServerCertificate: true,
+    trustedConnection: true // Tin tưởng chứng chỉ máy chủ
+  },
+};
 // test ignore stuff
 async function db(queryString, parameters = []) {
   try {
