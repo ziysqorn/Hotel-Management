@@ -147,12 +147,7 @@ export const CreateOrderRoom = async (req, res) => {
 // lấy room nào CÒN PHÒNG và cho thời gian cụ thể, có các filter thêm như RoomId và RoomTypeId
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
-  let {
-    CheckInDate,
-    ExpectedCheckOutDate,
-    RoomName,
-    RoomTypeId,
-  } = req.query;
+  let { CheckInDate, ExpectedCheckOutDate, RoomName, RoomTypeId } = req.query;
 
   let finalQ = `     
         SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
@@ -302,7 +297,15 @@ export const UpdateOrderRoom = async (req, res) => {
 };
 
 export const ReadOrderRoom = async (req, res) => {
-  let finalQ = `SELECT * FROM OrderRoom;`;
+  let {pageIndex,pageAmount} = req.query
+
+  let finalQ = `SELECT * FROM OrderRoom LIMIT  `;
+  if(pageAmount){
+    finalQ += `${pageAmount}`
+  }else finalQ += `${pageAmount}`
+  if(pageIndex){
+    finalQ += ` OFFSET ${pageIndex}`
+  } else finalQ += ` OFFSET 0`
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -369,5 +372,3 @@ export const DeleteRoomType = async (req, res) => {
     console.log(err);
   }
 };
-
-
