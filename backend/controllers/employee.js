@@ -2,7 +2,7 @@ import db from "../db.js";
 
 //get with query
 export const getWithQuery = async (req, res) =>{
-    let {employid, rolesid} = req.query
+    let {employid, rolesid, fullname} = req.query
     let FinalQuery = 'SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)'
 
     if (employid) {
@@ -10,6 +10,9 @@ export const getWithQuery = async (req, res) =>{
     }
     if (rolesid) {
         FinalQuery += ` AND RolesId = ${rolesid}`;
+    }
+    if (fullname) {
+        FinalQuery += ` AND Employee.FullName LIKE '%${fullname}%'`;
     }
     FinalQuery += `;`;
     console.table(FinalQuery);
@@ -91,6 +94,21 @@ export const DeleteEmployee = async (req, res) => {
     {
         const data = await db(FinalQuery);
         res.json(`Delete Employee success`);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+export const CreateUser = async (req, res) => {
+    let {item}  =req.body;
+    let FinalQuery = ` EXEC CreateUserForEmployee @EmployeeId = ${item.EmployeeId} ;
+                    SELECT * FROM Users WHERE EmployeeId = ${item.EmployeeId}`;
+    console.table(FinalQuery);
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(`Create user for employee ${item.EmployeeId} success`);
     }
     catch (err) {
         console.log(err);
