@@ -1,15 +1,27 @@
 .fade-in {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-30px, 0);
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-30px,0);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0,0);
-    }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
   }
-  
+}
+
+.material-symbols-light--bed-outline {
+  display: inline-block;
+ 
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M3 18v-5q0-.444.256-.946T4 11.3V9q0-.846.577-1.423T6 7h4.5q.517 0 .883.213T12 7.8q.252-.375.617-.587T13.5 7H18q.846 0 1.423.577T20 9v2.3q.488.252.744.754T21 13v5h-1v-2H4v2zm9.5-7H19V9q0-.425-.288-.712T18 8h-4.5q-.425 0-.712.288T12.5 9zM5 11h6.5V9q0-.425-.288-.712T10.5 8H6q-.425 0-.712.288T5 9zm-1 4h16v-2q0-.425-.288-.712T19 12H5q-.425 0-.712.288T4 13zm16 0H4z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}

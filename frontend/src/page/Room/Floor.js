@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { myAppColor } from "../../colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed } from "@fortawesome/free-solid-svg-icons";
-
+import "./style.css"
 export const Floor = ({ ...props }) => {
   useEffect(() => {
-    console.log(props.data);
+    console.log("work")
   }, []);
   return (
     <div
@@ -30,13 +30,9 @@ export const Floor = ({ ...props }) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          //   background: "white",
         }}
       >
-        <FontAwesomeIcon
-          style={{ marginLeft: "10px", fontSize: "30px", color: "white" }}
-          icon={faBed}
-        />
+        <span style={{width:"80px",height:"80px", marginLeft:"10px",color:"white"}} class="material-symbols-light--bed-outline"></span>
         <p
           style={{
             color: "white",
@@ -44,7 +40,6 @@ export const Floor = ({ ...props }) => {
             maxWidth: 150,
             fontSize: "20px",
             fontWeight: 600,
-            // margin: "auto",
             alignSelf: "center",
             transform: "translate(-10%,0)",
             textAlign: "center",
@@ -60,8 +55,6 @@ export const Floor = ({ ...props }) => {
       <div
         style={{
           flex: "1",
-          // backgroundColor: "white",
-
           display: "flex",
           justifyContent: "center",
           flexWrap: "wrap",
