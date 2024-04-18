@@ -137,15 +137,15 @@ CREATE TABLE ServiceForRoom
 GO
 
 
-<<<<<<< HEAD
+-- <<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
-ALTER TABLE Customer
-ADD COLUMN Type INT NOT NULL;
-GO
->>>>>>> Hung
-=======
+-- <<<<<<< HEAD
+-- =======
+-- ALTER TABLE Customer
+-- ADD COLUMN Type INT NOT NULL;
+-- GO
+-- >>>>>>> Hung
+-- =======
 drop table Customer
 drop table Users
 drop table UseService
@@ -157,4 +157,4 @@ drop table Bill
 drop table RoomType
 drop table ServiceForRoom
 drop table Service
->>>>>>> Quan
+-- >>>>>>> Quan
