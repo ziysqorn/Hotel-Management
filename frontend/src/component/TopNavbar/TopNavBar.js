@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import appLogo from "../../app-logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
@@ -8,7 +8,9 @@ import "./style.css";
 // import Fonta
 export const TopNavBar = () => {
   const [isHover, setIsHover] = useState([false, false, false]);
-
+  // useParams(()=>{
+  //   console.log("sthgn change");
+  // })
   return (
     <div
       style={{

@@ -20,8 +20,9 @@ function App() {
       style={{
         position: "relative",
         backgroundColor: myAppColor.Black.WindowBackground,
-        minHeight:"100vh",
-
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       {/* Start of top nav  */}
@@ -29,29 +30,29 @@ function App() {
       {/* Start of left nav  */}
       {/* End of left nav  */}
       <TopNavBar />
-      <LeftNavBar />
-
-      <div
-        style={{
-          width: "80%",
-          minHeight: "80%",
-
-
-          // backgroundColor: "white",
-          border: "1px solid red",
-          position: "absolute",
-          top: "150px",
-          left: "400px",
-        }}
-      >
-        <Routes>
-          <Route path="/apitest" element={<Apitest />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/rooms" element={<RoomsPage />} />
-          <Route path="/customers" element={<CustomersPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/employees" element={<EmployeesPage />} />
-        </Routes>
+      <div style={{display:"flex"}}>
+        <LeftNavBar />
+        <div
+          style={{
+            width: "80%",
+            minHeight: "80%",
+            // backgroundColor: "white",
+            border: "1px solid red",
+            // position: "absolute",
+            flex: 1,
+            // top: "10%",
+            // left: "12%",
+          }}
+        >
+          <Routes>
+            <Route path="/apitest" element={<Apitest />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/rooms" element={<RoomsPage />} />
+            <Route path="/customers" element={<CustomersPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/employees" element={<EmployeesPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

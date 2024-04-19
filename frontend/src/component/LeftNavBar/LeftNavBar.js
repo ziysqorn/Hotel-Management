@@ -21,6 +21,7 @@ export const LeftNavBar = () => {
 
   useEffect(() => {
     console.log(window.location.href);
+    console.log("render");
     const url = window.location.href;
     if (url.includes("analytics"))
       setSeletectList([true, false, false, false, false]);
