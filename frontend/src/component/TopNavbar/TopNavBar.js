@@ -12,8 +12,8 @@ export const TopNavBar = () => {
   return (
     <div
       style={{
-        height: "130px",
-        width: "100%",
+        height: "8vh",
+        width: "100vw",
         backgroundColor: myAppColor.Black.TopNavBackground,
         display: "flex",
         flexDirection: "row",
@@ -30,8 +30,8 @@ export const TopNavBar = () => {
         <div
           style={{
             overflow: "hidden",
-            width: "114px",
-            height: "97px",
+            width: "7vh",
+            height: "7vh",
             borderRadius: "50%",
             margin: "auto",
             marginLeft: "20px",
@@ -39,7 +39,7 @@ export const TopNavBar = () => {
             // justifyContent:""
           }}
         >
-          <img style={{ width: "114px", height: "97px" }} src={appLogo} />
+          <img style={{ width:"100%", height: "100%" }} src={appLogo} />
         </div>
         <p
           style={{
@@ -54,7 +54,7 @@ export const TopNavBar = () => {
         </p>
       </div>
       {/* Start of top nav  */}
-      <div className="Right" style={{ display: "flex", marginRight: "30px" }}>
+      <div className="Right" style={{ display: "flex", marginRight: "30px",height:"100%" ,alignItems:"center" }}>
         <div
           onMouseEnter={() => {
             setIsHover([true, false, false]);
@@ -64,7 +64,7 @@ export const TopNavBar = () => {
           }}
           style={{
             width: "62px",
-            height: "62px",
+            height: "50%",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             cursor: "pointer",
@@ -92,7 +92,7 @@ export const TopNavBar = () => {
           }}
           style={{
             width: "62px",
-            height: "62px",
+            height: "50%",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
@@ -120,7 +120,7 @@ export const TopNavBar = () => {
           }}
           style={{
             width: "62px",
-            height: "62px",
+            height: "50%",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",

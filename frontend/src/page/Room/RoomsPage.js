@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Floor } from "./Floor.js";
 import "./style.css";
 import axios from "axios";
 export const RoomsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState([]);
-  useState(() => {
+  useEffect(() => {
     axios
       .get("http://localhost:4000/api/room/query", {
         params: {

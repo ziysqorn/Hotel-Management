@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBed } from "@fortawesome/free-solid-svg-icons";
 import "./style.css"
 export const Floor = ({ ...props }) => {
-  useEffect(() => {
-    console.log("work")
-  }, []);
+  // useEffect(() => {
+  //   console.log("work")
+  // }, []);
   return (
     <div
       style={{
         width: "100%", //80%
-        height: "30vh",
+        minHeight: "30vh",
         margin: "10px",
+        padding:"5px",
         borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
@@ -32,7 +33,7 @@ export const Floor = ({ ...props }) => {
           alignItems: "center",
         }}
       >
-        <span style={{width:"80px",height:"80px", marginLeft:"10px",color:"white"}} class="material-symbols-light--bed-outline"></span>
+        <span style={{width:"4vw",height:"4vh", marginLeft:"0px",color:"white"}} class="material-symbols-light--bed-outline"></span>
         <p
           style={{
             color: "white",
@@ -81,7 +82,7 @@ export const Floor = ({ ...props }) => {
                 <p
                   style={{
                     color: item.Status ? "#B0B0B0" : "white",
-                    fontSize: "20px",
+                    fontSize: "100%",
                   }}
                 >
                   {item.RoomId}
