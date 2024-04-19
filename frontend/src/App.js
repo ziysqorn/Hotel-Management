@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-import { ReactDOM } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -25,23 +23,17 @@ function App() {
         flexDirection: "column",
       }}
     >
-      {/* Start of top nav  */}
-      {/* END of top nav  */}
-      {/* Start of left nav  */}
-      {/* End of left nav  */}
+
       <TopNavBar />
       <div style={{display:"flex"}}>
         <LeftNavBar />
         <div
           style={{
-            width: "80%",
-            minHeight: "80%",
             // backgroundColor: "white",
             border: "1px solid red",
-            // position: "absolute",
+            margin:"20px",
             flex: 1,
-            // top: "10%",
-            // left: "12%",
+    
           }}
         >
           <Routes>

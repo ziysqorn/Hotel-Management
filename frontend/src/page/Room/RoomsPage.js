@@ -26,7 +26,7 @@ export const RoomsPage = () => {
       style={{ display: "flex", width: "100%", flexDirection: "column" }}
     >
       <div
-        style={{ width: "100%", minHeight: "100px", border: "1px solid white" }}
+        style={{ width: "100%", minHeight: "15vh", border: "1px solid white" }}
       >
 
       </div>
@@ -35,11 +35,30 @@ export const RoomsPage = () => {
         style={{ display: "flex", flexWrap: "wrap", width: "100%" }}
       >
         {data && (
-          <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          // 639x410 / 1700 x 1100
+          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
             <Floor data={data} floorIndex={"P1"} />
           </div>
         )}
         {data && (
+          // 639x410 / 1700 x 1100
+          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
+            <Floor data={data} floorIndex={"P1"} />
+          </div>
+        )}
+        {data && (
+          // 639x410 / 1700 x 1100
+          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
+            <Floor data={data} floorIndex={"P1"} />
+          </div>
+        )}
+        {data && (
+          // 639x410 / 1700 x 1100
+          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
+            <Floor data={data} floorIndex={"P1"} />
+          </div>
+        )}
+        {/* {data && (
           <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
             <Floor data={data} floorIndex={"P2"} />
           </div>
@@ -53,7 +72,7 @@ export const RoomsPage = () => {
           <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
             <Floor data={data} floorIndex={"P4"} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
