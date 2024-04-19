@@ -21,6 +21,7 @@ export const LeftNavBar = () => {
 
   useEffect(() => {
     console.log(window.location.href);
+    console.log("render");
     const url = window.location.href;
     if (url.includes("analytics"))
       setSeletectList([true, false, false, false, false]);
@@ -49,7 +50,7 @@ export const LeftNavBar = () => {
     <div
       style={{
         backgroundColor: "#202020",
-        width: "300px",
+        width: "10vw",
         height: "80vh",
         marginTop: "15px",
         marginLeft: "15px",

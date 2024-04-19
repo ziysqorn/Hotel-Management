@@ -302,7 +302,15 @@ export const UpdateOrderRoom = async (req, res) => {
 };
 
 export const ReadOrderRoom = async (req, res) => {
-  let finalQ = `SELECT * FROM OrderRoom;`;
+  let {pageIndex,pageAmount} = req.query
+
+  let finalQ = `SELECT * FROM OrderRoom LIMIT  `;
+  if(pageAmount){
+    finalQ += `${pageAmount}`
+  }else finalQ += `${pageAmount}`
+  if(pageIndex){
+    finalQ += ` OFFSET ${pageIndex}`
+  } else finalQ += ` OFFSET 0`
   try {
     const data = await db(finalQ);
     res.json(data);

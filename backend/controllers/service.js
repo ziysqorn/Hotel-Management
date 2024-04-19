@@ -115,20 +115,21 @@ export const getUseService = async (req, res) => {
 export const EditUseService = async (req, res) => {
   let oldItem = req.body.oldItem;
   let newItem = req.body.newItem;
+  console.log(req.body);
   let finalQ = `UPDATE UseService
       SET 
           ServiceId = ${newItem.ServiceId},
           CustomerId = ${newItem.CustomerId},
-          UserId = ${newItem.UserID},
+          UserId = ${newItem.UserId},
           CheckInDate = '${newItem.CheckInDate}'
       WHERE  ServiceId = ${oldItem.ServiceId} AND
       CustomerId = ${oldItem.CustomerId} AND
-      UserId = ${oldItem.UserID} AND
+      UserId = ${oldItem.UserId} AND
       CheckInDate = '${oldItem.CheckInDate}';`;
-  console.log(finalQ);
+
   try {
     const data = await db(finalQ);
-    res.json(`Update item: ${oldItem.RoomId} success!!! `);
+    res.json(data);
   } catch (err) {
     console.log(err);
   }
@@ -140,7 +141,7 @@ export const addUseService = async (req, res) => {
 
   let finalQ = `
         INSERT INTO UseService
-          (ServiceId,CustomerId, UserID, CheckInDate)
+          (ServiceId,CustomerId, UserId, CheckInDate)
         VALUES
           (${item.ServiceId},${item.CustomerId}, ${item.UserId}, '${item.CheckInDate}');
     `;

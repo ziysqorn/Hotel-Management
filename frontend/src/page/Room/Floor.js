@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { myAppColor } from "../../colors";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBed } from "@fortawesome/free-solid-svg-icons";
-
+import "./style.css";
 export const Floor = ({ ...props }) => {
-  useEffect(() => {
-    console.log(props.data);
-  }, []);
+  // useEffect(() => {
+  //   console.log("work")
+  // }, []);
+
+
+  const removePword =(item)=>{
+    return item.slice(1)
+  }
   return (
     <div
       style={{
         width: "100%", //80%
-        height: "30vh",
+        height: "100%",
         margin: "10px",
+        padding: "5px",
         borderRadius: "10px",
         display: "flex",
         flexDirection: "column",
@@ -26,17 +30,22 @@ export const Floor = ({ ...props }) => {
         style={{
           width: "100%",
           paddingTop: "0px",
+          paddingBottom:"4%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          //   background: "white",
         }}
       >
-        <FontAwesomeIcon
-          style={{ marginLeft: "10px", fontSize: "30px", color: "white" }}
-          icon={faBed}
-        />
+        <span
+          style={{
+            width: "4vw",
+            height: "4vh",
+            marginLeft: "0px",
+            color: "white",
+          }}
+          class="material-symbols-light--bed-outline"
+        ></span>
         <p
           style={{
             color: "white",
@@ -44,7 +53,6 @@ export const Floor = ({ ...props }) => {
             maxWidth: 150,
             fontSize: "20px",
             fontWeight: 600,
-            // margin: "auto",
             alignSelf: "center",
             transform: "translate(-10%,0)",
             textAlign: "center",
@@ -60,10 +68,9 @@ export const Floor = ({ ...props }) => {
       <div
         style={{
           flex: "1",
-          // backgroundColor: "white",
-
           display: "flex",
           justifyContent: "center",
+
           flexWrap: "wrap",
         }}
       >
@@ -73,25 +80,28 @@ export const Floor = ({ ...props }) => {
               <div
                 key={index}
                 style={{
-                  width: "9%", //53px
-                  maxWidth:"100px",
+                  width: "10%", //53px
+                  // maxWidth: "100px",
                   cursor: "pointer",
-                  height: "40px",
+                  height: "8%",
                   backgroundColor: item.Status ? "#111111" : "#FF0000",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   margin: "1px 5px",
-                  borderRadius: "3px",
+                  padding:"4px 8px",
+                  borderRadius: "8px",
                 }}
               >
                 <p
                   style={{
+                    // margin:"auto 100px",
                     color: item.Status ? "#B0B0B0" : "white",
-                    fontSize: "20px",
+                    fontSize: "1.5rem",
+                    fontWeight:600
                   }}
                 >
-                  {item.RoomId}
+                  {removePword(item.RoomId)}
                 </p>
               </div>
             )
