@@ -88,7 +88,7 @@ export const EditEmployee = async (req, res) => {
 
 export const DeleteEmployee = async (req, res) => {
     let {item} = req.body;
-    let FinalQuery = ` DELETE FROM Employee WhERE EmployeeId = ${item.EmployeeId} `;
+    let FinalQuery = ` DELETE FROM Employee WHERE EmployeeId = ${item.EmployeeId} `;
     console.table(FinalQuery);
     try
     {
