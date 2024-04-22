@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-import { ReactDOM } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -20,38 +18,33 @@ function App() {
       style={{
         position: "relative",
         backgroundColor: myAppColor.Black.WindowBackground,
-        minHeight:"100vh",
-
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {/* Start of top nav  */}
-      {/* END of top nav  */}
-      {/* Start of left nav  */}
-      {/* End of left nav  */}
+
       <TopNavBar />
-      <LeftNavBar />
-
-      <div
-        style={{
-          width: "80%",
-          minHeight: "80%",
-
-
-          // backgroundColor: "white",
-          border: "1px solid red",
-          position: "absolute",
-          top: "150px",
-          left: "400px",
-        }}
-      >
-        <Routes>
-          <Route path="/apitest" element={<Apitest />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/rooms" element={<RoomsPage />} />
-          <Route path="/customers" element={<CustomersPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/employees" element={<EmployeesPage />} />
-        </Routes>
+      <div style={{display:"flex"}}>
+        <LeftNavBar />
+        <div
+          style={{
+            // backgroundColor: "white",
+            border: "1px solid red",
+            margin:"20px",
+            flex: 1,
+    
+          }}
+        >
+          <Routes>
+            <Route path="/apitest" element={<Apitest />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/rooms" element={<RoomsPage />} />
+            <Route path="/customers" element={<CustomersPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/employees" element={<EmployeesPage />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );
