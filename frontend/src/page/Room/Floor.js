@@ -5,11 +5,6 @@ export const Floor = ({ ...props }) => {
   // useEffect(() => {
   //   console.log("work")
   // }, []);
-
-
-  const removePword =(item)=>{
-    return item.slice(1)
-  }
   return (
     <div
       style={{
@@ -30,7 +25,7 @@ export const Floor = ({ ...props }) => {
         style={{
           width: "100%",
           paddingTop: "0px",
-          paddingBottom:"4%",
+          paddingBottom: "4%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -70,43 +65,51 @@ export const Floor = ({ ...props }) => {
           flex: "1",
           display: "flex",
           justifyContent: "center",
-
           flexWrap: "wrap",
         }}
       >
         {props.data.map(
           (item, index) =>
             item.RoomId.includes(props.floorIndex) && (
-              <div
-                key={index}
-                style={{
-                  width: "10%", //53px
-                  // maxWidth: "100px",
-                  cursor: "pointer",
-                  height: "8%",
-                  backgroundColor: item.Status ? "#111111" : "#FF0000",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "1px 5px",
-                  padding:"4px 8px",
-                  borderRadius: "8px",
-                }}
-              >
-                <p
-                  style={{
-                    // margin:"auto 100px",
-                    color: item.Status ? "#B0B0B0" : "white",
-                    fontSize: "1.5rem",
-                    fontWeight:600
-                  }}
-                >
-                  {removePword(item.RoomId)}
-                </p>
-              </div>
+              <SmallRoom key={index} index={index} item={item} />
             )
         )}
       </div>
+    </div>
+  );
+};
+
+const SmallRoom = ({ item, index }) => {
+  const removePword = (item) => {
+    return item.slice(1);
+  };
+  return (
+    <div
+      key={index}
+      style={{
+        width: "10%", //53px
+        // maxWidth: "100px",
+        cursor: "pointer",
+        height: "8%",
+        backgroundColor: item.Status ? "#111111" : "#FF0000",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "1px 5px",
+        padding: "4px 8px",
+        borderRadius: "8px",
+      }}
+    >
+      <p
+        style={{
+          // margin:"auto 100px",
+          color: item.Status ? "#B0B0B0" : "white",
+          fontSize: "1.5rem",
+          fontWeight: 600,
+        }}
+      >
+        {removePword(item.RoomId)}
+      </p>
     </div>
   );
 };

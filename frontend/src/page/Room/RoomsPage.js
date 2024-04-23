@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Floor } from "./Floor.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import "./style.css";
 import axios from "axios";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Searchbar } from "../../component/Searchbar/Searchbar.js";
 export const RoomsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState([]);
-  useEffect(() => {
+  const [query, setQuery] = useState({
+    RoomTypeId: null,
+    RoomId: null,
+    RoomName: null,
+    Status: null,
+  });
+
+  const getData = () => {
     axios
       .get("http://localhost:4000/api/room/query", {
-        params: {
-          RoomName: "P1",
-        },
+        params: query,
       })
       .then((item) => {
         console.log(item.data);
@@ -19,7 +28,15 @@ export const RoomsPage = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    console.log(window.location.pathname);
+    console.log(query);
+    getData();
   }, []);
+  useEffect(() => {
+    getData();
+  }, [query]);
   return (
     <div
       className={`fade-in ${isVisible ? "visible" : ""}`}
@@ -28,7 +45,12 @@ export const RoomsPage = () => {
       <div
         style={{ width: "100%", minHeight: "15vh", border: "1px solid white" }}
       >
-
+        {/* input div */}
+        <Searchbar
+          changeRoomType={(id) => {
+            setQuery({ ...query, RoomTypeId: id });
+          }}
+        />
       </div>
       <div
         className={`fade-in ${isVisible ? "visible" : ""}`}
@@ -36,43 +58,52 @@ export const RoomsPage = () => {
       >
         {data && (
           // 639x410 / 1700 x 1100
-          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
+          <div
+            style={{
+              flex: "0 0 calc(45% - 40px)",
+              minHeight: "40vh",
+              margin: "20px",
+            }}
+          >
             <Floor data={data} floorIndex={"P1"} />
           </div>
         )}
         {data && (
           // 639x410 / 1700 x 1100
-          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
-            <Floor data={data} floorIndex={"P1"} />
-          </div>
-        )}
-        {data && (
-          // 639x410 / 1700 x 1100
-          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
-            <Floor data={data} floorIndex={"P1"} />
-          </div>
-        )}
-        {data && (
-          // 639x410 / 1700 x 1100
-          <div style={{ flex: "0 0 calc(45% - 40px)",minHeight:"40vh", margin: "20px" }}>
-            <Floor data={data} floorIndex={"P1"} />
-          </div>
-        )}
-        {/* {data && (
-          <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          <div
+            style={{
+              flex: "0 0 calc(45% - 40px)",
+              minHeight: "40vh",
+              margin: "20px",
+            }}
+          >
             <Floor data={data} floorIndex={"P2"} />
           </div>
         )}
         {data && (
-          <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          // 639x410 / 1700 x 1100
+          <div
+            style={{
+              flex: "0 0 calc(45% - 40px)",
+              minHeight: "40vh",
+              margin: "20px",
+            }}
+          >
             <Floor data={data} floorIndex={"P3"} />
           </div>
         )}
         {data && (
-          <div style={{ flex: "0 0 calc(45% - 40px)", margin: "10px" }}>
+          // 639x410 / 1700 x 1100
+          <div
+            style={{
+              flex: "0 0 calc(45% - 40px)",
+              minHeight: "40vh",
+              margin: "20px",
+            }}
+          >
             <Floor data={data} floorIndex={"P4"} />
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

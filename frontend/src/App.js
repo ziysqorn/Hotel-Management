@@ -23,23 +23,22 @@ function App() {
         flexDirection: "column",
       }}
     >
-
       <TopNavBar />
-      <div style={{display:"flex"}}>
+      <div style={{ display: "flex" }}>
         <LeftNavBar />
         <div
           style={{
             // backgroundColor: "white",
             border: "1px solid red",
-            margin:"20px",
+            margin: "20px",
             flex: 1,
-    
           }}
         >
           <Routes>
             <Route path="/apitest" element={<Apitest />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/rooms" element={<RoomsPage />} />
+            <Route path="/rooms/detail/:id" element={<RoomsPage />} />
             <Route path="/customers" element={<CustomersPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/employees" element={<EmployeesPage />} />
