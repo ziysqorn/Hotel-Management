@@ -2,7 +2,7 @@ import db from "../db.js";
 
 //get with query
 export const getWithQuery = async (req, res) =>{
-    let {employid, rolesid, fullname} = req.query
+    let {employid, rolesid, fullname, position} = req.query
     let FinalQuery = 'SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)'
 
     if (employid) {
@@ -13,6 +13,9 @@ export const getWithQuery = async (req, res) =>{
     }
     if (fullname) {
         FinalQuery += ` AND Employee.FullName LIKE '%${fullname}%'`;
+    }
+    if (position) {
+        FinalQuery += ` AND Employee.position LIKE '%${position}%'`;
     }
     FinalQuery += `;`;
     console.table(FinalQuery);
@@ -86,6 +89,7 @@ export const EditEmployee = async (req, res) => {
     }
 }
 
+//xoá nhân viên
 export const DeleteEmployee = async (req, res) => {
     let {item} = req.body;
     let FinalQuery = ` DELETE FROM Employee WHERE EmployeeId = ${item.EmployeeId} `;
@@ -99,7 +103,8 @@ export const DeleteEmployee = async (req, res) => {
         console.log(err);
     }
 }
-
+/* ------ USERS ------ */
+//tạo tk user
 export const CreateUser = async (req, res) => {
     let {item}  =req.body;
     let FinalQuery = ` EXEC CreateUserForEmployee @EmployeeId = ${item.EmployeeId} ;
@@ -114,3 +119,104 @@ export const CreateUser = async (req, res) => {
         console.log(err);
     }
 }
+
+//Update User
+export const UpdateUser = async (req, res) => {
+    let {item} = await db(FinalQuery);
+    let FinalQuery = `UPDATE Users 
+                    SET Password = '${item.Password}' 
+                    WHERE UserId = '${item.UserId}'`;
+    console.table(FinalQuery);
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(`Update user ${item.EmployeeId} success`);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+//delete user
+export const DeleteUser = async (req, res) => {
+    let {item} = await db(FinalQuery);
+    let FinalQuery = `DELETE FROM Users WHERE UserId = ${item.UserId}`;
+    console.table(FinalQuery);
+    try
+    {
+        const data = await db(FinalQuery);
+        res.json(`Delete user ${item.UserId} success`);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+export const getUser = async (req, res) => {
+    try
+    {
+        const data = await db(`SELECT 
+                                e.FullName, 
+                                e.Phone, 
+                                e.PersonalId, 
+                                e.BirthDay, 
+                                e.FristDay, 
+                                e.Address, 
+                                e.position, 
+                                e.RolesId, 
+                                u.EmployeeId, 
+                                u.Password, 
+                                u.UserId
+                            FROM Employee e
+                            INNER JOIN Users u ON e.EmployeeId = u.EmployeeId`);
+        res.json(data);
+    }
+    catch (err) {
+        console.log(err);
+    }
+    
+};
+
+// Get user with query
+export const getUserQuery = async (req, res) =>{
+    let {userid, userRolesid, userFullname, userPosition} = req.query;
+    let FinalQuery = `SELECT 
+                        e.FullName, 
+                        e.Phone, 
+                        e.PersonalId, 
+                        e.BirthDay, 
+                        e.FristDay, 
+                        e.Address, 
+                        e.position, 
+                        e.RolesId, 
+                        u.EmployeeId, 
+                        u.Password, 
+                        u.UserId
+                    FROM Employee e
+                    INNER JOIN Users u ON e.EmployeeId = u.EmployeeId 
+                    WHERE NOT(u.UserId IS NULL)`
+
+    if (userid) {
+        FinalQuery += ` AND u.UserId = ${userid}`;
+    }
+    if (userRolesid) {
+        FinalQuery += ` AND e.RolesId = ${userRolesid}`;
+    }
+    if (userFullname) {
+        FinalQuery += ` AND e.FullName LIKE '%${userFullname}%'`;
+    }
+    if (userPosition) {
+        FinalQuery += ` AND e.position LIKE '%${userPosition}%'`;
+    }
+    FinalQuery += `;`;
+    console.table(FinalQuery);
+    
+    try {
+        const data = await db(FinalQuery);
+        
+        res.json(data);
+      } catch (err) {
+        console.log(err);
+      }
+}
+

@@ -5,7 +5,11 @@ import {
     AddEmployee, 
     EditEmployee,
     DeleteEmployee,
-    CreateUser} from "../controllers/employee.js";
+    CreateUser,
+    UpdateUser,
+    DeleteUser,
+    getUserQuery,
+    getUser} from "../controllers/employee.js";
 
 
 const router = express.Router();
@@ -17,6 +21,11 @@ router.post("/Edit", EditEmployee);
 router.post("/Delete", DeleteEmployee);
 
 router.post("/employ/createUser", CreateUser);
+router.post("/employ/updateUser", UpdateUser);
+router.post("/employ/deleteUser", DeleteUser);
+router.get("/employ/getuser", getUser);
+router.get("/employ/userquery", getUserQuery);
+
 
 // router.get("/",getAll);
 // router.get("/query",getAllWithQuery);
