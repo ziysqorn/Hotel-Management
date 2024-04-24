@@ -10,6 +10,7 @@ import { CustomersPage } from "./page/Customer/CustomersPage.js";
 import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/EmployeesPage";
 import { myAppColor } from "./colors";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
