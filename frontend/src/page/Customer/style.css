@@ -64,3 +64,7 @@
     font-family: "Montserrat";
     src: url('./assets/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
+.detailModal{
+    width: 65%;
+    max-width: 65% !important;
+}

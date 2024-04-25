@@ -1,11 +1,14 @@
 import React from 'react'
+import {
+    useState
+} from 'react'
 import CustomerIcon from './assets/CustomerIcon.png'
 import EyeIcon from './assets/EyeIcon.png'
 import FloorIcon from './assets/FloorIcon.png'
 import RoomIcon from './assets/RoomIcon.png'
 import "./style.css"
 
-export default function InHotel({containerWidth, containerHeight, MarginTop, customerInfo}){
+export default function InHotel({containerWidth, containerHeight, MarginTop, customerInfo, showDetail}){
   return (
     <div className='infoContainer' style={{width: containerWidth, height: containerHeight, marginTop: MarginTop}}>
         <div style={{width: '5%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -22,7 +25,7 @@ export default function InHotel({containerWidth, containerHeight, MarginTop, cus
             <img src={RoomIcon} style={{width: '8%', height: '50%'}}></img>
             <label style={{marginLeft: '2%'}}>Room {customerInfo.CustomerName}</label>
         </div>
-        <div style={{width: '5%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{width: '5%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={showDetail}>
             <img src={EyeIcon} style={{width: '50%', height: '50%'}}></img>
         </div>
     </div>

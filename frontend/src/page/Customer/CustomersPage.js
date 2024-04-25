@@ -21,7 +21,37 @@ import './assets/Montserrat-VariableFont_wght.ttf'
 export function CustomersPage(){
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const[showInHotelDetail, setShowInHotelDetail] = useState(false)
   const [showInHotelFilter, setShowInHotelFilter] = useState(false)
+  const [showAllCustomerFilt, setShowAllCustomerFilt] = useState(false)
+  const [filterItemBG, setFilterItemBG] = useState(['transparent', 'transparent', 'transparent', 'transparent'])
+  function HoverOverFilterItem(event){
+    var itemID = event.target.id
+    const index = parseInt(itemID[itemID.length - 1])
+    console.log(index)
+    const newBGs = filterItemBG.map(function(item, i){
+      if(index === i){
+        item = '#707070'
+        return item
+      }
+    })
+    setFilterItemBG(newBGs)
+  }
+  function LeaveFilerItem(event){
+    var itemID = event.target.id
+    const index = parseInt(itemID[itemID.length - 1])
+    console.log(index)
+    const newBGs = filterItemBG.map(function(item, i){
+      if(index === i){
+        item = 'transparent'
+        return item
+      }
+    })
+    setFilterItemBG(newBGs)
+  }
+  function InHotelDetail(){
+    setShowInHotelDetail(true)
+  }
   return (
     <div style={{width: "100%", height: "100%", display: "flex", flexDirection: 'column', alignItems: "center", justifyContent: 'space-between'}}>
     <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: 'space-between', width: "100%", height: "22%"}}>
@@ -61,16 +91,31 @@ export function CustomersPage(){
             <img src={SearchIcon} style={{width: '10%', height: '50%', margin: '5%'}}></img>
             <input type='text' style={{backgroundColor: '#111111', width: '85%', height: '90%', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none'}} placeholder='Search...'></input>
           </div>
-          <div style={{width: '30%', height: '55%', position: 'relative', backgroundColor: '#707070', fontSize: 23, color: 'white', fontFamily: 'Montserrat', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={()=>{setShowInHotelFilter(prev=>!prev)}}>
-            <div style={{width: '55%', height: '80%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+          <div style={{width: '30%', height: '55%', position: 'relative', backgroundColor: '#707070', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: '100%', height: '100%', backgroundColor: '#707070', fontSize: 23, color: 'white', fontFamily: 'Montserrat', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={()=>{setShowInHotelFilter(prev=>!prev); setShowAllCustomerFilt(false)}}>
+            <div style={{width: '55%', height: '80%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
             <img src={FilterIcon} style={{width: '30%', height: '70%'}}></img>
             <label>Filter</label>
-            <div style={{position: 'absolute', backgroundColor: 'pink', width: '10vw', height: '10vh', top: 61, right: 0, visibility: (showInHotelFilter === true) ? 'visible' : 'hidden', display: 'flex', flexDirection: 'column'}}></div>
+            </div>
+            </div>
+            <div style={{position: 'absolute', display: 'flex', justifyContent: 'center', backgroundColor: '#202020', width: '12vw', height: '10vh', top: 65, right: 0, visibility: (showInHotelFilter === true) ? 'visible' : 'hidden', display: 'flex', flexDirection: 'column', borderRadius: '10px', border: '1px solid white'}}>
+              <div id='inHotelFilter0' style={{backgroundColor: filterItemBG[0], width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Personal ID
+              </div>
+              <div id='inHotelFilter1' style={{backgroundColor: filterItemBG[1], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Phone Number
+              </div>
+              <div id='inHotelFilter2' style={{backgroundColor: filterItemBG[2], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Name
+              </div>
+              <div id='inHotelFilter3' style={{backgroundColor: filterItemBG[3], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Type
+              </div>
             </div>
           </div>
       </div>
       <div style={{width: '90%', height: '65%', display: 'flex', flexDirection: 'column', marginLeft: '2%'}}>
-        <InHotel containerWidth={"100%"} containerHeight={"20%"} MarginTop={"0%"} customerInfo={{CustomerName: 'Trần Duy Quân'}}></InHotel>
+        <InHotel containerWidth={"100%"} containerHeight={"20%"} MarginTop={"0%"} customerInfo={{CustomerName: 'Trần Duy Quân'}} showDetail={InHotelDetail}></InHotel>
         <InHotel containerWidth={"100%"} containerHeight={"20%"} MarginTop={"2%"} customerInfo={{}}></InHotel>
         <InHotel containerWidth={"100%"} containerHeight={"20%"} MarginTop={"2%"} customerInfo={{}}></InHotel>
         <InHotel containerWidth={"100%"} containerHeight={"20%"} MarginTop={"2%"} customerInfo={{}}></InHotel>
@@ -100,10 +145,24 @@ export function CustomersPage(){
             <img src={SearchIcon} style={{width: '15%', height: '50%', margin: '5%'}}></img>
             <input type='text' style={{backgroundColor: '#111111', width: '85%', height: '90%', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px', fontSize: 20, fontFamily: 'Montserrat', color: 'white', outline: 'none'}} placeholder='Search...'></input>
           </div>
-          <div style={{width: '30%', height: '60%', backgroundColor: '#707070', fontSize: 20, color: 'white', fontFamily: 'Montserrat', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <div style={{width: '30%', height: '60%', position: 'relative', backgroundColor: '#707070', fontSize: 20, color: 'white', fontFamily: 'Montserrat', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={()=>{setShowAllCustomerFilt(prev=>!prev); setShowInHotelFilter(false)}}>
             <div style={{width: '70%', height: '80%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
             <img src={FilterIcon} style={{width: '30%', height: '70%'}}></img>
             <label>Filter</label>
+            </div>
+            <div style={{position: 'absolute', display: 'flex', justifyContent: 'center', backgroundColor: '#202020', width: '12vw', height: '10vh', top: 65, right: 0, visibility: (showAllCustomerFilt === true) ? 'visible' : 'hidden', display: 'flex', flexDirection: 'column', borderRadius: '10px', border: '1px solid white'}}>
+              <div id='allCustomerFilter0' style={{backgroundColor: filterItemBG[0], width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Personal ID
+              </div>
+              <div id='allCustomerFilter1' style={{backgroundColor: filterItemBG[1], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Phone Number
+              </div>
+              <div id='allCustomerFilter2' style={{backgroundColor: filterItemBG[2], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Name
+              </div>
+              <div id='allCustomerFilter3' style={{backgroundColor: filterItemBG[3], fontSize: 23, fontFamily: 'Montserrat', color: 'white', cursor: 'pointer'}} onClick={(e)=>{console.log(e)}} onMouseEnter={(e)=>HoverOverFilterItem(e)} onMouseLeave={(e)=>LeaveFilerItem(e)}>
+                &nbsp;&nbsp;&nbsp;By Type
+              </div>
             </div>
           </div>
       </div>
@@ -188,6 +247,94 @@ export function CustomersPage(){
               Cancel
             </div>
           </div>
+        </div>
+      </Modal.Footer>
+    </Modal>
+    <Modal show={showInHotelDetail} centered onHide={()=>{setShowInHotelDetail(false)}} dialogClassName='detailModal'>
+      <Modal.Header className='border-0' closeButton closeVariant='white' style={{backgroundColor: '#2E2E2E', fontSize: 30, fontFamily: 'Montserrat', color: 'white'}}>Customer Detail</Modal.Header>
+      <Modal.Body style={{backgroundColor: '#2E2E2E'}}>
+        <div style={{backgroundColor: 'pink', height: '55vh', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <div style={{backgroundColor: 'skyblue', height: '100%', width: '40%', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid white'}}>
+            <div style={{backgroundColor: 'skyblue', height: '95%', width: '90%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}>
+              <div style={{backgroundColor: 'pink', height: '15%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{backgroundColor: 'blue', height: '45%', width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', display: 'flex', alignItems: 'center'}}>
+                  Customer Name
+                </div>
+                <div style={{backgroundColor: '#111111', height: '55%', width: '100%', direction: 'rtl', borderRadius: '10px'}}>
+                  <input style={{backgroundColor: '#111111', width: '95%', height: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none', direction: 'ltr', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px'}} value={'Trần Duy Quân'}>
+                  </input>
+                </div>
+              </div>
+              <div style={{backgroundColor: 'pink', height: '15%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{backgroundColor: 'blue', height: '45%', width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', display: 'flex', alignItems: 'center'}}>
+                  Customer Type
+                </div>
+                <div style={{backgroundColor: '#111111', height: '55%', width: '100%', direction: 'rtl', borderRadius: '10px'}}>
+                  <input style={{backgroundColor: '#111111', width: '95%', height: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none', direction: 'ltr', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px'}} value={'VIP'}>
+
+                  </input>
+                </div>
+              </div>
+              <div style={{backgroundColor: 'pink', height: '15%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{backgroundColor: 'blue', height: '45%', width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', display: 'flex', alignItems: 'center'}}>
+                  Personal ID
+                </div>
+                <div style={{backgroundColor: '#111111', height: '55%', width: '100%', direction: 'rtl', borderRadius: '10px'}}>
+                  <input style={{backgroundColor: '#111111', width: '95%', height: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none', direction: 'ltr', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px'}} value={'079203025908'}>
+
+                  </input>
+                </div>
+              </div>
+              <div style={{backgroundColor: 'pink', height: '15%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{backgroundColor: 'blue', height: '45%', width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', display: 'flex', alignItems: 'center'}}>
+                  Phone number
+                </div>
+                <div style={{backgroundColor: '#111111', height: '55%', width: '100%', direction: 'rtl', borderRadius: '10px'}}>
+                  <input style={{backgroundColor: '#111111', width: '95%', height: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none', direction: 'ltr', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px'}} value={'0814371165'}>
+
+                  </input>
+                </div>
+              </div>
+              <div style={{backgroundColor: 'pink', height: '15%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{backgroundColor: 'blue', height: '45%', width: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', display: 'flex', alignItems: 'center'}}>
+                  Address
+                </div>
+                <div style={{backgroundColor: '#111111', height: '55%', width: '100%', direction: 'rtl', borderRadius: '10px'}}>
+                  <input style={{backgroundColor: '#111111', width: '95%', height: '100%', fontSize: 23, fontFamily: 'Montserrat', color: 'white', outline: 'none', direction: 'ltr', border: '0px', borderTopRightRadius: '10px', borderBottomRightRadius: '10px'}} value={'HAHAHAHAAHA'}>
+
+                  </input>
+                </div>
+              </div>
+              <div style={{backgroundColor: 'pink', height: '10%', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div style={{backgroundColor: '#0564ff', height: '100%', width: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 23, fontFamily: 'Montserrat', color: 'white', borderRadius: '10px'}}>
+                  Edit
+                </div>
+                <div style={{backgroundColor: '#00d60b', height: '100%', width: '40%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 23, fontFamily: 'Montserrat', color: 'white', borderRadius: '10px'}}>
+                  Save
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style={{backgroundColor: 'red', height: '100%', width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{backgroundColor: 'skyblue', height: '95%', width: '90%', display: 'flex', flexDirection: 'column'}}>
+              <div style={{backgroundColor: 'pink', height: '10%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: 30, fontFamily: 'Montserrat', color: 'white'}}>
+                Residence History
+              </div>
+              <div style={{backgroundColor: '#06b000', height: '70%', width: '100%'}}>
+
+              </div>
+              <div style={{backgroundColor: '#bf8d02', height: '10%', width: '100%'}}>
+                
+              </div>
+              <div style={{backgroundColor: '#a6b500', height: '10%', width: '100%'}}>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer className='border-0' style={{backgroundColor: '#2E2E2E'}}>
+        <div style={{height: '0.5vh', width: '100%', display: 'flex', justifyContent: 'center'}}>
         </div>
       </Modal.Footer>
     </Modal>
