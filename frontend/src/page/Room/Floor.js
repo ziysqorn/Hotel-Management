@@ -5,6 +5,9 @@ export const Floor = ({ ...props }) => {
   // useEffect(() => {
   //   console.log("work")
   // }, []);
+  const removePword = (item) => {
+    return item.slice(1);
+  };
   return (
     <div
       style={{
@@ -55,7 +58,7 @@ export const Floor = ({ ...props }) => {
             borderRadius: "3px",
           }}
         >
-          Floor No. {`01`}
+          Floor No. {removePword(props.floorIndex)}
         </p>
         <div></div>
       </div>
@@ -89,6 +92,7 @@ const SmallRoom = ({ item, index }) => {
       style={{
         width: "10%", //53px
         // maxWidth: "100px",
+        minWidth: "2vw",
         cursor: "pointer",
         height: "8%",
         backgroundColor: item.Status ? "#111111" : "#FF0000",

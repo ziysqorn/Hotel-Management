@@ -34,9 +34,9 @@ export const RoomsPage = () => {
     console.log(query);
     getData();
   }, []);
-  useEffect(() => {
-    getData();
-  }, [query]);
+    // useEffect(() => {
+    //   getData();
+    // }, [query]);
   return (
     <div
       className={`fade-in ${isVisible ? "visible" : ""}`}
@@ -47,8 +47,14 @@ export const RoomsPage = () => {
       >
         {/* input div */}
         <Searchbar
+          submitSearch={() => {
+            getData();
+          }}
           changeRoomType={(id) => {
             setQuery({ ...query, RoomTypeId: id });
+          }}
+          changeRoomName={(name) => {
+            setQuery({ ...query, RoomName: name });
           }}
         />
       </div>

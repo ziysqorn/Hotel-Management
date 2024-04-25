@@ -11,6 +11,8 @@ import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/EmployeesPage";
 import { myAppColor } from "./colors";
 
+
+
 function App() {
   return (
     <div
@@ -23,7 +25,10 @@ function App() {
         flexDirection: "column",
       }}
     >
-      <TopNavBar />
+      <TopNavBar/>
+
+
+
       <div style={{ display: "flex" }}>
         <LeftNavBar />
         <div
