@@ -220,3 +220,29 @@ export const getUserQuery = async (req, res) =>{
       }
 }
 
+// login user backend
+export const LoginUser = async (req, res) => {
+    let {item} = req.body;
+    let FinalQuery = `SELECT 
+                        e.FullName, 
+                        e.Phone, 
+                        e.PersonalId, 
+                        e.BirthDay, 
+                        e.FristDay, 
+                        e.Address, 
+                        e.position, 
+                        e.RolesId, 
+                        u.EmployeeId, 
+                        u.Password, 
+                        u.UserId
+                    FROM Employee e
+                    INNER JOIN Users u ON e.EmployeeId = u.EmployeeId 
+                    WHERE e.Phone = '${item.Phone}' AND u.Password = '${item.Password}'`;
+    try {
+        const data = await db(FinalQuery);
+        
+        res.json(data);
+      } catch (err) {
+        console.log(err);
+      }
+}

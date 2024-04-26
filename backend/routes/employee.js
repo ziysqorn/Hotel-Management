@@ -9,7 +9,8 @@ import {
     UpdateUser,
     DeleteUser,
     getUserQuery,
-    getUser} from "../controllers/employee.js";
+    getUser,
+    LoginUser} from "../controllers/employee.js";
 
 
 const router = express.Router();
@@ -25,7 +26,7 @@ router.post("/employ/updateUser", UpdateUser);
 router.post("/employ/deleteUser", DeleteUser);
 router.get("/employ/getuser", getUser);
 router.get("/employ/userquery", getUserQuery);
-
+router.post("/employ/loginuser", LoginUser);
 
 // router.get("/",getAll);
 // router.get("/query",getAllWithQuery);
