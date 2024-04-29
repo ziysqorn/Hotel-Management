@@ -1,0 +1,71 @@
+.table-container {
+    width: 80%; /* Độ rộng của bảng */
+    margin-left: auto; /* Căn lề trái tự động */
+    margin-right: auto; /* Căn lề phải tự động */
+    margin-top: 20px; /* Khoảng cách với phần trên cùng */
+  }
+  
+  /* Định dạng các dòng trong bảng */
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+  }
+  
+  /* Định dạng tiêu đề của bảng */
+  .table-container th {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng nội dung các ô trong bảng */
+  .table-container td {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng icon trong ô Actions */
+  .table-container td:last-child {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng input search */
+  .search-container {
+    position: absolute;
+    top: 4%;
+    left: 4%;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Định dạng button "Add Service" */
+  .add-service-container {
+    width: 200px;
+    height: 58px;
+    position: relative;
+    top: 5%;
+    right: 5%;
+  }
+  
+  .add-service-container .AddStudent {
+    width: 217px;
+    height: 58px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+  }
+  
+  .add-service-container .AddService {
+    position: absolute;
+    left: 26px;
+    top: 13px;
+    color: #00fff5;
+    font-size: 24px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+  
+  

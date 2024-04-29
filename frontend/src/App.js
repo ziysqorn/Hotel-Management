@@ -7,7 +7,7 @@ import { LeftNavBar } from "./component/LeftNavBar/LeftNavBar";
 import { AnalyticsPage } from "./page/AnalyticsPage";
 import { RoomsPage } from "./page/Room/RoomsPage.js";
 import { CustomersPage } from "./page/CustomersPage";
-import { ServicesPage } from "./page/ServicesPage";
+import { ServicesPage } from "./page/Service/ServicesPage.js";
 import { EmployeesPage } from "./page/EmployeesPage";
 import { myAppColor } from "./colors";
 
