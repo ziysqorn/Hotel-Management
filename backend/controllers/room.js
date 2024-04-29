@@ -147,23 +147,42 @@ export const CreateOrderRoom = async (req, res) => {
 // lấy room nào CÒN PHÒNG và cho thời gian cụ thể, có các filter thêm như RoomId và RoomTypeId
 export const getRoomWithDate = async (req, res) => {
   // input : ngày nhận phòng và ngày trả phòng
-  let {
-    CheckInDate,
-    ExpectedCheckOutDate,
-    RoomName,
-    RoomTypeId,
-  } = req.query;
+  let { CheckInDate, ExpectedCheckOutDate, RoomName, RoomTypeId } = req.query;
 
-  let finalQ = `     
-        SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
-        FROM Room
-            LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
-        WHERE ((OrderRoom.CheckInDate IS NULL)
-            OR NOT (
-                  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-                AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-              )) 
+  // let finalQ = `
+  //       SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
+  //       FROM Room
+  //           LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
+  //       WHERE ((OrderRoom.CheckInDate IS NULL)
+  //           OR NOT (
+  //                 (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  //               AND (OrderRoom.ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  //             ))
+  // `;
+  let finalQ = `SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
+                FROM Room
+                LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
+                WHERE OrderRoom.CheckInDate IS NULL
+                OR Room.RoomId NOT IN (
+                    SELECT DISTINCT RoomId
+                    FROM OrderRoom
+                    WHERE (CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+                    OR (ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+                );
   `;
+
+  // `SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
+  // FROM Room
+  // LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
+  // WHERE OrderRoom.CheckInDate IS NULL
+  // OR Room.RoomId NOT IN (
+  //     SELECT DISTINCT RoomId
+  //     FROM OrderRoom
+  //     WHERE (CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  //     OR (ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  // );
+  // `
+
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
   if (RoomTypeId) finalQ += `AND RoomTypeId = ${RoomTypeId} `;
 
@@ -187,13 +206,17 @@ export const getOrderRoomWithQuery = async (req, res) => {
   } = req.query;
 
   let finalQ = `SELECT ${
-    getAll ? `*` : `DISTINCT OrderRoom.RoomId, CheckInDate, ExpectedCHeckOutDat`
-  } FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-  AND (OrderRoom.ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `;
+    getAll
+      ? `* FROM OrderRoom`
+      : `DISTINCT OrderRoom.RoomId, CheckInDate, ExpectedCHeckOutDate
+   FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
+  AND (OrderRoom.ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `
+  }`;
   if (CustomerId) finalQ += ` AND CustomerId = ${CustomerId}`;
   if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
   if (RoomName) finalQ += ` AND RoomId Like '%${RoomName}%'`;
   finalQ += `;`;
+  // console.log(finalQ, getAll);
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -302,15 +325,15 @@ export const UpdateOrderRoom = async (req, res) => {
 };
 
 export const ReadOrderRoom = async (req, res) => {
-  let {pageIndex,pageAmount} = req.query
+  let { pageIndex, pageAmount } = req.query;
 
   let finalQ = `SELECT * FROM OrderRoom LIMIT  `;
-  if(pageAmount){
-    finalQ += `${pageAmount}`
-  }else finalQ += `${pageAmount}`
-  if(pageIndex){
-    finalQ += ` OFFSET ${pageIndex}`
-  } else finalQ += ` OFFSET 0`
+  if (pageAmount) {
+    finalQ += `${pageAmount}`;
+  } else finalQ += `${pageAmount}`;
+  if (pageIndex) {
+    finalQ += ` OFFSET ${pageIndex}`;
+  } else finalQ += ` OFFSET 0`;
   try {
     const data = await db(finalQ);
     res.json(data);
@@ -377,5 +400,3 @@ export const DeleteRoomType = async (req, res) => {
     console.log(err);
   }
 };
-
-
