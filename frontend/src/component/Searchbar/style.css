@@ -1,0 +1,65 @@
+.cover-left {
+  width: 100%;
+  background: transparent;
+
+  position: relative;
+}
+
+.normal-cover {
+  /* background: rgba(0, 173, 181, 0.5); */
+
+  width: 100%;
+  /* background: transparent; */
+  /* opacity: 1; */
+  position: relative;
+}
+.normal-cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translate(50%, 0);
+  bottom: 0;
+  width: 50%;
+  /* transform: translate(-50%, 0); */
+  background: rgba(0, 173, 181, 0.5);
+  border-radius: 1rem 1rem 1rem 1rem;
+  z-index: -1;
+}
+
+.cover-right {
+  /* background: transparent; */
+  /* background: rgba(0, 173, 181, 0.5); */
+  position: relative;
+}
+.cover-right::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 70%;
+  background: rgba(0, 173, 181, 0.5);
+  border-radius: 1rem 0 0 1rem;
+  z-index: -1;
+}
+.cover-left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 24%;
+  bottom: 0;
+  left: 0;
+  background: rgba(
+    0,
+    173,
+    181,
+    0.5
+  ); /* Màu nền có độ trong suốt 50% cho phần bên phải */
+  z-index: -1;
+  border-radius: 0 1rem 1rem 0;
+}
+.full-cover {
+  background: rgba(0, 173, 181, 0.5);
+}

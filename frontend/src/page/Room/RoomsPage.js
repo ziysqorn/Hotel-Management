@@ -14,29 +14,45 @@ export const RoomsPage = () => {
     RoomId: null,
     RoomName: null,
     Status: null,
+    ExpectedCheckOutDate: null,
+    CheckInDate: null,
   });
 
   const getData = () => {
-    axios
-      .get("http://localhost:4000/api/room/query", {
-        params: query,
-      })
-      .then((item) => {
-        console.log(item.data);
-        setData(item.data.recordset);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(query);
+    if (query.CheckInDate && query.ExpectedCheckOutDate) {
+      axios
+        .get("http://localhost:4000/api/room/getRoomWithDate", {
+          params: query,
+        })
+        .then((item) => {
+          console.log(item.data);
+          setData(item.data.recordset);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else
+      axios
+        .get("http://localhost:4000/api/room/query", {
+          params: query,
+        })
+        .then((item) => {
+          console.log(item.data);
+          setData(item.data.recordset);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
   useEffect(() => {
     console.log(window.location.pathname);
     console.log(query);
     getData();
   }, []);
-    // useEffect(() => {
-    //   getData();
-    // }, [query]);
+  // useEffect(() => {
+  //   getData();
+  // }, [query]);
   return (
     <div
       className={`fade-in ${isVisible ? "visible" : ""}`}
@@ -49,12 +65,23 @@ export const RoomsPage = () => {
         <Searchbar
           submitSearch={() => {
             getData();
+            console.log(query);
           }}
           changeRoomType={(id) => {
             setQuery({ ...query, RoomTypeId: id });
           }}
           changeRoomName={(name) => {
             setQuery({ ...query, RoomName: name });
+          }}
+          changeRoomDate={(item) => {
+            console.log(item);
+            if (item) {
+              setQuery({
+                ...query,
+                CheckInDate: `${item.startDate.year}-${item.startDate.month}-${item.startDate.date}`,
+                ExpectedCheckOutDate: `${item.endDate.year}-${item.endDate.month}-${item.endDate.date}`,
+              });
+            }
           }}
         />
       </div>
