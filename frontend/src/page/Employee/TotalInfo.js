@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Design.css";
 
 export const Total_Info = () => {
+  const [isWindowOpen, setIswindowOpen] = useState(false);
+
   return (
     <div
       className="Top-info"
@@ -91,10 +93,27 @@ export const Total_Info = () => {
           onClick={() => {
             // Xử lý khi click
             console.log("added");
+            setIswindowOpen(true);  
+            // setIswindowOpen(!isWindowOpen);
           }}
         >
           + Add Employees
         </div>
+
+        {isWindowOpen && (
+          <div
+
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: "40vw",
+              height: "40vw",
+              background: "white",
+            }}
+          ></div>
+        )}
+
         <div
           className="Btn-remove"
           style={{
