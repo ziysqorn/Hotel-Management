@@ -207,7 +207,7 @@ export const getOrderRoomWithQuery = async (req, res) => {
 
   let finalQ = `SELECT ${
     getAll
-      ? `* FROM OrderRoom`
+      ? `* FROM OrderRoom WHERE RoomId IS NOT NULL`
       : `DISTINCT OrderRoom.RoomId, CheckInDate, ExpectedCHeckOutDate
    FROM OrderRoom WHERE  (OrderRoom.CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
   AND (OrderRoom.ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') `
