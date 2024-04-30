@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { UsersBox } from "./UsersBox";
 import { Employee_Box } from "./EmployeeBox";
 import { Roles_Box } from "./RolesBox";
@@ -10,8 +8,8 @@ export const UsersInfo = () => {
     <div
       className="Bottom-info"
       style={{
-        width: "100%",
-        height: "75%",
+        width: "75vw",
+        height: "60vh",
         marginTop: "2%",
         display: "flex",
         justifyContent: "space-around",

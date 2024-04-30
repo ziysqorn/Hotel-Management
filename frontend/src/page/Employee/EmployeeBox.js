@@ -9,7 +9,7 @@ export const Employee_Box = () => {
     <div
       className="Employee-box"
       style={{
-        width: "35%",
+        width: "25.5vw",
         color: "pink",
         background: "#2E2E2E",
         borderRadius: 10,
@@ -28,7 +28,7 @@ export const Employee_Box = () => {
       <div
         className="employee-searchbar"
         style={{
-          height: "14%",
+          height: "6vh",
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
@@ -39,9 +39,9 @@ export const Employee_Box = () => {
           style={{
             borderRadius: 5,
             background: "black",
-            width: "60%",
+            width: "15vw",
             paddingLeft: "3px",
-            height: "70%",
+            height: "5vh",
             display: "flex",
             alignItems: "center",
             marginRight: "5px",
@@ -54,7 +54,7 @@ export const Employee_Box = () => {
               color: "white",
               fontSize: 13,
               paddingLeft: "5px",
-              width: "10%",
+              width: "5vw",
             }}
           />
           <input
@@ -62,7 +62,7 @@ export const Employee_Box = () => {
             style={{
               background: "black",
               border: "black solid 2px",
-              width: "85%",
+              width: "15vw",
               borderRadius: 5,
             }}
             placeholder="Search ..."

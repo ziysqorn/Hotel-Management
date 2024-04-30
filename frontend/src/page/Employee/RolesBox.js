@@ -7,7 +7,7 @@ export const Roles_Box = () => {
     <div
       className="Roles-Box"
       style={{
-        width: "25%",
+        width: "18vw",
         background: "#2E2E2E",
         borderRadius: 10,
       }}

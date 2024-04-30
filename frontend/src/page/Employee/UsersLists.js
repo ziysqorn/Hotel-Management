@@ -8,7 +8,7 @@ import {
   faUserCircle,
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-const url = null;
+
 export const UsersLists = () => {
   let items = ["john", "sanra", "Tomuya", "Linda", "Phap", "Davinci"];
   const [currentTime, setCurrentTime] = useState(

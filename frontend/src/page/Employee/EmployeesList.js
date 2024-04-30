@@ -55,7 +55,7 @@ export const EmployeesList = () => {
           >
             <div
               style={{
-                width: "100%",
+                width: "22vw",
                 display: "flex",
                 margin: "5px",
                 alignItems: "center",
@@ -64,7 +64,7 @@ export const EmployeesList = () => {
             >
               <div
                 style={{
-                  width: "70%",
+                  width: "15vw",
                   display: "flex",
                   alignItems: "center",
                 }}
@@ -84,14 +84,14 @@ export const EmployeesList = () => {
             <div style={{ marginLeft: "5%", fontSize: "14px", padding: "2%" }}>
               {employee.phone}
             </div>
-            <div style={{ display: "flex", width: "100%" }}>
+            <div style={{ display: "flex", width: "20vw" }}>
               <div
                 style={{
                   padding: "2px",
                   borderRadius: 5,
                   marginLeft: "5%",
                   fontSize: "13px",
-                  width: "20%",
+                  width: "4.5vw",
                   alignItems: "center",
                   border: "solid #2E2E2E 1px",
                 }}

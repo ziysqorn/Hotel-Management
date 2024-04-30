@@ -21,7 +21,7 @@ export const Roles_List = () => {
               margin: "5px",
             }}
           >
-            <div style={{ width: "70%", marginLeft: "5%" }}>{item}</div>
+            <div style={{ width: "11vw", marginLeft: "5%" }}>{item}</div>
             <div className="user-actions" style={{ display: "flex" }}>
               <FontAwesomeIcon
                 icon={faPenToSquare}
