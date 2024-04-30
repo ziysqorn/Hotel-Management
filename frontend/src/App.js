@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Apitest from "./apitest.js";
 import { TopNavBar } from "./component/TopNavbar/TopNavBar";
 import { LeftNavBar } from "./component/LeftNavBar/LeftNavBar";
@@ -14,11 +14,13 @@ import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom";
 export const MainContext = React.createContext("undefined");
 
 function App() {
+  const [context, setContext] = useState();
   useEffect(() => {
     // console.log(this.context);
+    setContext({ customerId: 1 });
   }, []);
   return (
-    <MainContext.Provider value={{ CustomerId: 1 }}>
+    <MainContext.Provider value={[context, setContext]}>
       <div
         className="App"
         style={{
