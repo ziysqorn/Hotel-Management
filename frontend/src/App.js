@@ -8,7 +8,7 @@ import { AnalyticsPage } from "./page/AnalyticsPage";
 import { RoomsPage } from "./page/Room/RoomsPage.js";
 import { CustomersPage } from "./page/CustomersPage";
 import { ServicesPage } from "./page/ServicesPage";
-import { EmployeesPage } from "./page/EmployeesPage";
+import { EmployeesPage } from "./page/Employee/EmployeesPage.js";
 import { myAppColor } from "./colors";
 
 function App() {

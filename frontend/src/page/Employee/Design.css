@@ -1,0 +1,38 @@
+.Btn-add:hover, .Btn-remove:hover, .employee-filter:hover, .BtnAddUser:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    
+}
+.faEye:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+.Employee-box, .Users-Box, .Roles-Box {
+    overflow: hidden; 
+  }
+.employees-list, .users-list, .role-list {
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #2E2E2E;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color:  #111111;
+    border-radius: 4px; 
+  }
+.faTrashCan:hover {
+    color: #FF0000;
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+.faPenToSquare:hover { 
+    color: #00ADB5;
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
