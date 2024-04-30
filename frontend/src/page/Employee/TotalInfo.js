@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Design.css";
 
 export const Total_Info = () => {
@@ -93,7 +93,7 @@ export const Total_Info = () => {
           onClick={() => {
             // Xử lý khi click
             console.log("added");
-            setIswindowOpen(true);  
+            setIswindowOpen(true);
             // setIswindowOpen(!isWindowOpen);
           }}
         >
@@ -101,17 +101,13 @@ export const Total_Info = () => {
         </div>
 
         {isWindowOpen && (
-          <div
-
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              width: "40vw",
-              height: "40vw",
-              background: "white",
+          <ChildComponent
+            data={"jbdhbd"}
+            onExit={(item) => {
+              console.log("exit from child", item);
+              setIswindowOpen(false);
             }}
-          ></div>
+          />
         )}
 
         <div
@@ -136,5 +132,27 @@ export const Total_Info = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const ChildComponent = ({ onExit, ...Props }) => {
+  // Props.dat
+  useEffect(() => {
+    console.log(Props);
+  }, []);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        width: "40vw",
+        height: "40vw",
+        background: "white",
+      }}
+      onClick={() => {
+        onExit("fk thie s");
+      }}
+    ></div>
   );
 };
