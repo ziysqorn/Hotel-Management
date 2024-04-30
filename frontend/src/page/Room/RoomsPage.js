@@ -81,6 +81,12 @@ export const RoomsPage = () => {
                 CheckInDate: `${item.startDate.year}-${item.startDate.month}-${item.startDate.date}`,
                 ExpectedCheckOutDate: `${item.endDate.year}-${item.endDate.month}-${item.endDate.date}`,
               });
+            } else {
+              setQuery({
+                ...query,
+                CheckInDate: null,
+                ExpectedCheckOutDate: null,
+              });
             }
           }}
         />
@@ -132,6 +138,9 @@ export const RoomsPage = () => {
               flex: "0 0 calc(45% - 40px)",
               minHeight: "40vh",
               margin: "20px",
+            }}
+            onClick={function () {
+              console.log("fk this sheet");
             }}
           >
             <Floor data={data} floorIndex={"P4"} />

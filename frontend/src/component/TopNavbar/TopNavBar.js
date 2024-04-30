@@ -1,13 +1,15 @@
-import React, { useState} from "react";
+import React, { useContext, useState } from "react";
 import appLogo from "../../app-logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { faBell, faL, faUser } from "@fortawesome/free-solid-svg-icons";
 import { myAppColor } from "../../colors.js";
+import {MainContext} from "../../App.js"
 import "./style.css";
 // import Fonta
 export const TopNavBar = () => {
   const [isHover, setIsHover] = useState([false, false, false]);
+  const { context, setContext } = useContext(MainContext);
   // useParams(()=>{
   //   console.log("sthgn change");
   // })
@@ -41,7 +43,7 @@ export const TopNavBar = () => {
             // justifyContent:""
           }}
         >
-          <img style={{ width:"100%", height: "100%" }} src={appLogo} />
+          <img style={{ width: "100%", height: "100%" }} src={appLogo} />
         </div>
         <p
           style={{
@@ -56,7 +58,15 @@ export const TopNavBar = () => {
         </p>
       </div>
       {/* Start of top nav  */}
-      <div className="Right" style={{ display: "flex", marginRight: "30px",height:"100%" ,alignItems:"center" }}>
+      <div
+        className="Right"
+        style={{
+          display: "flex",
+          marginRight: "30px",
+          height: "100%",
+          alignItems: "center",
+        }}
+      >
         <div
           onMouseEnter={() => {
             setIsHover([true, false, false]);

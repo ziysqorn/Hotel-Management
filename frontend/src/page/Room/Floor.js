@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { myAppColor } from "../../colors";
 import "./style.css";
+// import { MonthCalendar } from "../../component/Searchbar/Searchbar";
+import { MonthCalendar } from "../../component/Searchbar/MonthCalender";
 export const Floor = ({ ...props }) => {
-  // useEffect(() => {
-  //   console.log("work")
-  // }, []);
+  const [date, setDate] = useState({
+    year: 2024,
+    month: 5,
+  });
+  const [roomDetailData, setRoomDetailData] = useState({});
+  const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
   const removePword = (item) => {
     return item.slice(1);
   };
+  const currentDate = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Tháng bắt đầu từ 0, nên cần cộng thêm 1
+    const date = now.getDate();
+
+    return { year, month, date };
+  };
+
+  useEffect(() => {
+    console.log(currentDate());
+    setDate(currentDate());
+  }, []);
   return (
     <div
       style={{
@@ -74,15 +92,52 @@ export const Floor = ({ ...props }) => {
         {props.data.map(
           (item, index) =>
             item.RoomId.includes(props.floorIndex) && (
-              <SmallRoom key={index} index={index} item={item} />
+              <SmallRoom
+                key={index}
+                index={index}
+                item={item}
+                openDetail={(item) => {
+                  console.log(item);
+                  setRoomDetailData(item);
+                  setIsDetailWindowOpen(true);
+                }}
+              />
             )
         )}
       </div>
+      {isDetailWindowOpen && (
+        <MonthCalendar
+          year={date.year}
+          month={date.month}
+          mode={"detail"}
+          item={roomDetailData}
+          changeDate={(item) => {
+            console.log(item);
+            if (item === "+") {
+              setDate({
+                ...date,
+                month: date.month + 1 >= 13 ? 1 : date.month + 1,
+                year: date.month + 1 >= 13 ? date.year + 1 : date.year,
+              });
+            } else if (item === "-") {
+              setDate({
+                ...date,
+                month: date.month - 1 <= 0 ? 12 : date.month - 1,
+                year: date.month - 1 <= 0 ? date.year - 1 : date.year,
+              });
+            }
+          }}
+          exitWindow={(item) => {
+            console.log(`handle close window`, item);
+            setIsDetailWindowOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 };
 
-const SmallRoom = ({ item, index }) => {
+const SmallRoom = ({ item, index, openDetail }) => {
   const removePword = (item) => {
     return item.slice(1);
   };
@@ -102,6 +157,10 @@ const SmallRoom = ({ item, index }) => {
         margin: "1px 5px",
         padding: "4px 8px",
         borderRadius: "8px",
+      }}
+      onClick={() => {
+        // console.log(`open room detail ${item.RoomId}`, item);
+        openDetail(item);
       }}
     >
       <p
