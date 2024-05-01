@@ -58,9 +58,7 @@ export const RoomsPage = () => {
       className={`fade-in ${isVisible ? "visible" : ""}`}
       style={{ display: "flex", width: "100%", flexDirection: "column" }}
     >
-      <div
-        style={{ width: "100%", minHeight: "15vh", border: "1px solid white" }}
-      >
+      <div style={{ width: "100%", minHeight: "15vh" }}>
         {/* input div */}
         <Searchbar
           submitSearch={() => {

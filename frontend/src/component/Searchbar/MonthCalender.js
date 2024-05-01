@@ -17,7 +17,7 @@ export const MonthCalendar = ({
   exitWindow,
 }) => {
   const navigate = useNavigate();
-  const { Context, setContext } = useContext(MainContext);
+  const [context, setContext] = useContext(MainContext);
   // mode relate
   const [totalCost, setTotalCost] = useState(5000000);
   const [ocupieData, setOcupieData] = useState([]);
@@ -608,7 +608,12 @@ export const MonthCalendar = ({
                 console.log(
                   `fucking order this order with roomid: ${item.RoomId}`
                 );
-                console.log(Context);
+                console.log(context);
+                setContext({
+                  ...context,
+                  OrderRoomInfo: { roomInfo: item, DateInfo: choseDay },
+                });
+                navigate("/rooms/orderroom")
               }}
             >
               <p
@@ -621,6 +626,7 @@ export const MonthCalendar = ({
                   borderRadius: "1vh",
                   cursor: "pointer",
                 }}
+
               >
                 Booking
               </p>

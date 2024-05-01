@@ -17,7 +17,7 @@ function App() {
   const [context, setContext] = useState();
   useEffect(() => {
     // console.log(this.context);
-    setContext({ customerId: 1 });
+    setContext({ customerInfo: { customerId: 1 } });
   }, []);
   return (
     <MainContext.Provider value={[context, setContext]}>
