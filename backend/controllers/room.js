@@ -162,13 +162,13 @@ export const getRoomWithDate = async (req, res) => {
   let finalQ = `SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
                 FROM Room
                 LEFT JOIN OrderRoom ON Room.RoomId = OrderRoom.RoomId
-                WHERE OrderRoom.CheckInDate IS NULL
+                WHERE (OrderRoom.CheckInDate IS NULL
                 OR Room.RoomId NOT IN (
                     SELECT DISTINCT RoomId
                     FROM OrderRoom
                     WHERE (CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
                     OR (ExpectedCheckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}')
-                );
+                ))
   `;
 
   // `SELECT DISTINCT Room.RoomId, Room.RoomTypeId, Room.Status, Room.Phone
@@ -184,7 +184,7 @@ export const getRoomWithDate = async (req, res) => {
   // `
 
   if (RoomName) finalQ += ` AND Room.RoomId LIKE '%${RoomName}%' `;
-  if (RoomTypeId) finalQ += `AND RoomTypeId = ${RoomTypeId} `;
+  if (RoomTypeId) finalQ += `AND Room.RoomTypeId = ${RoomTypeId} `;
 
   finalQ += `;`;
   try {
@@ -201,6 +201,7 @@ export const getOrderRoomWithQuery = async (req, res) => {
     ExpectedCheckOutDate,
     CustomerId,
     StayCustomerId,
+    RoomTypeId,
     RoomName,
     getAll,
   } = req.query;
@@ -214,6 +215,7 @@ export const getOrderRoomWithQuery = async (req, res) => {
   }`;
   if (CustomerId) finalQ += ` AND CustomerId = ${CustomerId}`;
   if (StayCustomerId) finalQ += ` AND StayCustomerId = ${StayCustomerId}`;
+  if (StayCustomerId) finalQ += ` AND RoomTypeId = ${RoomTypeId}`;
   if (RoomName) finalQ += ` AND RoomId Like '%${RoomName}%'`;
   finalQ += `;`;
   // console.log(finalQ, getAll);
