@@ -18,6 +18,10 @@ function App() {
   useEffect(() => {
     // console.log(this.context);
     setContext({ customerInfo: { customerId: 1 } });
+    if (!localStorage.getItem("OrdersInfo")) {
+      console.log("reset for no retion");
+      localStorage.setItem("OrdersInfo", "[]");
+    }
   }, []);
   return (
     <MainContext.Provider value={[context, setContext]}>

@@ -1,0 +1,20 @@
+.leftBorder {
+  width: 1px;
+    border: 2px solid white; /* Tạo đường viền cho div */
+  position: relative; 
+  /* Đặt vị trí tương đối cho div */
+}
+
+.leftBorder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /* width: 50%; Chiều rộng của đường viền bên phải được tô màu */
+  background: linear-gradient(
+    to bottom,
+    white 50%,
+    transparent 50%
+  ); /* Tạo hiệu ứng tô màu */
+}

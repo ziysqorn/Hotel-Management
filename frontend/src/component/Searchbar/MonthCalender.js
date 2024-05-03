@@ -15,6 +15,9 @@ export const MonthCalendar = ({
   mode,
   item,
   exitWindow,
+  position,
+  ajust,
+  exitWithSave,
 }) => {
   const navigate = useNavigate();
   const [context, setContext] = useContext(MainContext);
@@ -98,17 +101,7 @@ export const MonthCalendar = ({
   const checkIfOcupie = (data, item) => {
     let result = false;
     console.log(item);
-    if (item.date == 12) {
-      console.log(new Date(item.year, item.month - 1, item.date).getTime());
-      console.log(
-        new Date(item.year, item.month - 1, item.date + 1).getTime() >=
-          new Date("2024-04-06T00:00:00.000Z").getTime() &&
-          new Date(item.year, item.month - 1, item.date + 1).getTime() <=
-            new Date("2024-04-12T00:00:00.000Z").getTime()
-      );
-      console.log(new Date("2024-04-12T00:00:00.000Z").getTime());
-      console.log(new Date(item.year, item.month - 1, item.date).getTime());
-    }
+
     data.map((data_item) => {
       let value = new Date(item.year, item.month - 1, item.date + 1).getTime();
       if (
@@ -244,7 +237,7 @@ export const MonthCalendar = ({
           top: mode == "detail" ? "15vh" : "30vh",
           left: "50%",
           cursor: "pointer",
-          transform: "translate(-50%,-100%)",
+          transform: "translate(-50%,0)",
           borderRadius: mode == "detail" ? "1vh" : "2vh",
           // margin:mode == "detail" ? "1vh" : "2vh",
           zIndex: 5,
@@ -273,7 +266,8 @@ export const MonthCalendar = ({
           // paddingBottom: "2vh",
           opacity: 1,
           position: "absolute",
-          top: mode == "detail" ? "60%" : "50%",
+          top:
+            position != null ? position.top : mode == "detail" ? "62%" : "50%",
           left: "50%",
           transform: "translate(-50%,-100%)",
           borderRadius: "1vh",
@@ -609,11 +603,15 @@ export const MonthCalendar = ({
                   `fucking order this order with roomid: ${item.RoomId}`
                 );
                 console.log(context);
-                setContext({
-                  ...context,
-                  OrderRoomInfo: { roomInfo: item, DateInfo: choseDay },
-                });
-                navigate("/rooms/orderroom")
+                if (ajust) {
+                  exitWithSave(choseDay);
+                } else {
+                  setContext({
+                    ...context,
+                    OrderRoomInfo: { roomInfo: item, DateInfo: choseDay },
+                  });
+                  navigate("/rooms/orderroom");
+                }
               }}
             >
               <p
@@ -626,9 +624,8 @@ export const MonthCalendar = ({
                   borderRadius: "1vh",
                   cursor: "pointer",
                 }}
-
               >
-                Booking
+                {ajust ? "Save" : "Booking"}
               </p>
             </div>
           </div>
