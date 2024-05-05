@@ -10,7 +10,7 @@ import { CustomersPage } from "./page/CustomersPage";
 import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/EmployeesPage";
 import { myAppColor } from "./colors";
-import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom";
+import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom.js";
 export const MainContext = React.createContext("undefined");
 
 function App() {

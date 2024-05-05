@@ -11,11 +11,15 @@ export const get = async (req, res) => {
 };
 
 export const getWithQuery = async (req, res) => {
-  let { serviceid } = req.query;
+  let { serviceid, Name } = req.query;
   let FinalQuery = "SELECT * FROM Service WHERE NOT(Service.ServiceId IS NULL)";
 
   if (serviceid) {
     FinalQuery += ` AND ServiceId = ${serviceid}`;
+  }
+
+  if (Name) {
+    FinalQuery += ` AND Name LIKE '%${Name}%'`;
   }
 
   FinalQuery += `;`;

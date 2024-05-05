@@ -112,7 +112,6 @@ export const Floor = ({ ...props }) => {
           mode={"detail"}
           item={roomDetailData}
           changeDate={(item) => {
-            console.log(item);
             if (item === "+") {
               setDate({
                 ...date,
