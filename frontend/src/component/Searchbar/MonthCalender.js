@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useContext } from "react";
-import { getAllOrderRoomWithRoomId } from "../apicalls";
+import { getRoomInfoWithRoomId } from "../apicalls";
 import {
   faCalendar,
   faChevronLeft,
@@ -32,6 +32,7 @@ export const MonthCalendar = ({
     endDate: { date: 0, month: month, year: year },
   });
   const [isChoseDate, setIsChoseDate] = useState([true, false]);
+  const [roomInfo, setRoomInfo] = useState();
 
   function getDaysInMonthAndDayOfWeek(year, month) {
     const daysInMonth = new Date(year, month, 0).getDate(); // Số ngày trong tháng
@@ -77,10 +78,7 @@ export const MonthCalendar = ({
       console.log(item);
       const data = await getAllOrderRoomWithRoomId(item.RoomId);
       console.log(data.recordset);
-      // console.log(new Date(data.recordset[0].CheckInDate).getDay());
-      // console.log(
-      //   checkIfOcupie(data.recordset, { date: 3, month: 3, year: 2024 })
-      // );
+
       setOcupieData(data.recordset);
     } catch (e) {
       console.log(e);
@@ -115,33 +113,28 @@ export const MonthCalendar = ({
     return result;
   };
 
+  const getRoomInfo = async () => {
+    try {
+      const data = await getRoomInfoWithRoomId(item.RoomId);
+      console.log(data.recordset[0]);
+      setRoomInfo(data.recordset[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
+    console.log(item);
     if (mode == "detail") {
       console.log("work");
       getOcupie(item);
-
-      //  setOcupieData()
-      // console.log();
-      // console.log(
-      //   toDate({ date: 4, month: 5, year: 2024 }) >=
-      //     new Date("2024-04-01T00:00:00.000Z").getTime()
-      // );
-      // console.log(toDate({ date: 4, month: 4, year: 2024 }));
-      // console.log(new Date("2024-04-01T00:00:00.000Z").getTime());
-      // console.log(new Date("2024-04-30T00:00:00.000Z").getTime());
-      // console.log(
-      //   new Date("2024-04-01T00:00:00.000Z").getTime() >=
-      //     toDate({ date: 4, month: 5, year: 2024 }) &&
-      //     new Date("2024-04-30T00:00:00.000Z").getTime() <=
-      //       toDate({ date: 4, month: 5, year: 2024 })
-      // );
-      // console.log(checkIfOcupie(data, { date: 7, month: 4, year: 2024 }));
-      // console.log(new Date("2024-05-10T00:00:00.000Z"));
-      // console.log();
       console.log(item);
     }
     setData(getDaysInMonthAndDayOfWeek(year, month));
   }, [year, month, choseDay]);
+
+  useEffect(() => {
+    getRoomInfo();
+  }, []);
   // highlight nhiều ô
   const checkIfChoseHighLight = (startDate, endDate, date, index) => {
     // trường hợp trùng start date
@@ -224,37 +217,7 @@ export const MonthCalendar = ({
         }}
       ></div>
       {/* closing sign */}
-      <div
-        className="fade-in"
-        style={{
-          backgroundColor: "#353535",
-          color: "white",
-          minWidth: "2vw",
-          minHeight: "2vw",
-          // paddingBottom: "2vh",
-          opacity: 1,
-          position: "absolute",
-          top: mode == "detail" ? "15vh" : "30vh",
-          left: "50%",
-          cursor: "pointer",
-          transform: "translate(-50%,0)",
-          borderRadius: mode == "detail" ? "1vh" : "2vh",
-          // margin:mode == "detail" ? "1vh" : "2vh",
-          zIndex: 5,
-          fontSize: "1vw",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onClick={() => {
-          // console.log("handle exit");
-          console.log(choseDay);
-          exitWindow(choseDay);
-        }}
-      >
-        {mode == "detail" && <p>{item.RoomId}</p>}
-        {mode != "detail" && <FontAwesomeIcon icon={faCalendar} />}
-      </div>
+
       {/* main container */}
       <div
         // className="fade-in"
@@ -274,6 +237,37 @@ export const MonthCalendar = ({
           zIndex: 4,
         }}
       >
+        <div
+          className="fade-in"
+          style={{
+            backgroundColor: "#353535",
+            color: "white",
+            minWidth: "2vw",
+            minHeight: "2vw",
+            // paddingBottom: "2vh",
+            opacity: 1,
+            position: "absolute",
+            top: mode == "detail" ? "-10%" : "30vh",
+            left: "50%",
+            cursor: "pointer",
+            transform: "translate(-50%,0)",
+            borderRadius: mode == "detail" ? "1vh" : "2vh",
+            // margin:mode == "detail" ? "1vh" : "2vh",
+            zIndex: 5,
+            fontSize: "1vw",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => {
+            console.log(choseDay);
+            exitWindow(choseDay);
+            console.log(item);
+          }}
+        >
+          {mode == "detail" && <p>{item.RoomId}</p>}
+          {mode != "detail" && <FontAwesomeIcon icon={faCalendar} />}
+        </div>
         {/* top part of main container */}
         <div
           style={{
@@ -340,9 +334,6 @@ export const MonthCalendar = ({
             paddingBottom: "2vh",
             opacity: 1,
             position: "absolute",
-            // top: "50%",
-            // left: "50%",
-            // transform: "translate(-50%,-50%)",
             borderRadius: "1vh",
             zIndex: 4,
           }}
@@ -492,14 +483,8 @@ export const MonthCalendar = ({
                     >
                       <p
                         style={{
-                          // opacity: 1,
-                          // padding: "1vh",
-                          // margin: "auto",
                           width: "50%",
                           height: "3vh",
-
-                          // textAlign:"center",
-                          // height:"50%",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -517,9 +502,6 @@ export const MonthCalendar = ({
                               ? "#00ADB5"
                               : "transparent",
                           borderRadius: "1rem 1rem 1rem 1rem",
-
-                          // background: "blue",""
-                          // backgroundColor: "#00ADB5"
                         }}
                         onClick={() => {
                           if (isChoseDate[1]) {

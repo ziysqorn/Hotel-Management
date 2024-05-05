@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { faBell, faL, faUser } from "@fortawesome/free-solid-svg-icons";
 import { myAppColor } from "../../colors.js";
-import {MainContext} from "../../App.js"
+import { MainContext } from "../../App.js";
 import "./style.css";
+import { Navigate, useNavigate } from "react-router-dom";
 // import Fonta
 export const TopNavBar = () => {
   const [isHover, setIsHover] = useState([false, false, false]);
   const { context, setContext } = useContext(MainContext);
+  const navigate = useNavigate();
   // useParams(()=>{
   //   console.log("sthgn change");
   // })
@@ -88,6 +90,9 @@ export const TopNavBar = () => {
             transform: `translateY(${isHover[0] ? "-5px" : "0"})`,
             opacity: isHover[0] ? 1 : 0.8,
             transition: "all 0.3s ease-in-out",
+          }}
+          onClick={() => {
+            navigate("/rooms/orderroom");
           }}
         >
           <FontAwesomeIcon

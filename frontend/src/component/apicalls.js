@@ -69,6 +69,20 @@ export const getServiceInfoWithQuery = async (query) => {
   }
 };
 
+export const getRoomInfoWithRoomId = async (id) => {
+  console.log(id);
+  try {
+    const { data } = await axios.get(`http://localhost:4000/api/room/query`, {
+      params: {
+        RoomId: id,
+      },
+    });
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
+
 export const OrderRooms = async (list, cusInfo, UserId) => {
   console.log(list);
   console.log(cusInfo);
@@ -111,7 +125,7 @@ export const OrderRooms = async (list, cusInfo, UserId) => {
         });
       } catch (e) {
         console.log(e);
-        return e
+        return e;
       }
     });
   });

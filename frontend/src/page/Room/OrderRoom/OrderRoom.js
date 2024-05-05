@@ -360,10 +360,11 @@ export const OrderRoom = () => {
               {/* 1 item */}
               <AllOrderRoomHeader />
               {allOrderRoom.length &&
-                allOrderRoom.map((item) => {
+                allOrderRoom.map((item,index) => {
                   return (
                     item && (
                       <RoomNumOfPeopleDate
+                      key={index}
                         RoomId={item.RoomId}
                         numofmen={5}
                         startDate={`${item.startDate.date}/${item.startDate.month}/${item.startDate.year}`}
@@ -411,7 +412,7 @@ export const OrderRoom = () => {
           mode={"detail"}
           item={{ RoomId: chosenRoom.RoomId }}
           ajust={true}
-          position={{ top: "65%" }}
+          position={{ top: "50%" }}
           changeDate={(item) => {
             handleChangeDate(item);
           }}
