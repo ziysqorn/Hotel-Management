@@ -1,9 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { Delete_Confirm } from "./Modal/DeleteConfirm";
+import { AddEmployeeModal } from "./Modal/AddEmployee";
 import "./Design.css";
 
 export const Total_Info = () => {
-  const [isWindowOpen, setIswindowOpen] = useState(false);
+  const [isAddEmployOpen, setIsAddEmployOpen] = useState(false);
+  const [deleteWindow, setdeleteWindow] = useState(false);
   return (
     <div
       className="Top-info"
@@ -90,26 +93,10 @@ export const Total_Info = () => {
             marginBottom: "5px",
             cursor: "pointer",
           }}
-          onClick={() => {
-            // Xử lý khi click
-            console.log("added");
-            setIswindowOpen(true);
-          }}
+          onClick={() => setIsAddEmployOpen(true)}
         >
           + Add Employees
         </div>
-        {isWindowOpen && (
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              width: "40vw",
-              height: "40vw",
-              background: "white",
-            }}
-          ></div>
-        )}
 
         <div
           className="Btn-remove"
@@ -124,15 +111,20 @@ export const Total_Info = () => {
             alignItems: "center",
             cursor: "pointer",
           }}
-          onClick={() => {
-            // Xử lý khi click
-            console.log("removed");
-          }}
+          mode = "delete-employee"
+          onClick={() => setdeleteWindow(true)}
         >
-          {" "}
           Remove Employees
         </div>
       </div>
+      <AddEmployeeModal
+        AddEmployeeIsOpen={isAddEmployOpen}
+        AddEmployeeOnClose={() => setIsAddEmployOpen(false)}
+      />
+     <Delete_Confirm
+        isDelWindowOpen={deleteWindow}
+        onDelWindowClose={() => setdeleteWindow(false)}
+      />
     </div>
   );
 };

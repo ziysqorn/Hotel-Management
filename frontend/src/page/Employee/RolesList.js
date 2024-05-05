@@ -1,12 +1,16 @@
 import React from "react";
 import { useState } from "react";
+import { Delete_Confirm } from "./Modal/DeleteConfirm";
+import { EditRolesModal } from "./Modal/EditRolesModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export const Roles_List = () => {
   let roleItems = ["Staff", "Manager", "CEO"];
+  const [isEditRolesOpen, setEditRolesOpen] = useState(false);
+  const [deleteWindow, setdeleteWindow] = useState(false);
   return (
-    <div className="role-list" style={{ height: "40vh" }}>
+    <div className="role-list" style={{ height: "45vh", marginTop: "10px" }}>
       <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
         {roleItems.map((item, index) => (
           <li
@@ -27,16 +31,27 @@ export const Roles_List = () => {
                 icon={faPenToSquare}
                 className="faPenToSquare"
                 style={{ paddingRight: "50%", cursor: "pointer" }}
+                onClick={() => setEditRolesOpen(true)}
               />
               <FontAwesomeIcon
+                mode="delete-roles"
                 icon={faTrashCan}
                 className="faTrashCan"
                 style={{ cursor: "pointer" }}
+                onClick={() => setdeleteWindow(true)}
               />
             </div>
           </li>
         ))}
       </ul>
+      <EditRolesModal
+        isEditOpen={isEditRolesOpen}
+        onEditClose={() => setEditRolesOpen(false)}
+      />
+      <Delete_Confirm
+        isDelWindowOpen={deleteWindow}
+        onDelWindowClose={() => setdeleteWindow(false)}
+      />
     </div>
   );
 };

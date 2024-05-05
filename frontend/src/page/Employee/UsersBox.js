@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import "./Design.css";
+import { CreateUserModal } from "./Modal/CreateUsermodal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { UsersList, UsersLists } from "./UsersLists";
+import { UsersLists } from "./UsersLists";
 
 export const UsersBox = () => {
+  const [CUserOpen, setCUserOpen] = useState(false);
   return (
     <div
       className="Users-box"
@@ -60,8 +61,8 @@ export const UsersBox = () => {
             type="text"
             style={{
               background: "black",
-              border: "black solid 2px",
-              width: "15vw",
+              border: "none",
+              width: "100%",
               borderRadius: 5,
             }}
             placeholder="Search ..."
@@ -76,13 +77,17 @@ export const UsersBox = () => {
             padding: "3%",
             cursor: "pointer",
           }}
-          onClick={() => console.log("added")}
+          onClick={() => setCUserOpen(true)}
         >
           + Add
         </div>
       </div>
 
       <UsersLists />
+      <CreateUserModal
+        isCUserOpen={CUserOpen}
+        isCUserClose={() => setCUserOpen (false)}
+      />
     </div>
   );
 };

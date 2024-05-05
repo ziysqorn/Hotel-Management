@@ -61,8 +61,8 @@ export const Employee_Box = () => {
             type="text"
             style={{
               background: "black",
-              border: "black solid 2px",
-              width: "15vw",
+              border: "none",
+              width: "100%",
               borderRadius: 5,
             }}
             placeholder="Search ..."
@@ -77,13 +77,28 @@ export const Employee_Box = () => {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "3%",
+            marginRight: '2%',
             borderRadius: 10,
             cursor: "pointer",
           }}
-          onClick={() => console.log("order by")}
         >
           <FontAwesomeIcon icon={faFilter} />
-          <div style={{ marginLeft: "6px" }}>Filter</div>
+          <select
+            style={{
+              fontWeight: "bold",
+              height: '100%',
+              width: '100%',
+              background: "#3E3E3E",
+              fontSize: '100%',
+              color: "white",
+              border: "none",
+            }}
+          >
+            <option value="">Filter</option>
+            <option value="option1">A - Z</option>
+            <option value="option2">Z - A</option>
+            <option value="option3">Option 3</option>
+          </select>
         </div>
       </div>
       <EmployeesList />

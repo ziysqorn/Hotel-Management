@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Design.css";
+import { EditEmployModal } from "./Modal/EditEmployModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -9,6 +10,7 @@ import {
 import {} from "@fortawesome/react-fontawesome";
 
 export const EmployeesList = () => {
+  const [EditWindow, setEditWindow] = useState(false);
   let employees = [
     {
       name: "John",
@@ -35,10 +37,12 @@ export const EmployeesList = () => {
       Firstday: "11/10/2021",
     },
   ];
-
   return (
-    <div className="employees-list" style={{ height: "40vh" }}>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+    <div
+      className="employees-list"
+      style={{ height: "45vh", marginTop: "10px" }}
+    >
+      <ul style={{ listStyleType: "none", padding: 0, width: "23vw" }}>
         {employees.map((employee) => (
           <li
             key={employee.name} // Sử dụng tên làm key, đảm bảo duy nhất
@@ -47,15 +51,15 @@ export const EmployeesList = () => {
               color: "white",
               alignItems: "center",
               borderRadius: 5,
-              height: "14vh",
-              width: "23vw",
+              height: "50%",
+              width: "100%",
               margin: "5px",
               padding: "5px",
             }}
           >
             <div
               style={{
-                width: "22vw",
+                width: "90%",
                 display: "flex",
                 margin: "5px",
                 alignItems: "center",
@@ -64,7 +68,7 @@ export const EmployeesList = () => {
             >
               <div
                 style={{
-                  width: "15vw",
+                  width: "75%",
                   display: "flex",
                   alignItems: "center",
                 }}
@@ -79,12 +83,13 @@ export const EmployeesList = () => {
                 icon={faEye}
                 className="faEye"
                 style={{ cursor: "pointer" }}
+                onClick={() => setEditWindow(true)}
               />
             </div>
             <div style={{ marginLeft: "5%", fontSize: "14px", padding: "2%" }}>
               {employee.phone}
             </div>
-            <div style={{ display: "flex", width: "20vw" }}>
+            <div style={{ display: "flex", width: "80%" }}>
               <div
                 style={{
                   padding: "2px",
@@ -117,6 +122,10 @@ export const EmployeesList = () => {
           </li>
         ))}
       </ul>
+      <EditEmployModal
+        EditEmployIsOpen={EditWindow}
+        EditEmployOnClose={() => setEditWindow(false)}
+      />
     </div>
   );
 };
