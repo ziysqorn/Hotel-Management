@@ -1,4 +1,8 @@
 import "animate.css";
+import "./ModalStyle.css";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import React from "react";
 import {
   faX,
@@ -6,10 +10,10 @@ import {
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
+  const [selectedBirthday, setSelectedBirthday] = useState(null);
+  const [selectedFirstDay, setSelectedFirstDay] = useState(null);
   if (!AddEmployeeIsOpen) return null;
-
   return (
     <div
       className="animate__animated animate__zoomIn"
@@ -62,7 +66,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginTop: "3%",
             marginBottom: "3%",
             background: "#111111",
@@ -83,21 +87,16 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
             border: "solid #111111 1px",
           }}
         >
-          <input
-            type="text"
-            style={{
-              width: "70%",
-              color: "white",
-              height: "100%",
-              background: "#111111",
-              border: "none",
-            }}
-            placeholder="   Birthday"
+          <DatePicker
+            selected={selectedBirthday}
+            onChange={(date) => setSelectedBirthday(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="   Birthday                                           //"
+            className="datepicker-input"
           />
-          <div style={{ color: "#B0B0B0", width: "20%" }}>//</div>
           <FontAwesomeIcon
             icon={faCalendar}
-            style={{ color: "white", width: "10%" }}
+            style={{ color: "darkgray", width: "10%" }}
           />
         </div>
         <div
@@ -113,7 +112,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
             type="text"
             style={{
               width: "80%",
-              color: "white",
+              color: "darkgray",
               background: "#111111",
               marginRight: "3%",
               height: "100%",
@@ -126,7 +125,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
             type="text"
             style={{
               width: "20%",
-              color: "white",
+              color: "darkgray",
               background: "#111111",
               height: "100%",
               border: "none",
@@ -140,7 +139,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -173,21 +172,16 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
             border: "solid #111111 1px",
           }}
         >
-          <input
-            type="text"
-            style={{
-              width: "95%",
-              color: "white",
-              height: "100%",
-              background: "#111111",
-              border: "none",
-            }}
-            placeholder="   Firstday"
+          <DatePicker
+            selected={selectedFirstDay}
+            onChange={(date) => setSelectedFirstDay(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="   Firstday                                            //"
+            className="datepicker-input"
           />
-          <div style={{ color: "#B0B0B0", width: "20%" }}>//</div>
           <FontAwesomeIcon
             icon={faCalendar}
-            style={{ color: "white", width: "10%" }}
+            style={{ color: "darkgray", width: "10%",}}
           />
         </div>
         <input
@@ -195,7 +189,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "5%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -208,7 +202,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",

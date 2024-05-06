@@ -1,4 +1,7 @@
 import "animate.css";
+import "./ModalStyle.css";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
 import React from "react";
 import {
   faX,
@@ -8,6 +11,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
+  const [selectedBirthday, setSelectedBirthday] = useState(null);
+  const [selectedFirstDay, setSelectedFirstDay] = useState(null);
   if (!EditEmployIsOpen) return null;
 
   return (
@@ -83,18 +88,13 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             border: "solid #111111 1px",
           }}
         >
-          <input
-            type="text"
-            style={{
-              width: "70%",
-              color: "white",
-              height: "100%",
-              background: "#111111",
-              border: "none",
-            }}
-            placeholder="   Birthday"
+          <DatePicker
+            selected={selectedBirthday}
+            onChange={(date) => setSelectedBirthday(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="   Birthday                                           //"
+            className="datepicker-input"
           />
-          <div style={{ color: "#B0B0B0", width: "20%" }}>//</div>
           <FontAwesomeIcon
             icon={faCalendar}
             style={{ color: "white", width: "10%" }}
@@ -173,18 +173,13 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             border: "solid #111111 1px",
           }}
         >
-          <input
-            type="text"
-            style={{
-              width: "95%",
-              color: "white",
-              height: "100%",
-              background: "#111111",
-              border: "none",
-            }}
-            placeholder="   Firstday"
+          <DatePicker
+            selected={selectedFirstDay}
+            onChange={(date) => setSelectedFirstDay(date)}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="   Firstday                                            //"
+            className="datepicker-input"
           />
-          <div style={{ color: "#B0B0B0", width: "20%" }}>//</div>
           <FontAwesomeIcon
             icon={faCalendar}
             style={{ color: "white", width: "10%" }}
