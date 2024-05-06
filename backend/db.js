@@ -1,5 +1,5 @@
 import sql from "mssql";
-import { config } from "./config.js";
+//import { config } from "./config.js";
 
 const config = {
   server: "localhost\\CSSQL05",

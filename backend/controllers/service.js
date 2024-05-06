@@ -32,7 +32,7 @@ export const getWithQuery = async (req, res) => {
 
 //Thêm dịch vụ --Đậu --Khang duyệt
 export const AddService = async (req, res) => {
-  let { item } = req.body;
+  let  item  = req.body.item;
 
   let finalQ = `INSERT INTO Service (Name, Price, Description)
                   VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;

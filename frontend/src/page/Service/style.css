@@ -68,4 +68,61 @@
     word-wrap: break-word;
   }
   
+  .Row1 {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
   
+  .Row1 > div {
+    margin-right: 8%; /* Khoảng cách giữa các phần tử con */
+  }
+
+  .icon {
+    font-size: 24px; /* Phóng to lên 24px */
+    color: white; /* Đổi màu sắc thành màu xanh */
+}
+/* CSS */
+.delete-confirmation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Thiết lập chiều rộng */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Thiết lập chiều cao */
+  max-height: 80%; /* Giới hạn chiều cao tối đa */
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button1{
+  width: 200;
+  position: 'absolute';
+   height: 61;
+    left: 150;
+     top: 476;
+      color: 'white';
+       background:"#00868D";
+}
+.editForm, .showAdd {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Thiết lập chiều rộng */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Thiết lập chiều cao */
+  max-height: 80%; /* Giới hạn chiều cao tối đa */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* .showAdd-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+} */
+
