@@ -1,5 +1,6 @@
 import axios from "axios";
 import { apiInfo } from "../apivar";
+
 export const getAllOrderRoomWithRoomId = async (RoomId) => {
   try {
     const response = await axios.get(
@@ -131,4 +132,59 @@ export const OrderRooms = async (list, cusInfo, UserId) => {
   });
 
   // return list;
+};
+
+export const getRoomTypeWithQuery = async (RoomTypeId) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/room/ReadRoomType`,
+      {
+        params: {
+          RoomTypeId: RoomTypeId,
+        },
+      }
+    );
+
+    console.log(data.recordset[0]);
+    return data.recordset[0];
+  } catch (e) {}
+};
+
+export const getOrderRoomWithCustomerIdStartDateEndDate = async (
+  CusId,
+  StartDate,
+  EndDate
+) => {
+  try {
+    const data = await axios.get(
+      `http://localhost:4000/api/room/getOrderRoomWithStartDateEndDateCustomerId`,
+      {
+        params: {
+          CheckInDate: StartDate,
+          ExpectedCheckOutDate: EndDate,
+          CustomerId: CusId,
+        },
+      }
+    );
+    console.log(data);
+  } catch (e) {
+    return e;
+  }
+};
+
+export const getAllCusomterWithPhoneNum = async (item) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/customer/get/byPhoneNumber`,
+      {
+        params: {
+          phoneNumber: item,
+        },
+      }
+    );
+    console.log(data);
+    // return data;
+  } catch (e) {
+    return e;
+  }
 };

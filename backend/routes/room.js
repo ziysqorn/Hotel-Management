@@ -19,6 +19,7 @@ import {
   UpdateRoomType,
   ReadRoomType,
   DeleteRoomType,
+  getOrderRoomWithStartDateEndDateCustomerId,
 } from "../controllers/room.js";
 const router = express.Router();
 // room
@@ -36,6 +37,10 @@ router.get("/getAllCusomterInRoom", getAllCusomterInRoom);
 router.get("/getCustomerInRoom", getCustomerInRoom);
 router.get("/getOrderRoomWithStayCustomerId", getOrderRoomWithStayCustomerId);
 router.get("/getOrderRoomWithQuery", getOrderRoomWithQuery);
+router.get(
+  "/getOrderRoomWithStartDateEndDateCustomerId",
+  getOrderRoomWithStartDateEndDateCustomerId
+);
 
 // OrderRoom
 router.post("/CreateOrderRoom", CreateOrderRoom);

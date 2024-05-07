@@ -360,11 +360,11 @@ export const OrderRoom = () => {
               {/* 1 item */}
               <AllOrderRoomHeader />
               {allOrderRoom.length &&
-                allOrderRoom.map((item,index) => {
+                allOrderRoom.map((item, index) => {
                   return (
                     item && (
                       <RoomNumOfPeopleDate
-                      key={index}
+                        key={index}
                         RoomId={item.RoomId}
                         numofmen={5}
                         startDate={`${item.startDate.date}/${item.startDate.month}/${item.startDate.year}`}
@@ -682,7 +682,7 @@ const AddCusOrderContainer = ({ ...props }) => {
   );
 };
 
-const TopNav = ({ ...props }) => {
+export const TopNav = ({ ...props }) => {
   return (
     <div
       style={{
@@ -707,26 +707,26 @@ const TopNav = ({ ...props }) => {
         />
       </div>
       <div>
-        <p style={{ fontSize: "1vw", fontWeight: 600 }}>Booking room</p>
+        <p style={{ fontSize: "1vw", fontWeight: 600 }}>
+          {props.content ? props.content : "Booking room"}
+        </p>
       </div>
       <div></div>
     </div>
   );
 };
 
-const LeftContainer = ({ cusInfo }) => {
+export const LeftContainer = ({ cusInfo }) => {
   return (
     <div
       style={{
         width: "30%",
-        // border: "1px solid green",
-        // borderRight:"1px 50% solid white",
+
         display: "flex",
         flexDirection: "column",
         color: "white",
         alignItems: "center",
         position: "relative",
-        // justifyContent: "space",
       }}
     >
       <div
@@ -799,7 +799,7 @@ const LeftContainer = ({ cusInfo }) => {
   );
 };
 
-const StartDateAndEndDateContainer = ({
+export const StartDateAndEndDateContainer = ({
   setIsDetailWindowOpen,
   chosenRoom,
   chosenDate,
@@ -853,7 +853,7 @@ const StartDateAndEndDateContainer = ({
   );
 };
 
-const AllOrderRoomHeader = () => {
+export const AllOrderRoomHeader = () => {
   return (
     <div
       style={{
@@ -878,7 +878,7 @@ const AllOrderRoomHeader = () => {
   );
 };
 
-const ServiceInfoWithPlusIcon = ({ item, ...props }) => {
+export const ServiceInfoWithPlusIcon = ({ item, ...props }) => {
   return (
     <div
       style={{
@@ -909,7 +909,7 @@ const ServiceInfoWithPlusIcon = ({ item, ...props }) => {
   );
 };
 
-const ServiceInfoWithTrashIcon = ({ item, ...props }) => {
+export const ServiceInfoWithTrashIcon = ({ item, ...props }) => {
   return (
     <div
       style={{
@@ -941,7 +941,7 @@ const ServiceInfoWithTrashIcon = ({ item, ...props }) => {
     </div>
   );
 };
-const CustomerInfoWithPLusIcon = ({ item, ...props }) => {
+export const CustomerInfoWithPLusIcon = ({ item, ...props }) => {
   return (
     <div
       style={{
@@ -974,7 +974,7 @@ const CustomerInfoWithPLusIcon = ({ item, ...props }) => {
   );
 };
 
-const CustomerInfoWithTrashIcon = ({ item, ...props }) => {
+export const CustomerInfoWithTrashIcon = ({ item, ...props }) => {
   return (
     <div
       style={{
@@ -1007,7 +1007,7 @@ const CustomerInfoWithTrashIcon = ({ item, ...props }) => {
   );
 };
 
-const MainCustomerDiv = ({
+export const MainCustomerDiv = ({
   handleSearchCustomter,
   allCus,
   cusVal,
@@ -1104,7 +1104,7 @@ const MainCustomerDiv = ({
   );
 };
 
-const MainServiceDiv = ({
+export const MainServiceDiv = ({
   allSer,
   handleSearchService,
   serVal,

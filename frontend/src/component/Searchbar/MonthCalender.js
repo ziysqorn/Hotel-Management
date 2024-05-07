@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect, useContext } from "react";
-import { getRoomInfoWithRoomId } from "../apicalls";
+import {
+  getRoomInfoWithRoomId,
+  getAllOrderRoomWithRoomId,
+  getRoomTypeWithQuery,
+} from "../apicalls";
 import {
   faCalendar,
   faChevronLeft,
@@ -84,17 +88,6 @@ export const MonthCalendar = ({
       console.log(e);
     }
   };
-  const stringToDate = (item) => {
-    const date = new Date(item);
-    // console.log(item);
-    // console.log(date);
-    return {
-      date: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-      item: date,
-    };
-  };
 
   const checkIfOcupie = (data, item) => {
     let result = false;
@@ -116,8 +109,9 @@ export const MonthCalendar = ({
   const getRoomInfo = async () => {
     try {
       const data = await getRoomInfoWithRoomId(item.RoomId);
-      console.log(data.recordset[0]);
-      setRoomInfo(data.recordset[0]);
+      console.log(data.recordset);
+      const RoomInfo = await getRoomTypeWithQuery(data.recordset[0].RoomTypeId);
+      setRoomInfo(RoomInfo);
     } catch (e) {
       console.log(e);
     }
@@ -127,7 +121,6 @@ export const MonthCalendar = ({
     if (mode == "detail") {
       console.log("work");
       getOcupie(item);
-      console.log(item);
     }
     setData(getDaysInMonthAndDayOfWeek(year, month));
   }, [year, month, choseDay]);
@@ -137,11 +130,6 @@ export const MonthCalendar = ({
   }, []);
   // highlight nhiều ô
   const checkIfChoseHighLight = (startDate, endDate, date, index) => {
-    // trường hợp trùng start date
-    // if (date.date == 20) {
-    //   console.log(date);
-    // }
-    //
     const fullCover =
       toDate(date) >= toDate(startDate) && toDate(date) <= toDate(endDate);
     const rightCover =
@@ -247,7 +235,7 @@ export const MonthCalendar = ({
             // paddingBottom: "2vh",
             opacity: 1,
             position: "absolute",
-            top: mode == "detail" ? "-10%" : "30vh",
+            top: mode == "detail" ? "-10%" : "-14%",
             left: "50%",
             cursor: "pointer",
             transform: "translate(-50%,0)",
@@ -265,7 +253,11 @@ export const MonthCalendar = ({
             console.log(item);
           }}
         >
-          {mode == "detail" && <p>{item.RoomId}</p>}
+          {mode == "detail" && (
+            <p>
+              {item.RoomId} {roomInfo ? `-${roomInfo.Type}` : null}
+            </p>
+          )}
           {mode != "detail" && <FontAwesomeIcon icon={faCalendar} />}
         </div>
         {/* top part of main container */}

@@ -15,13 +15,13 @@ export const get = async (req, res) => {
 
 // lấy all từ Room và có thể có điều kiện như có kèm RoomId,RoomTypeId, RoomName(nhập 1 phàn roomId)
 export const getWithQuery = async (req, res) => {
-  let { roomid, RoomTypeId, RoomName, Status } = req.query;
+  let { RoomId, RoomTypeId, RoomName, Status } = req.query;
   // cách nào cũng dc
   let roomId = req.query.roomid;
   // handle query đến sql server
   let finalQ = `SELECT * FROM Room WHERE NOT(Room.RoomId IS NULL) `;
-  if (roomid) {
-    finalQ += ` AND RoomId = '${roomid}'`;
+  if (RoomId) {
+    finalQ += ` AND RoomId = '${RoomId}'`;
   }
   if (RoomTypeId) {
     finalQ += ` AND RoomTypeId = ${RoomTypeId}`;
@@ -227,6 +227,16 @@ export const getOrderRoomWithQuery = async (req, res) => {
   }
 };
 
+export const getOrderRoomWithStartDateEndDateCustomerId = async (req, res) => {
+  let { CheckInDate, ExpectedCheckOutDate, CustomerId } = req.query;
+  let finalQ = `SELECT * FROM OrderRoom WHERE 
+                (CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') 
+                AND (ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') 
+                AND CustomerId = ${CustomerId} `;
+  console.log(finalQ);
+  res.send(finalQ);
+};
+
 export const getOrderRoomWithStayCustomerId = async (req, res) => {
   let { StayCustomerId } = req.query;
   let finalQ = `SELECT *
@@ -367,7 +377,14 @@ export const CreateRoomType = async (req, res) => {
 };
 
 export const ReadRoomType = async (req, res) => {
-  let finalQ = `SELECT * FROM RoomType;`;
+  let finalQ = `SELECT * FROM RoomType WHERE RoomTypeId IS NOT NULL `;
+  let { RoomTypeId, Description } = req.query;
+  if (RoomTypeId) {
+    finalQ += `AND RoomTypeId = ${RoomTypeId} `;
+  }
+
+  finalQ += ";";
+
   try {
     const data = await db(finalQ);
     res.json(data);

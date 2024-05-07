@@ -11,6 +11,7 @@ import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/EmployeesPage";
 import { myAppColor } from "./colors";
 import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom.js";
+import { Bill } from "./page/Room/Bill/Bill";
 export const MainContext = React.createContext("undefined");
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/rooms" element={<RoomsPage />} />
               <Route path="/rooms/orderroom" element={<OrderRoom />} />
+              <Route path="/rooms/orderroom/bill" element={<Bill />} />
               <Route path="/customers" element={<CustomersPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/employees" element={<EmployeesPage />} />
