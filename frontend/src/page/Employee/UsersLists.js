@@ -52,20 +52,27 @@ export const UsersLists = () => {
             >
               <FontAwesomeIcon
                 icon={faUserCircle}
-                style={{ marginLeft: "7%" }}
+                style={{ marginLeft: "7%", fontSize: "1vw" }}
               />
-              <div style={{ flexDirection: "column", marginLeft: "7%" }}>
+              <div
+                style={{
+                  flexDirection: "column",
+                  marginLeft: "7%",
+                  fontSize: "1vw",
+                }}
+              >
                 <span>{item}</span>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
                     style={{
-                      fontSize: "10px",
+                      fontSize: "0.8vw",
                       color: "#00FFF5",
+                      cursor:"pointer",
                       paddingRight: "10%",
                     }}
                   />
-                  <div className="time-log" style={{ fontSize: "10px" }}>
+                  <div className="time-log" style={{ fontSize: "0.8vw" }}>
                     {currentTime}
                   </div>
                 </div>
@@ -75,12 +82,16 @@ export const UsersLists = () => {
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 className="faPenToSquare"
-                style={{ paddingRight: "50%", cursor: "pointer" }}
+                style={{
+                  paddingRight: "50%",
+                  fontSize: "1vw",
+                  cursor: "pointer",
+                }}
               />
               <FontAwesomeIcon
                 icon={faTrashCan}
                 className="faTrashCan"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", fontSize: "1vw" }}
               />
             </div>
           </li>

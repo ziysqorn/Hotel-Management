@@ -18,7 +18,7 @@ export const Employee_Box = () => {
       <div
         style={{
           color: "white",
-          fontSize: "14px",
+          fontSize: "1vw",
           fontWeight: "bold",
           margin: "3%",
         }}
@@ -52,7 +52,7 @@ export const Employee_Box = () => {
             icon={faSearch}
             style={{
               color: "white",
-              fontSize: 13,
+              fontSize: "0.9vw",
               paddingLeft: "5px",
               width: "10%",
             }}
@@ -62,6 +62,10 @@ export const Employee_Box = () => {
             style={{
               background: "black",
               border: "black solid 2px",
+              textDecoration: "none",
+              outline: "none",
+              color: "white",
+              fontSize: "0.8vw",
               width: "85%",
               borderRadius: 5,
             }}
@@ -75,6 +79,8 @@ export const Employee_Box = () => {
             background: "#3E3E3E",
             display: "flex",
             alignItems: "center",
+            fontSize: "0.8vw",
+            fontWeight:600,
             justifyContent: "space-between",
             padding: "3%",
             borderRadius: 10,
