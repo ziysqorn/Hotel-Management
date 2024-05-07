@@ -109,6 +109,7 @@ export function CustomersPage(){
   }
   function CustomerClick(CustomerId){
     setSelectedCustomer(prev=>prev===CustomerId ? -1 : CustomerId)
+    console.log(handleChooseCustomer)
   }
   function RemoveClick(){
     if(selectedCustomer === -1){
