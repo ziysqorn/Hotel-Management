@@ -52,7 +52,7 @@ export const Service_Info = () => {
 
 //   const handleAddServicetemp = async (id,name,des)=>{
 //     try{
-//       const res = await axios.post(``,{
+//       const res = await axios.post(`http://localhost:4000/api/service/add`,{
 //         item :{
 // Name:
 //         }
@@ -61,6 +61,19 @@ export const Service_Info = () => {
 //       )
 //     }catch(e){}
 //   }
+
+// const fetchData =async ()=>{
+//   try {
+//     const res = await axios.get(`http://localhost:4000/api/service`, {
+//     });
+//     let item = res.data
+//     console.log(res.data.rowsAffected[0]);
+//     setApiData(res.data.recordset)
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
+
   // const handleSubmitEdit = () => {
   //   // Xử lí logic khi nhấn nút Submit ở form sửa chữa ở đây
   //   setEditFormVisible(false);
@@ -114,10 +127,10 @@ export const Service_Info = () => {
       {showDeleteConfirmation && (
         <div className="delete-confirmation">
           <p>Bạn có chắc chắn muốn xóa không?</p>
-          <button className="button1" onClick={handleDeleteConfirm}>
+          <button className="button1" onClick={()=>{handleDeleteConfirm()}}>
             Yes
           </button>
-          <button className="button2" onClick={handleDeleteCancel}>
+          <button className="button2"  onClick={()=>{handleDeleteCancel()}}>
             No
           </button>
         </div>
@@ -160,7 +173,8 @@ export const Service_Info = () => {
               Edit
             </button>
             <button
-            onClick={handleDeleteData}
+            onClick={()=>{handleDeleteData()}}
+            
               style={{
                 width: "15vw",position: 'absolute', height: "8vh", left: 400, top: 476, color: 'white',background: '#2E2E2E', fontSize: 30,border: '2px #3F3F3F solid', borderRadius:10
               }}
