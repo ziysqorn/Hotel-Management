@@ -3,6 +3,7 @@ import {
   faChartSimple,
   faCubes,
   faGraduationCap,
+  faMoneyBill,
   faTv,
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
@@ -24,16 +25,18 @@ export const LeftNavBar = () => {
     console.log("render");
     const url = window.location.href;
     if (url.includes("analytics"))
-      setSeletectList([true, false, false, false, false]);
+      setSeletectList([true, false, false, false, false, false]);
     if (url.includes("rooms"))
-      setSeletectList([false, true, false, false, false]);
+      setSeletectList([false, true, false, false, false, false]);
     if (url.includes("customers"))
-      setSeletectList([false, false, true, false, false]);
+      setSeletectList([false, false, true, false, false, false]);
     if (url.includes("services"))
-      setSeletectList([false, false, false, true, false]);
+      setSeletectList([false, false, false, true, false, false]);
     if (url.includes("employees"))
-      setSeletectList([false, false, false, false, true]);
-  },[]);
+      setSeletectList([false, false, false, false, true, false]);
+    if (url.includes("bill"))
+      setSeletectList([false, false, false, false, false, true]);
+  }, []);
 
   const changeRoute = (index) => {
     console.log(index, selectedList);
@@ -95,6 +98,7 @@ export const LeftNavBar = () => {
           </p>
         </div>
       </Link>
+
       <Link
         style={{ textDecoration: "none" }}
         to={"/rooms"}
@@ -131,6 +135,7 @@ export const LeftNavBar = () => {
           </p>
         </div>
       </Link>
+
       <Link
         style={{ textDecoration: "none" }}
         to={"/customers"}
@@ -204,6 +209,7 @@ export const LeftNavBar = () => {
           </p>
         </div>
       </Link>
+
       <Link
         style={{ textDecoration: "none" }}
         to={"/employees"}
@@ -237,6 +243,42 @@ export const LeftNavBar = () => {
             }}
           >
             Employees
+          </p>
+        </div>
+      </Link>
+      <Link
+        style={{ textDecoration: "none" }}
+        to={"/rooms/orderroom/bill"}
+        onClick={() => {
+          changeRoute(5);
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            height: "72px",
+            backgroundColor: ` ${selectedList[5] ? "#2E2E2E" : "transparent"}`,
+            borderRadius: "10px",
+            alignItems: "center",
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faMoneyBill}
+            style={{
+              fontSize: "20px",
+              color: selectedList[5] ? "#00FFF5" : "#B0B0B0",
+              marginLeft: "20px",
+              marginRight: "15px",
+            }}
+          />
+          <p
+            style={{
+              fontSize: "20px",
+              color: `${selectedList[5] ? "#FFFFFF" : "#B0B0B0"}`,
+              fontWeight: 600,
+            }}
+          >
+            Bills
           </p>
         </div>
       </Link>

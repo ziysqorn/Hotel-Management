@@ -1066,8 +1066,10 @@ export const MainCustomerDiv = ({
           style={{
             width: "40%",
             maxHeight: "30vh",
-            overflow: "scroll",
-            marginBottom: "1vw",
+            display: "block",
+            // overflow: "scroll",
+            overflowY: "scroll",
+            // marginBottom: "1vw",
           }}
         >
           {/* one item */}
@@ -1165,7 +1167,7 @@ export const MainServiceDiv = ({
           style={{
             width: "40%",
             maxHeight: "30vh",
-            overflow: "scroll",
+            overflowY: "scroll",
             marginBottom: "1vw",
           }}
         >

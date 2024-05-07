@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   CustomerInfoWithPLusIcon,
+  CustomerInfoWithTrashIcon,
   LeftContainer,
   TopNav,
 } from "../OrderRoom/OrderRoom";
@@ -94,6 +95,7 @@ const AllCustomerDiv = ({ ...props }) => {
   const [cusVal, setCusVal] = useState();
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
   const [date, setDate] = useState();
+  const [chosenCus, setChosenCus] = useState();
   // =======END VARIABLE=========
 
   // ===========START FUNCTIONS========
@@ -109,6 +111,7 @@ const AllCustomerDiv = ({ ...props }) => {
     try {
       const data = await getAllCusomterWithPhoneNum(item);
       console.log(data);
+      setAllCus(data);
     } catch (e) {
       console.log(e);
     }
@@ -132,6 +135,8 @@ const AllCustomerDiv = ({ ...props }) => {
         height: "100%",
         // alignItems: "center"
         // justifyContent: "center",
+        // display:"flex",
+
         ...OrderRoomStyles.BodyContainer,
       }}
     >
@@ -205,25 +210,72 @@ const AllCustomerDiv = ({ ...props }) => {
 
       {/* ========START OF MAIN DIV======= */}
       {/* =======START OF CHOSEN ITEM======== */}
+      {chosenCus ? (
+        <div
+          style={{
+            width: "60%",
+            maxHeight: "30vh",
+            // overflowY: "scroll",
+            // minHeight: "10vh",
+            // marginBottom: "1vw",
+            margin: "2vh auto ",
+          }}
+        >
+          <CustomerInfoWithTrashIcon
+            item={chosenCus}
+            onDeleteCustomer={() => {
+              // console.log(`handle dele`, item);
+              setChosenCus(null);
+            }}
+          />
+        </div>
+      ) : null}
+
       {/* =======END OF CHOSEN ITEM======== */}
       {/* =======START OF ARRAY======== */}
       <div
         style={{
-          width: "100%",
+          width: "60%",
           maxHeight: "30vh",
-          overflow: "scroll",
-          marginBottom: "1vw",
+          overflowY: "scroll",
+          margin: "2vh auto ",
         }}
       >
         {allCus.length > 0
           ? allCus.map((item, index) => {
-              return <CustomerInfoWithPLusIcon key={index} item={item} />;
+              console.log(item);
+              return (
+                <CustomerInfoWithPLusIcon
+                  item={item}
+                  onAddCustomer={() => {
+                    console.log(`handle set userinfo`, chosenCus);
+                    setChosenCus(item);
+                  }}
+                />
+              );
             })
           : null}
       </div>
 
       {/* =======END OF ARRAY======== */}
       {/* ========END OF MAIN DIV======= */}
+      <div
+        style={{
+          width: "5vw",
+          padding: "0.2vw",
+          border: "1px solid White",
+          textAlign: "center",
+          borderRadius: "1vw",
+          // marginRight: "1vw",
+          margin: "0 auto",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          console.log(`handle search`);
+        }}
+      >
+        <p style={{ fontSize: "0.5vw", fontWeight: 500 }}>Find Bill</p>
+      </div>
       {/* =======START OF CALENDER======= */}
       {isDetailWindowOpen && (
         <MonthCalendar

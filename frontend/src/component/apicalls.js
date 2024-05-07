@@ -183,7 +183,7 @@ export const getAllCusomterWithPhoneNum = async (item) => {
       }
     );
     console.log(data);
-    // return data;
+    return data;
   } catch (e) {
     return e;
   }
