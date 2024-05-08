@@ -5,16 +5,10 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 export const Service_Info = () => {
-  //form edit --1
-  // const [editFormVisible, setEditFormVisible] = useState(false);
-  // const [editedItem, setEditedItem] = useState({ code: "", name: "", price: "" });
-  // const [confirmDelete, setConfirmDelete] = useState(false);
-
-  // const handleEditClick = (code, name, price) => {
-  //   setEditedItem({ code, name, price });
-  //   setEditFormVisible(true);
-  // };
+  
   const [apiData,setApiData] = useState([])
+  // const [deleteItem, setDeleteItem] = useState(null);
+
   const fetchData =async ()=>{
     try {
       const res = await axios.get(`http://localhost:4000/api/service`, {
@@ -31,66 +25,6 @@ export const Service_Info = () => {
     console.log("jsjjsjsj");
   },[])
 
-  // const handleSubmitEdit = () => {
-  //   // Handle edit submission here
-  //   // You can implement your logic to update the item with the new values
-  //   setEditFormVisible(false);
-  // };
-  const [editFormVisible, setEditFormVisible] = useState(false);
-  const [editedItem, setEditedItem] = useState({
-    code: "",
-    name: "",
-    description:"",
-    price: "",
-  });
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // State để hiển thị popup xác nhận xóa
-
-  const handleEditClick = (code, name, price) => {
-    setEditedItem({ code, name, price });
-    setEditFormVisible(true);
-  };
-
-//   const handleAddServicetemp = async (id,name,des)=>{
-//     try{
-//       const res = await axios.post(`http://localhost:4000/api/service/add`,{
-//         item :{
-// Name:
-//         }
-//       }
-
-//       )
-//     }catch(e){}
-//   }
-
-// const fetchData =async ()=>{
-//   try {
-//     const res = await axios.get(`http://localhost:4000/api/service`, {
-//     });
-//     let item = res.data
-//     console.log(res.data.rowsAffected[0]);
-//     setApiData(res.data.recordset)
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
-
-  // const handleSubmitEdit = () => {
-  //   // Xử lí logic khi nhấn nút Submit ở form sửa chữa ở đây
-  //   setEditFormVisible(false);
-  // };
-  const handleDeleteClick = () => {
-    // Hiển thị popup xác nhận xóa
-    setShowDeleteConfirmation(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    // Thực hiện xóa dịch vụ
-    // Đặt logic xóa ở đây
-
-    // Ẩn popup xác nhận xóa sau khi xóa thành công hoặc hủy
-    setShowDeleteConfirmation(false);
-  };
-
   const handleDeleteCancel = () => {
     // Ẩn popup xác nhận xóa nếu người dùng hủy
     setShowDeleteConfirmation(false);
@@ -101,7 +35,6 @@ export const Service_Info = () => {
     setEditFormVisible (false); // Ẩn form khi nhấn nút "Cancel"
   };
 
-
   const handleDeleteData = () => {
     // Xóa dữ liệu trên các input ở đây
     const inputs = document.querySelectorAll('.editForm input[type="text"]');
@@ -109,6 +42,53 @@ export const Service_Info = () => {
       input.value = ''; // Xóa giá trị của input
     });
   };
+  
+  const [editFormVisible, setEditFormVisible] = useState(false);
+  const [editedItem, setEditedItem] = useState({
+    name: "",
+    description: "",
+    price: "",
+  });
+
+  const [serviceData, setServiceData] = useState({
+    // id:'',
+    name: '',
+    description: '',
+    price:'',
+    //Thêm các trường dữ liệu khác ở đây nếu cần
+  });
+  
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // State để hiển thị popup xác nhận xóa
+  
+  const handleEditClick = () => {
+    // Set dữ liệu của item cần chỉnh sửa vào state editedItem
+    setEditFormVisible(true);
+  };
+
+  const handleChange = (e, fieldName) => {
+    const { value } = e.target;
+    setServiceData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+ 
+  // const sendEditedData = async (id,name,des) => {
+  //   try {
+  //     const res = await axios.post(`http://localhost:4000/api/service/edit`,{
+  //       item :{
+  //             ServiceId: serviceData.id,
+  //             Name: serviceData.name,
+  //             Description: serviceData.description,
+  //             Price: serviceData.price,
+  //       }
+  //     }
+      
+  //     )
+  //   }catch(error){
+  //     console.log('loi khi sưa dich vu',error)
+  //   }
+  // }
 
 
   return (
@@ -126,14 +106,14 @@ export const Service_Info = () => {
       {/* Popup xác nhận xóa */}
       {showDeleteConfirmation && (
         <div className="delete-confirmation">
-          <p>Bạn có chắc chắn muốn xóa không?</p>
-          <button className="button1" onClick={()=>{handleDeleteConfirm()}}>
-            Yes
-          </button>
-          <button className="button2"  onClick={()=>{handleDeleteCancel()}}>
-            No
-          </button>
-        </div>
+        <p>Bạn có chắc chắn muốn xóa không?</p>
+        <button className="button1" onClick={()=>{handleDeleteConfirm()}}>
+          Yes
+        </button>
+        <button className="button2" onClick={handleDeleteCancel}>
+          No
+        </button>
+      </div>
       )}
 
       {/* Form sửa chữa */}
@@ -158,6 +138,7 @@ export const Service_Info = () => {
               }}
             />
             <button
+            onClick={()=>{sendEditedData()}}
               style={{
                 width: "15vw",
                 position: "absolute",
@@ -173,24 +154,25 @@ export const Service_Info = () => {
               Edit
             </button>
             <button
-            onClick={()=>{handleDeleteData()}}
-            
+            onClick={()=>{handleDeleteData()}}  
               style={{
                 width: "15vw",position: 'absolute', height: "8vh", left: 400, top: 476, color: 'white',background: '#2E2E2E', fontSize: 30,border: '2px #3F3F3F solid', borderRadius:10
               }}
             >
               Delete
             </button>
-            <input
+            {/*<input
               type="text"
+              value={serviceData.id} onChange={(e)=>handleChange(e, 'id')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 120, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
               placeholder="ServiceID"
-              value={editedItem.code}
-            />
+             
+            /> */}
             <input
-              type="text"
+              type="text" 
+              value={serviceData.name} onChange={(e)=>handleChange(e, 'name')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 200, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -199,6 +181,7 @@ export const Service_Info = () => {
             />
             <input
               type="text"
+              value={serviceData.description} onChange={(e)=>handleChange(e, 'description')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 280, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -206,6 +189,7 @@ export const Service_Info = () => {
             />
             <input
               type="text"
+              value={serviceData.price} onChange={(e)=>handleChange(e, 'price')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 360, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -265,16 +249,13 @@ export const Service_Info = () => {
     </div>
     <div style={{ width: 121, color: "white", fontSize: 24 }}>{`${item.Price}`}đ</div>
     <div>
-      <FontAwesomeIcon icon={faTrashAlt} className="icon" />
+       <FontAwesomeIcon icon={faTrashAlt} className="icon"  onClick={() => handleDeleteClick(item)} />
     </div>
     <div>
-      <FontAwesomeIcon icon={faEdit} className="icon" />
+      <FontAwesomeIcon icon={faEdit} className="icon"  onClick={() => handleEditClick()} />
     </div>
   </div>)
  }):null}
-
-
-     
 
     </div>
   );
