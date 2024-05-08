@@ -24,7 +24,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
         left: "40%",
         width: "27vw",
         height: "40vw",
-        borderRadius: 10,
+        borderRadius: "5%",
         background: "#2E2E2E",
       }}
     >
@@ -57,7 +57,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           <FontAwesomeIcon
             icon={faX}
             className="faX"
-            style={{ fontSize: "90%" }}
+            style={{ fontSize: "90%", cursor: "pointer" }}
             onClick={() => EditEmployOnClose(false)}
           />
         </div>
@@ -82,7 +82,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             width: "91%",
             height: "7%",
             marginBottom: "3%",
-            borderRadius: 5,
+            borderRadius: "2%",
             alignItems: "center",
             background: "#111111",
             border: "solid #111111 1px",
@@ -118,7 +118,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
               marginRight: "3%",
               height: "100%",
               border: "none",
-              borderRadius: 5,
+              borderRadius: "2%",
             }}
             placeholder="   Personal ID"
           />
@@ -130,7 +130,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
               background: "#111111",
               height: "100%",
               border: "none",
-              borderRadius: 5,
+              borderRadius: "2%",
             }}
             placeholder="   Image"
           />
@@ -144,7 +144,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
-            borderRadius: 5,
+            borderRadius: "2%",
           }}
           placeholder="   Phone"
         />
@@ -157,7 +157,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
-            borderRadius: 5,
+            borderRadius: "2%",
           }}
           placeholder="   Address"
         />
@@ -167,7 +167,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             width: "91%",
             height: "7%",
             marginBottom: "3%",
-            borderRadius: 5,
+            borderRadius: "2%",
             alignItems: "center",
             background: "#111111",
             border: "solid #111111 1px",
@@ -194,7 +194,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             marginBottom: "5%",
             background: "#111111",
             border: "solid #111111 1px",
-            borderRadius: 5,
+            borderRadius: "2%",
           }}
           placeholder="   Roles"
         />
@@ -207,7 +207,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
-            borderRadius: 5,
+            borderRadius: "2%",
           }}
           placeholder="   Position"
         />
@@ -219,7 +219,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
               color: "white",
               width: "40%",
               padding: "2%",
-              borderRadius: 7,
+              borderRadius: "7%",
               display: "flex",
               fontSize: "120%",
               cursor: "pointer",

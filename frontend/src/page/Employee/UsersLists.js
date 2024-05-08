@@ -1,7 +1,7 @@
 import React from "react";
 import "./Design.css";
 import { useState, useEffect } from "react";
-import { Delete_Confirm } from "./Modal/DeleteConfirm";
+import { DeleteConfirm } from "./Modal/DeleteConfirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
@@ -94,7 +94,7 @@ export const UsersLists = () => {
           </li>
         ))}
       </ul>
-      <Delete_Confirm
+      <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
       />

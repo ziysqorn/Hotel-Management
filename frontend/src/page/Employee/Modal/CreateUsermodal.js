@@ -43,7 +43,7 @@ export const CreateUserModal = ({ isCUserOpen, isCUserClose }) => {
           <FontAwesomeIcon
             icon={faX}
             className="faX"
-            style={{ fontSize: "90%" }}
+            style={{ fontSize: "90%", cursor: "pointer" }}
             onClick={() => isCUserClose(false)}
           />
         </div>

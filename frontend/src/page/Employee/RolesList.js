@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Delete_Confirm } from "./Modal/DeleteConfirm";
+import { DeleteConfirm } from "./Modal/DeleteConfirm";
 import { EditRolesModal } from "./Modal/EditRolesModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +48,7 @@ export const Roles_List = () => {
         isEditOpen={isEditRolesOpen}
         onEditClose={() => setEditRolesOpen(false)}
       />
-      <Delete_Confirm
+      <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
       />

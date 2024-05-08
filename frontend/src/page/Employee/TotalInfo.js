@@ -1,10 +1,40 @@
 import React from "react";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Delete_Confirm } from "./Modal/DeleteConfirm";
+import { DeleteConfirm } from "./Modal/DeleteConfirm";
 import { AddEmployeeModal } from "./Modal/AddEmployee";
 import "./Design.css";
 
 export const Total_Info = () => {
+  const [totalEmployees, setTotalEmployees] = useState(0); //đếm tổng sô nhân viên
+  const [totalUsers, setTotalUsers] = useState(0);
+  useEffect(() => {
+    const fetchTotalEmployees = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/employee/totalemployee"
+        );
+        setTotalEmployees(response.data.totalEmployees);
+      } catch (error) {
+        console.error("Error fetching total employees:", error);
+      }
+    };
+
+    const fetchTotalUsers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/employee/employ/totaluser"
+        );
+        setTotalUsers(response.data.totalUsers);
+      } catch (error) {
+        console.error("Error fetching total users:", error);
+      }
+    };
+
+    fetchTotalEmployees();
+    fetchTotalUsers();
+  }, []);
+
   const [isAddEmployOpen, setIsAddEmployOpen] = useState(false);
   const [deleteWindow, setdeleteWindow] = useState(false);
   return (
@@ -36,7 +66,7 @@ export const Total_Info = () => {
           }}
         >
           <div style={{ fontSize: "14px" }}>Total Employee</div>
-          <div style={{ fontSize: "20px", margin: "2%" }}>3000</div>
+          <div style={{ fontSize: "20px", margin: "2%" }}>{totalEmployees}</div>
         </div>
         <div
           className="Total-User"
@@ -51,7 +81,7 @@ export const Total_Info = () => {
           }}
         >
           <div style={{ fontSize: "14px" }}>Total Users</div>
-          <div style={{ fontSize: "20px", margin: "2%" }}>2000</div>
+          <div style={{ fontSize: "20px", margin: "2%" }}>{totalUsers}</div>
         </div>
         <div
           className="Total-Position"
@@ -111,7 +141,7 @@ export const Total_Info = () => {
             alignItems: "center",
             cursor: "pointer",
           }}
-          mode = "delete-employee"
+          mode="delete-employee"
           onClick={() => setdeleteWindow(true)}
         >
           Remove Employees
@@ -121,31 +151,10 @@ export const Total_Info = () => {
         AddEmployeeIsOpen={isAddEmployOpen}
         AddEmployeeOnClose={() => setIsAddEmployOpen(false)}
       />
-     <Delete_Confirm
+      <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
       />
     </div>
   );
 };
-// export const ChildComponent = ({ onExit, ...Props }) => {
-//   // Props.dat
-//   useEffect(() => {
-//     console.log(Props);
-//   }, []);
-//   return (
-//     <div
-//       style={{
-//         position: "absolute",
-//         top: "50%",
-//         left: "50%",
-//         width: "40vw",
-//         height: "40vw",
-//         background: "white",
-//       }}
-//       onClick={() => {
-//         onExit("fk thie s");
-//       }}
-//     ></div>
-//   );
-// };

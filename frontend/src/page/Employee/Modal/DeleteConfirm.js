@@ -1,5 +1,5 @@
 import React from "react";
-export const Delete_Confirm = ({ isDelWindowOpen, onDelWindowClose }) => {
+export const DeleteConfirm = ({ isDelWindowOpen, onDelWindowClose }) => {
   if (!isDelWindowOpen) return null;
   return (
     <div

@@ -56,7 +56,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           <FontAwesomeIcon
             icon={faX}
             className="faX"
-            style={{ fontSize: "90%" }}
+            style={{ fontSize: "90%", cursor: "pointer" }}
             onClick={() => AddEmployeeOnClose(false)}
           />
         </div>
@@ -181,7 +181,7 @@ export const AddEmployeeModal = ({ AddEmployeeIsOpen, AddEmployeeOnClose }) => {
           />
           <FontAwesomeIcon
             icon={faCalendar}
-            style={{ color: "darkgray", width: "10%",}}
+            style={{ color: "darkgray", width: "10%" }}
           />
         </div>
         <input

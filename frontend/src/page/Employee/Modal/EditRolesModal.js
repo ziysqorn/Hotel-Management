@@ -43,7 +43,7 @@ export const EditRolesModal = ({ isEditOpen, onEditClose }) => {
           <FontAwesomeIcon
             icon={faX}
             className="faX"
-            style={{ fontSize: "90%" }}
+            style={{ fontSize: "90%", cursor: "pointer" }}
             onClick={() => onEditClose(false)}
           />
         </div>
