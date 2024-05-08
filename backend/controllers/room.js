@@ -234,7 +234,12 @@ export const getOrderRoomWithStartDateEndDateCustomerId = async (req, res) => {
                 AND (ExpectedCHeckOutDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') 
                 AND CustomerId = ${CustomerId} `;
   console.log(finalQ);
-  res.send(finalQ);
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getOrderRoomWithStayCustomerId = async (req, res) => {

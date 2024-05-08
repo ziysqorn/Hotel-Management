@@ -2,7 +2,7 @@ export const config = {
   server: "localhost",
   port: 1433,
   database: "hotel_management",
-  user: "SA",
+  user: "sa",
   password: "Password123",
   options: {
     encrypt: true, // Bật mã hóa
