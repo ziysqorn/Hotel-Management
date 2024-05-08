@@ -3,6 +3,8 @@ import { myAppColor } from "../../colors";
 import "./style.css";
 // import { MonthCalendar } from "../../component/Searchbar/Searchbar";
 import { MonthCalendar } from "../../component/Searchbar/MonthCalender";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
 export const Floor = ({ ...props }) => {
   const [date, setDate] = useState({
     year: 2024,
@@ -148,7 +150,7 @@ const SmallRoom = ({ item, index, openDetail }) => {
         // maxWidth: "100px",
         minWidth: "2vw",
         cursor: "pointer",
-        height: "8%",
+        height: "9%",
         backgroundColor: item.Status ? "#111111" : "#FF0000",
         display: "flex",
         alignItems: "center",

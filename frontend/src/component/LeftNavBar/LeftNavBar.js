@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { faFaceAngry } from "@fortawesome/free-regular-svg-icons";
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 export const LeftNavBar = () => {
   const [selectedList, setSeletectList] = useState([
     true,
@@ -150,6 +150,8 @@ export const LeftNavBar = () => {
             backgroundColor: ` ${selectedList[2] ? "#2E2E2E" : "transparent"}`,
             borderRadius: "10px",
             alignItems: "center",
+            // background:"white",
+            // justifyContent: "center",
           }}
         >
           <FontAwesomeIcon
@@ -164,6 +166,7 @@ export const LeftNavBar = () => {
           <p
             style={{
               fontSize: "20px",
+              textAlign: "center",
               color: selectedList[2] ? "#FFFFFF" : "#B0B0B0",
               fontWeight: 600,
             }}
