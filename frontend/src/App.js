@@ -6,12 +6,13 @@ import { TopNavBar } from "./component/TopNavbar/TopNavBar";
 import { LeftNavBar } from "./component/LeftNavBar/LeftNavBar";
 import { AnalyticsPage } from "./page/AnalyticsPage";
 import { RoomsPage } from "./page/Room/RoomsPage.js";
-import { CustomersPage } from "./page/CustomersPage";
+import { CustomersPage } from "./page/Customer/CustomersPage.js";
 import { ServicesPage } from "./page/ServicesPage";
 import { EmployeesPage } from "./page/Employee/EmployeesPage.js";
 import { myAppColor } from "./colors";
 import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom.js";
 import { Bill } from "./page/Room/Bill/Bill";
+
 export const MainContext = React.createContext("undefined");
 
 function App() {

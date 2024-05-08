@@ -53,7 +53,7 @@ export const LeftNavBar = () => {
     <div
       style={{
         backgroundColor: "#202020",
-        width: "10vw",
+        width: "15vw",
         height: "80vh",
         marginTop: "15px",
         marginLeft: "15px",

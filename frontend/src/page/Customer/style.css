@@ -1,0 +1,70 @@
+.customerNumberContainer{
+    background-color: #111111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+}
+.customerNumberTitle{
+    /* background-color: pink; */
+    width: 90%;
+    height: 45%;
+    font-size: 20px;
+    color: white;
+    font-family: 'Montserrat';
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.customerNumberData{
+    /* background-color: skyblue; */
+    font-size: 30px;
+    color: white;
+    font-family: 'Montserrat';
+    width: 90%;
+    height: 55%;
+    display: flex;
+    align-items: center;
+}
+.contentContainer{
+    background-color: #2E2E2E;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.buttonContainer{
+    border: 2px solid;
+    border-radius: 10px;
+    width: 90%; 
+    height: 40%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buttonTitleContainer{
+    width: 65%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.infoContainer{
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    margin-top: 5%;
+}
+.actionIcon{
+    width: 20%;
+    height: 80%;
+}
+@font-face {
+    font-family: "Montserrat";
+    src: url('./assets/Montserrat-VariableFont_wght.ttf') format('truetype');
+}
+.detailModal{
+    width: 75%;
+    max-width: 75% !important;
+}
