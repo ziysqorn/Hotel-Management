@@ -130,8 +130,6 @@ export const OrderRooms = async (list, cusInfo, UserId) => {
       }
     });
   });
-
-  // return list;
 };
 
 export const getRoomTypeWithQuery = async (RoomTypeId) => {
@@ -156,7 +154,7 @@ export const getOrderRoomWithCustomerIdStartDateEndDate = async (
   EndDate
 ) => {
   try {
-    const data = await axios.get(
+    const { data } = await axios.get(
       `http://localhost:4000/api/room/getOrderRoomWithStartDateEndDateCustomerId`,
       {
         params: {
@@ -166,7 +164,8 @@ export const getOrderRoomWithCustomerIdStartDateEndDate = async (
         },
       }
     );
-    console.log(data);
+    console.log(data.recordset);
+    return data;
   } catch (e) {
     return e;
   }

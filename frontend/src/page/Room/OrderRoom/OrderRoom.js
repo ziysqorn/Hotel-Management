@@ -454,7 +454,7 @@ export const OrderRoom = () => {
 };
 
 // ================================COMPONENT========================
-const RoomNumOfPeopleDate = ({ ...props }) => {
+export const RoomNumOfPeopleDate = ({ ...props }) => {
   return (
     <div
       style={{

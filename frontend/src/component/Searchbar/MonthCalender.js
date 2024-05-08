@@ -10,7 +10,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import { MainContext } from "../../App.js";
 export const MonthCalendar = ({
   year,
@@ -22,6 +22,8 @@ export const MonthCalendar = ({
   position,
   ajust,
   exitWithSave,
+  chosenDate,
+  edit,
 }) => {
   const navigate = useNavigate();
   const [context, setContext] = useContext(MainContext);
@@ -93,8 +95,13 @@ export const MonthCalendar = ({
     let result = false;
     console.log(item);
 
+    let value = new Date(
+      `${item.year}-${item.month < 10 ? `0${item.month}` : item.month}-${
+        item.date < 10 ? `0${item.date}` : item.date
+      }T00:00:00.000Z`
+    ).getTime();
+
     data.map((data_item) => {
-      let value = new Date(item.year, item.month - 1, item.date + 1).getTime();
       if (
         new Date(data_item.CheckInDate).getTime() <= value &&
         new Date(data_item.ExpectedCHeckOutDate).getTime() >= value
@@ -111,23 +118,13 @@ export const MonthCalendar = ({
       const data = await getRoomInfoWithRoomId(item.RoomId);
       console.log(data.recordset);
       const RoomInfo = await getRoomTypeWithQuery(data.recordset[0].RoomTypeId);
+      console.log(RoomInfo);
       setRoomInfo(RoomInfo);
     } catch (e) {
       console.log(e);
     }
   };
-  useEffect(() => {
-    console.log(item);
-    if (mode == "detail") {
-      console.log("work");
-      getOcupie(item);
-    }
-    setData(getDaysInMonthAndDayOfWeek(year, month));
-  }, [year, month, choseDay]);
 
-  useEffect(() => {
-    getRoomInfo();
-  }, []);
   // highlight nhiều ô
   const checkIfChoseHighLight = (startDate, endDate, date, index) => {
     const fullCover =
@@ -170,7 +167,7 @@ export const MonthCalendar = ({
       // normal cover
       // if(fullCover &&)
     } else return result;
-    // console.log(result);
+    console.log(result);
     return result;
   };
 
@@ -187,6 +184,73 @@ export const MonthCalendar = ({
     }
     return false;
   };
+
+  const handleCheckForOneItem = (ocupieData, item, index) => {
+    let final = "transparent";
+    if (
+      mode == "detail" &&
+      checkIfOcupie(ocupieData, item) &&
+      checkIfChoseHighLight(
+        choseDay.startDate,
+        choseDay.endDate,
+        item,
+        index
+      ) === ""
+    ) {
+      final = "red";
+    } else if (checkIfchoose(choseDay.startDate, choseDay.endDate, item)) {
+      final = "#00ADB5";
+    }
+
+    return final;
+  };
+
+  useEffect(() => {
+    console.log(item);
+    if (mode == "detail") {
+      console.log("work");
+      getOcupie(item);
+    }
+    setData(getDaysInMonthAndDayOfWeek(year, month));
+  }, [year, month, choseDay]);
+
+  useEffect(() => {
+    console.log(chosenDate);
+    if (chosenDate) {
+      setChoseDay(chosenDate);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(item);
+    if (mode == "detail") {
+      console.log("work");
+      getOcupie(item);
+    }
+  }, []);
+
+  useEffect(() => {
+    getRoomInfo();
+  }, [item]);
+
+  // useEffect(() => {
+  //   console.log(roomInfo);
+  // }, [roomInfo]);
+  useEffect(() => {
+    console.log(
+      year,
+      month,
+      changeDate,
+      mode,
+      item,
+      exitWindow,
+      position,
+      ajust,
+      exitWithSave,
+      chosenDate,
+      edit
+    );
+  }, []);
 
   return (
     <div>
@@ -248,9 +312,7 @@ export const MonthCalendar = ({
             justifyContent: "center",
           }}
           onClick={() => {
-            console.log(choseDay);
             exitWindow(choseDay);
-            console.log(item);
           }}
         >
           {mode == "detail" && (
@@ -264,7 +326,6 @@ export const MonthCalendar = ({
         <div
           style={{
             width: "100%",
-            // background:"white",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-evenly",
@@ -493,27 +554,30 @@ export const MonthCalendar = ({
                                 )
                               ? "#00ADB5"
                               : "transparent",
+                          // `${handleCheckForOneItem(ocupieData, item, index)}`,
                           borderRadius: "1rem 1rem 1rem 1rem",
                         }}
                         onClick={() => {
-                          if (isChoseDate[1]) {
-                            setChoseDay({
-                              ...choseDay,
-                              endDate: {
-                                date: item.date,
-                                month: item.month,
-                                year: item.year,
-                              },
-                            });
-                          } else
-                            setChoseDay({
-                              ...choseDay,
-                              startDate: {
-                                date: item.date,
-                                month: item.month,
-                                year: item.year,
-                              },
-                            });
+                          if (!edit) {
+                            if (isChoseDate[1]) {
+                              setChoseDay({
+                                ...choseDay,
+                                endDate: {
+                                  date: item.date,
+                                  month: item.month,
+                                  year: item.year,
+                                },
+                              });
+                            } else
+                              setChoseDay({
+                                ...choseDay,
+                                startDate: {
+                                  date: item.date,
+                                  month: item.month,
+                                  year: item.year,
+                                },
+                              });
+                          }
                         }}
                       >
                         {item.date}
@@ -529,14 +593,9 @@ export const MonthCalendar = ({
           <div
             style={{
               width: "100%",
-              // background:"white",
               display: "flex",
-              // alignItems: "flex-end",
               justifyContent: "space-around",
               position: "relative",
-              // flexWrap:"wrap-reverse",
-              // flex: "flex-end",
-              // paddingTop:"10vh",
               minHeight: "30vw",
             }}
           >
