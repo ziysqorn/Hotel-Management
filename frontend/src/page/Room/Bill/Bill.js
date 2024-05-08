@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
+  AllOrderRoomHeader,
   CustomerInfoWithPLusIcon,
   CustomerInfoWithTrashIcon,
   LeftContainer,
+  RoomNumOfPeopleDate,
+  StartDateAndEndDateContainer,
   TopNav,
 } from "../OrderRoom/OrderRoom";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +16,11 @@ import {
   getAllCusomterWithPhoneNum,
 } from "../../../component/apicalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendar,
+  faSearch,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { MonthCalendar } from "../../../component/Searchbar/MonthCalender";
 
 export const Bill = () => {
@@ -22,7 +29,12 @@ export const Bill = () => {
   // ============START VARIABLE===============
   const [cusInfo, setCusInfo] = useState();
   const [allOrderRoom, setAllOrderRoom] = useState([]);
+  const [allOrderRoomAfter, setAllOrderRoomAfter] = useState([]);
   const [isHaveCustomer, setIsHaveCustomer] = useState(false);
+  const [chosenRoom, setChosenRoom] = useState();
+  const [chosenDate, setChosenDate] = useState();
+  const [date, setDate] = useState();
+  const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
   // ============END OF VARIABLE===============
 
   //   ================START OF FUNCTION============
@@ -41,20 +53,112 @@ export const Bill = () => {
     endDate
   ) => {
     try {
-      const data = await getOrderRoomWithCustomerIdStartDateEndDate(1002);
-      console.log(data);
+      const data = await getOrderRoomWithCustomerIdStartDateEndDate(
+        cusId,
+        startDate,
+        endDate
+      );
+      return data;
     } catch (e) {
       console.log(e);
     }
   };
+
+  const handleFindBill = async (item) => {
+    let startDate = `${item.chosenDate.startDate.year}-${item.chosenDate.startDate.month}-${item.chosenDate.startDate.date}`;
+    let endDate = `${item.chosenDate.endDate.year}-${item.chosenDate.endDate.month}-${item.chosenDate.endDate.date}`;
+
+    try {
+      const result = await handleGetAllOrderRoomWithStartAndEndDate(
+        item.chosenCus.CustomerId,
+        startDate,
+        endDate
+      );
+      console.log(result);
+      if (result.rowsAffected[0] > 0) {
+        setCusInfo(item.chosenCus);
+        setAllOrderRoom(result.recordset);
+        setIsHaveCustomer(true);
+      } else {
+        alert("Không tìm thấy bill");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleConvertToAllOrderRoomAfter = (list) => {
+    console.log(list);
+    let finalList = [];
+    list.forEach((item) => {
+      console.log(item);
+      let checkRoomExit = false;
+      finalList.forEach((room) => {
+        if (room?.RoomId == item.RoomId) {
+          checkRoomExit = true;
+        }
+      });
+
+      if (!checkRoomExit) {
+        finalList.push({ ...item, allCusomter: [] });
+      }
+      finalList.forEach((room) => {
+        if (room.RoomId == item.RoomId) {
+          let checIfCusExit = false;
+          room.allCusomter.forEach((cus) => {
+            if (cus.CustomerId == item.StayCustomerId) {
+              checIfCusExit = true;
+            }
+          });
+          if (!checIfCusExit) {
+            room.allCusomter.push({ CustomerId: item.StayCustomerId });
+          }
+        }
+      });
+    });
+    console.log(finalList);
+    return finalList;
+  };
+
+  const stringToDate = (item) => {
+    console.log(item);
+    let final = new Date(item);
+    return {
+      date: final.getDate(),
+      month: final.getMonth() + 1,
+      year: final.getFullYear(),
+    };
+  };
+
+  const handleChangeRoomInfo = (item) => {
+    console.log(item);
+    console.log(item.RoomId);
+    console.log(stringToDate(item.CheckInDate));
+    console.log(stringToDate(item.ExpectedCHeckOutDate));
+    console.log({
+      chosenDate: {
+        startDate: stringToDate(item.CheckInDate),
+        endDate: stringToDate(item.ExpectedCHeckOutDate),
+      },
+    });
+    setChosenDate({
+      startDate: stringToDate(item.CheckInDate),
+      endDate: stringToDate(item.ExpectedCHeckOutDate),
+    });
+    setChosenRoom({ RoomId: item.RoomId });
+  };
   //   ================END OF FUNCTION============
   // ============START USEEFFECT===============
   useEffect(() => {
-    console.log(context);
-
     getCusInfo(1004);
+    console.log(stringToDate("2024-05-10T00:00:00.000Z"));
     // handleGetAllOrderRoomWithStartAndEndDate(1002,startdate,enddate)
   }, []);
+
+  useEffect(() => {
+    console.log(allOrderRoom);
+    setAllOrderRoomAfter(handleConvertToAllOrderRoomAfter(allOrderRoom));
+  }, [allOrderRoom]);
   // ============END OF USEEFFECT===============
   return isHaveCustomer ? (
     <div style={OrderRoomStyles.BodyContainer}>
@@ -67,7 +171,6 @@ export const Bill = () => {
       />
       {/* ================END OF TOP NAV============== */}
       {/* ==============START OF CUSTOMER AND ROOM CONTAINER========== */}
-      {/*================= Left Container ================= */}
       <div
         style={{
           flex: 1,
@@ -77,13 +180,114 @@ export const Bill = () => {
           paddingBottom: "10vh",
         }}
       >
+        {/*================= Left Container ================= */}
         {cusInfo && <LeftContainer cusInfo={cusInfo} />}
+        {/* ===================End Left Container ============= */}
+        {/* ====================START OF ROOM CONTAINER=========== */}
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            color: "white",
+            alignItems: "center",
+            paddingBottom: "1vw",
+            position: "relative",
+          }}
+        >
+          {chosenRoom && chosenDate && (
+            <p style={{ fontSize: "1vw", fontWeight: 500 }}>
+              Room {chosenRoom?.RoomId}
+            </p>
+          )}
+          {chosenRoom && chosenDate && (
+            <StartDateAndEndDateContainer
+              chosenDate={chosenDate}
+              chosenRoom={chosenRoom}
+              setIsDetailWindowOpen={setIsDetailWindowOpen}
+            />
+          )}
+          <div
+            style={{
+              flex: 3,
+              width: "80%",
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <p style={{ fontSize: "1vw", marginBottom: "2vw" }}>All room</p>
+            <div
+              style={{
+                flex: 1,
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <AllOrderRoomHeader />
+              {allOrderRoomAfter.length > 0 &&
+                allOrderRoomAfter.map((item, index) => {
+                  const startDate = stringToDate(item.CheckInDate);
+                  const endDate = stringToDate(item.ExpectedCHeckOutDate);
+                  return (
+                    item && (
+                      <RoomNumOfPeopleDate
+                        key={index}
+                        RoomId={item.RoomId}
+                        numofmen={item.allCusomter.length}
+                        startDate={`${startDate.date}/${startDate.month}/${startDate.year}`}
+                        endDate={`${endDate.date}/${endDate.month}/${endDate.year}`}
+                        // handleRemoveRoomInfo={() => {
+                        //   handleClearAllOrderRoom(item);
+                        //   console.log(item);
+                        // }}
+                        handleChangeRoomInfo={() => {
+                          handleChangeRoomInfo(item);
+                          console.log(item);
+                        }}
+                      />
+                    )
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+        {/* ====================END OF ROOM CONTAINER=========== */}
       </div>
-      {/* ===================End Left Container ============= */}
+
       {/* ==============END OF CUSTOMER AND ROOM CONTAINER========== */}
+      {/* ==========START POP UP windows========= */}
+      {isDetailWindowOpen && (
+        <MonthCalendar
+          year={chosenDate.startDate.year}
+          month={chosenDate.startDate.month}
+          chosenDate={chosenDate}
+          mode={"detail"}
+          edit={true} //ko dc edit
+          item={{ RoomId: chosenRoom.RoomId }}
+          ajust={true}
+          position={{ top: "70%" }}
+          changeDate={(item) => {
+            // handleChangeDate(item);
+          }}
+          exitWindow={(item) => {
+            setIsDetailWindowOpen(false);
+          }}
+          exitWithSave={(item) => {
+            // handleExitAndSaveOrderRoom(item);
+          }}
+        />
+      )}
+      {/* ==========END OF POP UP windows========= */}
     </div>
   ) : (
-    <AllCustomerDiv />
+    <AllCustomerDiv
+      onFindBill={(item) => {
+        console.log(item);
+        handleFindBill(item);
+      }}
+    />
   );
 };
 
@@ -95,6 +299,7 @@ const AllCustomerDiv = ({ ...props }) => {
   const [cusVal, setCusVal] = useState();
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
   const [date, setDate] = useState();
+  const [chosenDate, setChosenDate] = useState();
   const [chosenCus, setChosenCus] = useState();
   // =======END VARIABLE=========
 
@@ -205,6 +410,37 @@ const AllCustomerDiv = ({ ...props }) => {
             handleChoseDate();
           }}
         />
+        {chosenDate && (
+          <div
+            style={{
+              marginLeft: "1vw",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              color: "white",
+              fontSize: "20px",
+            }}
+          >
+            <p
+              style={{}}
+              onClick={() => {
+                setIsDetailWindowOpen(true);
+              }}
+            >
+              {chosenDate.startDate.date}-{chosenDate.startDate.month}-
+              {chosenDate.startDate.year} To {chosenDate.endDate.date}-
+              {chosenDate.endDate.month}-{chosenDate.startDate.year}
+            </p>
+            <FontAwesomeIcon
+              style={{ marginLeft: "2vw" }}
+              icon={faXmark}
+              onClick={() => {
+                setChosenDate();
+              }}
+            />
+          </div>
+        )}
       </div>
       {/* =========END OF SEARCH BAR====  */}
 
@@ -215,13 +451,11 @@ const AllCustomerDiv = ({ ...props }) => {
           style={{
             width: "60%",
             maxHeight: "30vh",
-            // overflowY: "scroll",
-            // minHeight: "10vh",
-            // marginBottom: "1vw",
             margin: "2vh auto ",
           }}
         >
           <CustomerInfoWithTrashIcon
+            key={-1}
             item={chosenCus}
             onDeleteCustomer={() => {
               // console.log(`handle dele`, item);
@@ -243,9 +477,9 @@ const AllCustomerDiv = ({ ...props }) => {
       >
         {allCus.length > 0
           ? allCus.map((item, index) => {
-              console.log(item);
               return (
                 <CustomerInfoWithPLusIcon
+                  key={index}
                   item={item}
                   onAddCustomer={() => {
                     console.log(`handle set userinfo`, chosenCus);
@@ -272,6 +506,7 @@ const AllCustomerDiv = ({ ...props }) => {
         }}
         onClick={() => {
           console.log(`handle search`);
+          props.onFindBill({ chosenDate, chosenCus });
         }}
       >
         <p style={{ fontSize: "0.5vw", fontWeight: 500 }}>Find Bill</p>
@@ -298,6 +533,7 @@ const AllCustomerDiv = ({ ...props }) => {
           }}
           exitWindow={(item) => {
             console.log(`handle close window`, item);
+            setChosenDate(item);
             setIsDetailWindowOpen(false);
           }}
         />

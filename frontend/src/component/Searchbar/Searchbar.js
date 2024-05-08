@@ -242,7 +242,6 @@ export const Searchbar = ({ ...props }) => {
                 />
               </div>
             )}
-            {/* <div style={{ width: "100%", backgroundColor: "white" }}></div> */}
           </div>
         </div>
       )}
