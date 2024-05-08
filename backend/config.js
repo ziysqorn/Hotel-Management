@@ -5,7 +5,9 @@ export const config = {
   user: "sa",
   password: "Password123",
   options: {
-    encrypt: true, // Bật mã hóa
+    //encrypt: true, // Bật mã hóa
     trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
+    trustedConnection: true
   },
+  
 };
