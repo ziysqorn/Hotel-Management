@@ -9,7 +9,7 @@ export const Employee_Box = () => {
     <div
       className="Employee-box"
       style={{
-        width: "35%",
+        width: "25.5vw",
         color: "pink",
         background: "#2E2E2E",
         borderRadius: 10,
@@ -18,7 +18,7 @@ export const Employee_Box = () => {
       <div
         style={{
           color: "white",
-          fontSize: "14px",
+          fontSize: "1vw",
           fontWeight: "bold",
           margin: "3%",
         }}
@@ -28,7 +28,7 @@ export const Employee_Box = () => {
       <div
         className="employee-searchbar"
         style={{
-          height: "14%",
+          height: "6vh",
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
@@ -39,9 +39,9 @@ export const Employee_Box = () => {
           style={{
             borderRadius: 5,
             background: "black",
-            width: "60%",
+            width: "15vw",
             paddingLeft: "3px",
-            height: "70%",
+            height: "5vh",
             display: "flex",
             alignItems: "center",
             marginRight: "5px",
@@ -52,18 +52,21 @@ export const Employee_Box = () => {
             icon={faSearch}
             style={{
               color: "white",
-              fontSize: 13,
+              fontSize: "0.8vw",
               paddingLeft: "5px",
-              width: "10%",
+              width: "5vw",
             }}
           />
           <input
             type="text"
             style={{
               background: "black",
-              border: "black solid 2px",
-              width: "85%",
+              border: "none",
+              width: "100%",
               borderRadius: 5,
+              fontSize: "0.7vw",
+              outline: "none",
+              color: "white",
             }}
             placeholder="Search ..."
           />
@@ -77,13 +80,29 @@ export const Employee_Box = () => {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "3%",
+            marginRight: "2%",
             borderRadius: 10,
             cursor: "pointer",
           }}
-          onClick={() => console.log("order by")}
         >
           <FontAwesomeIcon icon={faFilter} />
-          <div style={{ marginLeft: "6px" }}>Filter</div>
+          <select
+            style={{
+              fontWeight: "bold",
+              height: "100%",
+              width: "100%",
+              background: "#3E3E3E",
+              fontSize: "100%",
+              outline: "none",
+              color: "white",
+              border: "none",
+            }}
+          >
+            <option value="">Filter</option>
+            <option value="option1">A - Z</option>
+            <option value="option2">Z - A</option>
+            <option value="option3">Option 3</option>
+          </select>
         </div>
       </div>
       <EmployeesList />

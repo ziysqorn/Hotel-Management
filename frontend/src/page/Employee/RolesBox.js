@@ -1,22 +1,25 @@
 import React from "react";
+import { useState } from "react";
+import { AddRolesModal } from "./Modal/AddRolesModal";
 import "./Design.css";
 import { Roles_List } from "./RolesList";
 
 export const Roles_Box = () => {
+  const [isAddRolesOpen, setIsAddRolesOpen] = useState(false);
   return (
     <div
       className="Roles-Box"
       style={{
-        width: "25%",
-        background: "#2E2E2E",
+        width: "18vw",
         borderRadius: 10,
+        background: "#2E2E2E",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", margin: "3%" }}>
         <div
           style={{
             color: "white",
-            fontSize: "18px",
+            fontSize: "1vw",
             fontWeight: "bold",
             margin: "3%",
             width: "65%",
@@ -25,21 +28,27 @@ export const Roles_Box = () => {
           Roles
         </div>
         <div
-          className="BtnAddUser"
+          className="BtnAddRoles"
           style={{
             background: "#00FFF5",
             borderRadius: 10,
             padding: "3%",
+            fontSize:"0.8vw",
+            fontWeight:600,
             width: "30%",
             margin: "3%",
             cursor: "pointer",
           }}
-          onClick={() => console.log("added")}
+          onClick={() => setIsAddRolesOpen(true)}
         >
           + Add
         </div>
       </div>
       <Roles_List />
+      <AddRolesModal
+        isAddRolesOpen={isAddRolesOpen}
+        onAddRolesClose={() => setIsAddRolesOpen(false)}
+      />
     </div>
   );
 };

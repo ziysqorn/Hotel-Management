@@ -1,6 +1,7 @@
 import React from "react";
 import "./Design.css";
 import { useState, useEffect } from "react";
+import { DeleteConfirm } from "./Modal/DeleteConfirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
@@ -8,7 +9,7 @@ import {
   faUserCircle,
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-const url = null;
+
 export const UsersLists = () => {
   let items = ["john", "sanra", "Tomuya", "Linda", "Phap", "Davinci"];
   const [currentTime, setCurrentTime] = useState(
@@ -27,14 +28,17 @@ export const UsersLists = () => {
 
     return () => clearInterval(interval);
   }, []);
+  const [deleteWindow, setdeleteWindow] = useState(false);
+
   return (
     <div
       className="users-list"
-      style={{ justifyContent: "center", height: "40vh" }}
+      style={{ justifyContent: "center", height: "45vh", marginTop: "10px" }}
     >
-      <ul style={{ listStyleType: "none", width: "23vw", padding: 0 }}>
+      <ul style={{ listStyleType: "none", width: "24vw", padding: 0 }}>
         {items.map((item, index) => (
           <li
+            key={index}
             style={{
               display: "flex",
               background: "black",
@@ -42,50 +46,59 @@ export const UsersLists = () => {
               alignItems: "center",
               borderRadius: 5,
               height: "7vh",
-              width: "24vw",
+              width: "100%",
               margin: "5px",
             }}
           >
             <div
               className="user-info"
-              style={{ width: "83%", display: "flex", alignItems: "center" }}
+              style={{ width: "80%", display: "flex", alignItems: "center" }}
             >
               <FontAwesomeIcon
                 icon={faUserCircle}
-                style={{ marginLeft: "7%" }}
+                style={{ marginLeft: "7%", fontSize: "1vw" }}
               />
-              <div style={{ flexDirection: "column", marginLeft: "7%" }}>
+              <div style={{ flexDirection: "column", marginLeft: "7%", fontSize:"1vw"}}>
                 <span>{item}</span>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
                     style={{
-                      fontSize: "10px",
+                      fontSize: "0.7vw",
                       color: "#00FFF5",
                       paddingRight: "10%",
                     }}
                   />
-                  <div className="time-log" style={{ fontSize: "10px" }}>
+                  <div className="time-log" style={{ fontSize: "0.6vw" }}>
                     {currentTime}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="user-actions" style={{ display: "flex" }}>
+            <div
+              className="user-actions"
+              style={{ display: "flex", width: "10%",fontSize:"1vw" }}
+            >
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 className="faPenToSquare"
-                style={{ paddingRight: "50%", cursor: "pointer" }}
+                style={{ paddingRight: "40%", cursor: "pointer" }}
               />
               <FontAwesomeIcon
+                mode="delete-user"
                 icon={faTrashCan}
                 className="faTrashCan"
                 style={{ cursor: "pointer" }}
+                onClick={() => setdeleteWindow(true)}
               />
             </div>
           </li>
         ))}
       </ul>
+      <DeleteConfirm
+        isDelWindowOpen={deleteWindow}
+        onDelWindowClose={() => setdeleteWindow(false)}
+      />
     </div>
   );
 };

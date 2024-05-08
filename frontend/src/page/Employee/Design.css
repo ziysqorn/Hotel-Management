@@ -1,4 +1,9 @@
-.Btn-add:hover, .Btn-remove:hover, .employee-filter:hover, .BtnAddUser:hover {
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+.Btn-add:hover, 
+.Btn-remove:hover, 
+.employee-filter:hover, 
+.BtnAddUser:hover, 
+.BtnAddRoles:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;
     
