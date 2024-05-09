@@ -10,9 +10,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
-  const [selectedBirthday, setSelectedBirthday] = useState(null);
-  const [selectedFirstDay, setSelectedFirstDay] = useState(null);
+export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose, employeeInfo }) => {
+  const [selectedBirthday, setSelectedBirthday] = useState(employeeInfo?.BirthDay || null);
+  const [selectedFirstDay, setSelectedFirstDay] = useState(employeeInfo?.FristDay || null);
+  const [fullName, setFullName] = useState(employeeInfo?.FullName || "");
+  const [personalId, setPersonalId] = useState(employeeInfo?.PersonalId || "");
+  const [phone, setPhone] = useState(employeeInfo?.Phone || "");
+  const [address, setAddress] = useState(employeeInfo?.Address || "");
+  const [position, setPosition] = useState(employeeInfo?.position || "");
+  const [roles, setRoles] = useState(employeeInfo?.Roles || "");
+  const [image, setImage] = useState(employeeInfo?.image || "");
   if (!EditEmployIsOpen) return null;
 
   return (
@@ -64,6 +71,8 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
 
         <input
           type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
           style={{
             width: "90%",
             height: "7%",

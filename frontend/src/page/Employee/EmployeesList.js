@@ -12,19 +12,26 @@ import {
 export const EmployeesList = () => {
   const [employees, setEmployees] = useState([]);
   const [EditWindow, setEditWindow] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // Thêm state để lưu thông tin của nhân viên được chọn
+  
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/employee/"); //get employee
+      setEmployees(response.data.recordset);
+    } catch (error) {
+      console.error("Error fetching employees:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/employee/"); //get employee
-        setEmployees(response.data.recordset);
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      }
-    };
-
     fetchEmployees();
   }, []);
+
+  const handleEdit = (employee) => {
+    setSelectedEmployee(employee); // Lưu thông tin của nhân viên được chọn
+    setEditWindow(true); // Mở modal chỉnh sửa
+  };
+
   return (
     <div
       className="employees-list"
@@ -72,7 +79,7 @@ export const EmployeesList = () => {
                   icon={faEye}
                   className="faEye"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setEditWindow(true)}
+                  onClick={() => handleEdit(employee)}
                 />
               </div>
               <div
@@ -118,6 +125,7 @@ export const EmployeesList = () => {
       <EditEmployModal
         EditEmployIsOpen={EditWindow}
         EditEmployOnClose={() => setEditWindow(false)}
+        employeeInfo={selectedEmployee}
       />
     </div>
   );

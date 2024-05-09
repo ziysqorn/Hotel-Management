@@ -155,7 +155,8 @@ export const getUser = async (req, res) => {
     const data = await db(`SELECT 
                                 e.FullName, 
                                 e.Phone, 
-                                e.PersonalId, 
+                                e.PersonalId,
+                                e.image,
                                 e.BirthDay, 
                                 e.FristDay, 
                                 e.Address, 

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import "./Design.css";
 import { useState, useEffect } from "react";
 import { DeleteConfirm } from "./Modal/DeleteConfirm";
@@ -11,12 +12,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const UsersLists = () => {
-  let items = ["john", "sanra", "Tomuya", "Linda", "Phap", "Davinci"];
+  const [users, setUsers] = useState([]);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/employee/employ/getUser"); // Gọi API để lấy danh sách người dùng
+        setUsers(response.data.recordset);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
     const interval = setInterval(() => {
       setCurrentTime(
         new Date().toLocaleTimeString([], {
@@ -26,8 +36,11 @@ export const UsersLists = () => {
       );
     }, 60000); // Update every minute (60,000 milliseconds)
 
+    fetchUsers();
+
     return () => clearInterval(interval);
   }, []);
+
   const [deleteWindow, setdeleteWindow] = useState(false);
 
   return (
@@ -35,65 +48,81 @@ export const UsersLists = () => {
       className="users-list"
       style={{ justifyContent: "center", height: "45vh", marginTop: "10px" }}
     >
-      <ul style={{ listStyleType: "none", width: "24vw", padding: 0 }}>
-        {items.map((item, index) => (
-          <li
-            style={{
-              display: "flex",
-              background: "black",
-              color: "white",
-              alignItems: "center",
-              borderRadius: 5,
-              height: "7vh",
-              width: "100%",
-              margin: "5px",
-            }}
-          >
-            <div
-              className="user-info"
-              style={{ width: "80%", display: "flex", alignItems: "center" }}
+      {users.length > 0 ? (
+        <ul style={{ listStyleType: "none", width: "24vw", padding: 0 }}>
+          {users.map((user, index) => (
+            <li
+              key={index}
+              style={{
+                display: "flex",
+                background: "black",
+                color: "white",
+                alignItems: "center",
+                borderRadius: 5,
+                height: "7vh",
+                width: "100%",
+                margin: "5px",
+              }}
             >
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                style={{ marginLeft: "7%" }}
-              />
-              <div style={{ flexDirection: "column", marginLeft: "7%" }}>
-                <span>{item}</span>
-                <div style={{ display: "flex", alignItems: "center" }}>
+              <div
+                className="user-info"
+                style={{
+                  width: "80%",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {user.image ? (
+                  <img src={user.image} alt="Avatar" style={{ marginLeft: "7%", borderRadius: "50%", width: "30px", height: "30px" }} />
+                ) : (
                   <FontAwesomeIcon
-                    icon={faArrowRightToBracket}
-                    style={{
-                      fontSize: "10px",
-                      color: "#00FFF5",
-                      paddingRight: "10%",
-                    }}
+                    icon={faUserCircle}
+                    style={{ marginLeft: "7%" }}
                   />
-                  <div className="time-log" style={{ fontSize: "10px" }}>
-                    {currentTime}
+                )}
+                <div
+                  style={{
+                    flexDirection: "column",
+                    marginLeft: "7%",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <span>{user.FullName}</span>
+                  <div
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowRightToBracket}
+                      style={{
+                        fontSize: "10px",
+                        color: "#00FFF5",
+                        paddingRight: "10%",
+                      }}
+                    />
+                    <div className="time-log" style={{ fontSize: "10px" }}>
+                      {currentTime}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="user-actions"
-              style={{ display: "flex", width: "10%" }}
-            >
-              <FontAwesomeIcon
-                icon={faPenToSquare}
-                className="faPenToSquare"
-                style={{ paddingRight: "40%", cursor: "pointer" }}
-              />
-              <FontAwesomeIcon
-                mode="delete-user"
-                icon={faTrashCan}
-                className="faTrashCan"
-                style={{ cursor: "pointer" }}
-                onClick={() => setdeleteWindow(true)}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div className="user-actions" style={{ display: "flex", width: "10%" }}>
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  className="faPenToSquare"
+                  style={{ paddingRight: "40%", cursor: "pointer" }}
+                />
+                <FontAwesomeIcon
+                  mode="delete-user"
+                  icon={faTrashCan}
+                  className="faTrashCan"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setdeleteWindow(true)}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
