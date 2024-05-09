@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   useState,
   useEffect,
@@ -17,15 +17,19 @@ import LeftArrowIcon from './assets/LeftArrowIcon.png'
 import RightArrowIcon from './assets/RightArrowIcon.png'
 import './assets/Montserrat-VariableFont_wght.ttf'
 import axios from 'axios'
+import { MainContext } from '../../App'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const apiURL = 'http://localhost:4000/api'
 
 
 export function CustomersPage(){
-  // use context 
+  // use context
+  const [context,setContext] = useContext(MainContext) 
   
-
+  useEffect(()=>{
+    console.log(context);
+  },[])
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -115,6 +119,11 @@ export function CustomersPage(){
   function CustomerClick(CustomerId){
     setSelectedCustomer(prev=>prev===CustomerId ? -1 : CustomerId)
     console.log("handleChooseCustomer")
+    setContext(prev=>{
+      return {...prev,
+      customerInfo:{customerId:CustomerId}}
+    })
+
   }
   function RemoveClick(){
     if(selectedCustomer === -1){

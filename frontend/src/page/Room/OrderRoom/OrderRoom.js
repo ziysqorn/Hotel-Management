@@ -234,7 +234,9 @@ export const OrderRoom = () => {
       const data = await OrderRooms(allOrderRoom, cusInfo, 1);
       console.log(data);
       if (!data) {
-        alert("hoàn thành ");
+        window.confirm("Order success!!!");
+        localStorage.setItem("OrdersInfo","[]")
+        navigate("/rooms");
       }
     } catch (e) {
       console.log(e);
@@ -286,7 +288,9 @@ export const OrderRoom = () => {
       }
     }
     setAllOrderRoom(data);
-    getCusInfo(1004);
+    if (context) {
+      getCusInfo(context.customerInfo.customerId);
+    }
   }, []);
 
   return (
@@ -359,26 +363,27 @@ export const OrderRoom = () => {
             >
               {/* 1 item */}
               <AllOrderRoomHeader />
-              {allOrderRoom.length &&
-                allOrderRoom.map((item, index) => {
-                  return (
-                    item && (
-                      <RoomNumOfPeopleDate
-                        key={index}
-                        RoomId={item.RoomId}
-                        numofmen={5}
-                        startDate={`${item.startDate.date}/${item.startDate.month}/${item.startDate.year}`}
-                        endDate={`${item.endDate.date}/${item.endDate.month}/${item.endDate.year}`}
-                        handleRemoveRoomInfo={() => {
-                          handleClearAllOrderRoom(item);
-                        }}
-                        handleChangeRoomInfo={() => {
-                          handleChangeRoomInfo(item);
-                        }}
-                      />
-                    )
-                  );
-                })}
+              {allOrderRoom.length > 0
+                ? allOrderRoom.map((item, index) => {
+                    return (
+                      item && (
+                        <RoomNumOfPeopleDate
+                          key={index}
+                          RoomId={item.RoomId}
+                          numofmen={5}
+                          startDate={`${item.startDate.date}/${item.startDate.month}/${item.startDate.year}`}
+                          endDate={`${item.endDate.date}/${item.endDate.month}/${item.endDate.year}`}
+                          handleRemoveRoomInfo={() => {
+                            handleClearAllOrderRoom(item);
+                          }}
+                          handleChangeRoomInfo={() => {
+                            handleChangeRoomInfo(item);
+                          }}
+                        />
+                      )
+                    );
+                  })
+                : null}
             </div>
           </div>
 

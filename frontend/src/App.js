@@ -7,7 +7,7 @@ import { LeftNavBar } from "./component/LeftNavBar/LeftNavBar";
 import { AnalyticsPage } from "./page/AnalyticsPage";
 import { RoomsPage } from "./page/Room/RoomsPage.js";
 import { CustomersPage } from "./page/Customer/CustomersPage.js";
-import { ServicesPage } from "./page/ServicesPage";
+import { ServicesPage } from "./page/Service/ServicesPage.js";
 import { EmployeesPage } from "./page/Employee/EmployeesPage.js";
 import { myAppColor } from "./colors";
 import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom.js";
@@ -43,7 +43,7 @@ function App() {
           <div
             style={{
               // backgroundColor: "white",
-              border: "1px solid red",
+              // border: "1px solid red",
               margin: "20px",
               flex: 1,
             }}

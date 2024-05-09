@@ -35,6 +35,7 @@ export const Bill = () => {
   const [chosenDate, setChosenDate] = useState();
   const [date, setDate] = useState();
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
+  const [renderDataInCus, setRenderDataInCus] = useState({});
   // ============END OF VARIABLE===============
 
   //   ================START OF FUNCTION============
@@ -65,25 +66,26 @@ export const Bill = () => {
   };
 
   const handleFindBill = async (item) => {
-    let startDate = `${item.chosenDate.startDate.year}-${item.chosenDate.startDate.month}-${item.chosenDate.startDate.date}`;
-    let endDate = `${item.chosenDate.endDate.year}-${item.chosenDate.endDate.month}-${item.chosenDate.endDate.date}`;
-
-    try {
-      const result = await handleGetAllOrderRoomWithStartAndEndDate(
-        item.chosenCus.CustomerId,
-        startDate,
-        endDate
-      );
-      console.log(result);
-      if (result.rowsAffected[0] > 0) {
-        setCusInfo(item.chosenCus);
-        setAllOrderRoom(result.recordset);
-        setIsHaveCustomer(true);
-      } else {
-        alert("Không tìm thấy bill");
+    if (item.chosenDate) {
+      let startDate = `${item.chosenDate.startDate.year}-${item.chosenDate.startDate.month}-${item.chosenDate.startDate.date}`;
+      let endDate = `${item.chosenDate.endDate.year}-${item.chosenDate.endDate.month}-${item.chosenDate.endDate.date}`;
+      try {
+        const result = await handleGetAllOrderRoomWithStartAndEndDate(
+          item.chosenCus.CustomerId,
+          startDate,
+          endDate
+        );
+        console.log(result);
+        if (result.rowsAffected[0] > 0) {
+          setCusInfo(item.chosenCus);
+          setAllOrderRoom(result.recordset);
+          setIsHaveCustomer(true);
+        } else {
+          alert("Không tìm thấy bill");
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -130,6 +132,26 @@ export const Bill = () => {
     };
   };
 
+  const handleGetAllCusInfoInRoom = async (room) => {
+    try {
+      const promises = room.allCusomter.map(async (cus) => {
+        try {
+          const cusInfo = await getCustomerInfoWithCustomterId(cus.CustomerId);
+          console.log(cusInfo);
+          return cusInfo[0];
+        } catch (e) {
+          console.log(e);
+          return null;
+        }
+      });
+
+      const data = await Promise.all(promises);
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleChangeRoomInfo = (item) => {
     console.log(item);
     console.log(item.RoomId);
@@ -154,6 +176,19 @@ export const Bill = () => {
     console.log(stringToDate("2024-05-10T00:00:00.000Z"));
     // handleGetAllOrderRoomWithStartAndEndDate(1002,startdate,enddate)
   }, []);
+
+  useEffect(() => {
+    console.log(chosenRoom);
+    if (chosenRoom) {
+      allOrderRoomAfter.forEach((room) => {
+        console.log(room);
+        if (room.RoomId == chosenRoom.RoomId) {
+          let finalArray = [];
+          handleGetAllCusInfoInRoom(room);
+        }
+      });
+    }
+  }, [chosenRoom]);
 
   useEffect(() => {
     console.log(allOrderRoom);
@@ -255,8 +290,37 @@ export const Bill = () => {
         </div>
         {/* ====================END OF ROOM CONTAINER=========== */}
       </div>
-
       {/* ==============END OF CUSTOMER AND ROOM CONTAINER========== */}
+      {/* ==============START OF CUSTOMER IN ROOM AND SERVICE======= */}
+      <div
+        style={{
+          // border: "1px solid white",
+          background: "#2E2E2E",
+          borderRadius: "1vw",
+          width: "100%",
+          minHeight: "20vh",
+          marginTop: "1vh",
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "20vh",
+          // padding:"1vw 0"
+          alignItems: "center",
+        }}
+      >
+        {/* ============START OF CUSTOMER DIV========= */}
+        <div
+          style={{
+            width: "50%",
+            display: "flex",
+            marginTop: "1vw",
+            minHeight: "10vh",
+          }}
+        ></div>
+        {/* ============END OF CUSTOMER DIV========= */}
+      </div>
+
+      {/* ==============END OF CUSTOMER IN ROOM AND SERVICE======= */}
+
       {/* ==========START POP UP windows========= */}
       {isDetailWindowOpen && (
         <MonthCalendar

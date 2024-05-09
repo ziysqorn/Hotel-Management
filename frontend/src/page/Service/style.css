@@ -1,0 +1,128 @@
+.table-container {
+    width: 80%; /* Độ rộng của bảng */
+    margin-left: auto; /* Căn lề trái tự động */
+    margin-right: auto; /* Căn lề phải tự động */
+    margin-top: 20px; /* Khoảng cách với phần trên cùng */
+  }
+  
+  /* Định dạng các dòng trong bảng */
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+  }
+  
+  /* Định dạng tiêu đề của bảng */
+  .table-container th {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng nội dung các ô trong bảng */
+  .table-container td {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng icon trong ô Actions */
+  .table-container td:last-child {
+    padding: 10px;
+    border-bottom: 1px solid white;
+  }
+  
+  /* Định dạng input search */
+  .search-container {
+    position: absolute;
+    top: 4%;
+    left: 4%;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Định dạng button "Add Service" */
+  .add-service-container {
+    width: 200px;
+    height: 58px;
+    position: relative;
+    top: 5%;
+    right: 5%;
+  }
+  
+  .add-service-container .AddStudent {
+    width: 217px;
+    height: 58px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+  }
+  
+  .add-service-container .AddService {
+    position: absolute;
+    left: 26px;
+    top: 13px;
+    color: #00fff5;
+    font-size: 24px;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+  
+  .Row1 {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
+  
+  .Row1 > div {
+    margin-right: 8%; /* Khoảng cách giữa các phần tử con */
+  }
+
+  .icon {
+    font-size: 24px; /* Phóng to lên 24px */
+    color: white; /* Đổi màu sắc thành màu xanh */
+}
+/* CSS */
+.delete-confirmation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Thiết lập chiều rộng */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Thiết lập chiều cao */
+  max-height: 80%; /* Giới hạn chiều cao tối đa */
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button1{
+  width: 200;
+  position: 'absolute';
+   height: 61;
+    left: 150;
+     top: 476;
+      color: 'white';
+       background:"#00868D";
+}
+.editForm, .showAdd {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; /* Thiết lập chiều rộng */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Thiết lập chiều cao */
+  max-height: 80%; /* Giới hạn chiều cao tối đa */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* .showAdd-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+} */
+

@@ -236,21 +236,21 @@ export const MonthCalendar = ({
   // useEffect(() => {
   //   console.log(roomInfo);
   // }, [roomInfo]);
-  useEffect(() => {
-    console.log(
-      year,
-      month,
-      changeDate,
-      mode,
-      item,
-      exitWindow,
-      position,
-      ajust,
-      exitWithSave,
-      chosenDate,
-      edit
-    );
-  }, []);
+  // useEffect(() => {
+  //   console.log(
+  //     year,
+  //     month,
+  //     changeDate,
+  //     mode,
+  //     item,
+  //     exitWindow,
+  //     position,
+  //     ajust,
+  //     exitWithSave,
+  //     chosenDate,
+  //     edit
+  //   );
+  // }, []);
 
   return (
     <div>

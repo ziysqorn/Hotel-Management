@@ -36,7 +36,7 @@ export const getWithQuery = async (req, res) => {
 
 //Thêm dịch vụ --Đậu --Khang duyệt
 export const AddService = async (req, res) => {
-  let { item } = req.body;
+  let  item  = req.body.item;
 
   let finalQ = `INSERT INTO Service (Name, Price, Description)
                   VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;
@@ -119,27 +119,26 @@ export const getUseService = async (req, res) => {
 export const EditUseService = async (req, res) => {
   let oldItem = req.body.oldItem;
   let newItem = req.body.newItem;
-  console.log(req.body);
   let finalQ = `UPDATE UseService
       SET 
           ServiceId = ${newItem.ServiceId},
           CustomerId = ${newItem.CustomerId},
-          UserId = ${newItem.UserId},
+          UserId = ${newItem.UserID},
           CheckInDate = '${newItem.CheckInDate}'
       WHERE  ServiceId = ${oldItem.ServiceId} AND
       CustomerId = ${oldItem.CustomerId} AND
-      UserId = ${oldItem.UserId} AND
+      UserId = ${oldItem.UserID} AND
       CheckInDate = '${oldItem.CheckInDate}';`;
-
+  console.log(finalQ);
   try {
     const data = await db(finalQ);
-    res.json(data);
+    res.json(`Update item: ${oldItem.RoomId} success!!! `);
   } catch (err) {
     console.log(err);
   }
 };
 
-//thêm userService
+//thêm userService -- Khang Duyệt 
 export const addUseService = async (req, res) => {
   let { item } = req.body;
 
