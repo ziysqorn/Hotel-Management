@@ -26,7 +26,6 @@ export const Floor = ({ ...props }) => {
 
   useEffect(() => {
     console.log(currentDate());
-    console.log(props);
     setDate(currentDate());
   }, []);
   return (

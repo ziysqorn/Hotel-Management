@@ -10,6 +10,22 @@ export const get = async (req, res) => {
   }
 };
 
+export const getUseServiceWithStartDateAndEndDate = async (req, res) => {
+  let { CheckInDate, ExpectedCheckOutDate, CustomerId } = req.query;
+  let finalQ = `SELECT * FROM UseService WHERE 
+                (CheckInDate BETWEEN '${CheckInDate}' AND '${ExpectedCheckOutDate}') 
+                AND CustomerId = ${CustomerId} `;
+  try {
+    const data = await db(finalQ);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: err.message });
+  }
+};
+
 export const getWithQuery = async (req, res) => {
   let { serviceid, Name } = req.query;
   let FinalQuery = "SELECT * FROM Service WHERE NOT(Service.ServiceId IS NULL)";
@@ -36,7 +52,7 @@ export const getWithQuery = async (req, res) => {
 
 //Thêm dịch vụ --Đậu --Khang duyệt
 export const AddService = async (req, res) => {
-  let  item  = req.body.item;
+  let item = req.body.item;
 
   let finalQ = `INSERT INTO Service (Name, Price, Description)
                   VALUES ('${item.Name}', ${item.Price}, '${item.Description}')`;
@@ -138,7 +154,7 @@ export const EditUseService = async (req, res) => {
   }
 };
 
-//thêm userService -- Khang Duyệt 
+//thêm userService -- Khang Duyệt
 export const addUseService = async (req, res) => {
   let { item } = req.body;
 

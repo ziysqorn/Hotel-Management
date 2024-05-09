@@ -1,9 +1,12 @@
 import {
+  faBellConcierge,
   faChevronLeft,
   faEye,
+  faPerson,
   faPlus,
   faSearch,
   faTrash,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
@@ -235,7 +238,7 @@ export const OrderRoom = () => {
       console.log(data);
       if (!data) {
         window.confirm("Order success!!!");
-        localStorage.setItem("OrdersInfo","[]")
+        localStorage.setItem("OrdersInfo", "[]");
         navigate("/rooms");
       }
     } catch (e) {
@@ -899,17 +902,31 @@ export const ServiceInfoWithPlusIcon = ({ item, ...props }) => {
     >
       <p style={{ flex: 1, marginLeft: "1vw" }}>{item.Name}</p>
       <p style={{ flex: 1 }}>{item.Price}</p>
-      <FontAwesomeIcon
-        icon={faPlus}
-        style={{
-          marginRight: "1vw",
-          fontWeight: 700,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          props.onAddService(item);
-        }}
-      />
+      {props.mode == "watch" ? (
+        <FontAwesomeIcon
+          icon={faBellConcierge}
+          style={{
+            marginRight: "1vw",
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            props.onAddService(item);
+          }}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faPlus}
+          style={{
+            marginRight: "1vw",
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            props.onAddService(item);
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -964,17 +981,27 @@ export const CustomerInfoWithPLusIcon = ({ item, ...props }) => {
     >
       <p style={{ flex: 1, marginLeft: "1vw" }}>{item.FullName}</p>
       <p style={{ flex: 1 }}>{item.Phone}</p>
-      <FontAwesomeIcon
-        icon={faPlus}
-        style={{
-          marginRight: "1vw",
-          fontWeight: 700,
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          props.onAddCustomer(item);
-        }}
-      />
+      {props.mode == "watch" ? (
+        <FontAwesomeIcon
+          icon={faUser}
+          style={{
+            marginRight: "1vw",
+            fontWeight: 700,
+          }}
+        />
+      ) : (
+        <FontAwesomeIcon
+          icon={faPlus}
+          style={{
+            marginRight: "1vw",
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            props.onAddCustomer(item);
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -1072,9 +1099,8 @@ export const MainCustomerDiv = ({
             width: "40%",
             maxHeight: "30vh",
             display: "block",
-            // overflow: "scroll",
+
             overflowY: "scroll",
-            // marginBottom: "1vw",
           }}
         >
           {/* one item */}

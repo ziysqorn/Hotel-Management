@@ -18,7 +18,7 @@ export const Service_Info = () => {
       setApiData(res.data.recordset)
     } catch (e) {
       console.log(e);
-    }
+    } 
   }
   useEffect(()=>{
     fetchData()

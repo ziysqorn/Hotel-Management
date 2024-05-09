@@ -14,9 +14,7 @@ import {
   deleteServiceForRoom,
   editServiceForRoom,
   getServiceForRoom,
-  // OrderService,
-  // deleteOrderService,
-  // editOrderService
+  getUseServiceWithStartDateAndEndDate,
 } from "../controllers/service.js";
 const router = express.Router();
 
@@ -28,6 +26,10 @@ router.post("/delete", deleteService);
 
 router.get("/getAllUseService", getAllUseService);
 router.get("/getUseService", getUseService);
+router.get(
+  "/getUseServiceWithStartDateAndEndDate",
+  getUseServiceWithStartDateAndEndDate
+);
 router.post("/addUseService", addUseService);
 router.post("/EditUseService", EditUseService);
 router.post("/deleteUseService", deleteUseService);

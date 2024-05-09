@@ -70,6 +70,48 @@ export const getServiceInfoWithQuery = async (query) => {
   }
 };
 
+export const getUseServiceWithStartDateAndEndDate = async (
+  cusId,
+  startDate,
+  endDate
+) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/service/getUseServiceWithStartDateAndEndDate`,
+      {
+        params: {
+          CheckInDate: startDate,
+          ExpectedCheckOutDate: endDate,
+          CustomerId: cusId,
+        },
+      }
+    );
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+export const getServiceInfoWithServiceId = async (id) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/service/query`,
+      {
+        params: {
+          serviceid: id,
+        },
+      }
+    );
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 export const getRoomInfoWithRoomId = async (id) => {
   console.log(id);
   try {
@@ -133,6 +175,7 @@ export const OrderRooms = async (list, cusInfo, UserId) => {
 };
 
 export const getRoomTypeWithQuery = async (RoomTypeId) => {
+  console.log("got called");
   try {
     const { data } = await axios.get(
       `http://localhost:4000/api/room/ReadRoomType`,
@@ -145,6 +188,18 @@ export const getRoomTypeWithQuery = async (RoomTypeId) => {
 
     console.log(data.recordset[0]);
     return data.recordset[0];
+  } catch (e) {}
+};
+
+export const getAllRoomType = async () => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/room/ReadRoomType`,
+      {}
+    );
+
+    console.log(data.recordset);
+    return data.recordset;
   } catch (e) {}
 };
 
@@ -182,6 +237,16 @@ export const getAllCusomterWithPhoneNum = async (item) => {
       }
     );
     console.log(data);
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const getAllRoom = async () => {
+  try {
+    const { data } = await axios.get(`http://localhost:4000/api/room/get`);
+    console.log(data.recordset);
     return data;
   } catch (e) {
     return e;

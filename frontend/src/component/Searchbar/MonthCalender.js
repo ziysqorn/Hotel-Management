@@ -224,7 +224,6 @@ export const MonthCalendar = ({
   useEffect(() => {
     console.log(item);
     if (mode == "detail") {
-      console.log("work");
       getOcupie(item);
     }
   }, []);
@@ -236,21 +235,6 @@ export const MonthCalendar = ({
   // useEffect(() => {
   //   console.log(roomInfo);
   // }, [roomInfo]);
-  // useEffect(() => {
-  //   console.log(
-  //     year,
-  //     month,
-  //     changeDate,
-  //     mode,
-  //     item,
-  //     exitWindow,
-  //     position,
-  //     ajust,
-  //     exitWithSave,
-  //     chosenDate,
-  //     edit
-  //   );
-  // }, []);
 
   return (
     <div>
@@ -312,7 +296,9 @@ export const MonthCalendar = ({
             justifyContent: "center",
           }}
           onClick={() => {
+            console.log(choseDay);
             exitWindow(choseDay);
+            console.log(item);
           }}
         >
           {mode == "detail" && (
@@ -326,6 +312,7 @@ export const MonthCalendar = ({
         <div
           style={{
             width: "100%",
+            // background:"white",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-evenly",

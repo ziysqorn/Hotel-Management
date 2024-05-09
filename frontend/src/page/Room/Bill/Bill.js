@@ -5,6 +5,7 @@ import {
   CustomerInfoWithTrashIcon,
   LeftContainer,
   RoomNumOfPeopleDate,
+  ServiceInfoWithPlusIcon,
   StartDateAndEndDateContainer,
   TopNav,
 } from "../OrderRoom/OrderRoom";
@@ -14,6 +15,12 @@ import {
   getCustomerInfoWithCustomterId,
   getOrderRoomWithCustomerIdStartDateEndDate,
   getAllCusomterWithPhoneNum,
+  getUseServiceWithStartDateAndEndDate,
+  getServiceInfoWithServiceId,
+  getRoomTypeWithQuery,
+  getRoomInfoWithRoomId,
+  getAllRoomType,
+  getAllRoom,
 } from "../../../component/apicalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,7 +42,12 @@ export const Bill = () => {
   const [chosenDate, setChosenDate] = useState();
   const [date, setDate] = useState();
   const [isDetailWindowOpen, setIsDetailWindowOpen] = useState(false);
-  const [renderDataInCus, setRenderDataInCus] = useState({});
+  const [renderDataInCus, setRenderDataInCus] = useState([]);
+  const [renderDataInSer, setRenderDataInSer] = useState([]);
+  const [renderDataInSerAfter, setRenderDataInSerAfter] = useState([]);
+  const [allRoomType, setAllRoomType] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [allRoom, setAllRoom] = useState([]);
   // ============END OF VARIABLE===============
 
   //   ================START OF FUNCTION============
@@ -86,6 +98,50 @@ export const Bill = () => {
       } catch (e) {
         console.log(e);
       }
+    }
+  };
+
+  const handleFindServiceForBill = async (item) => {
+    if (item.chosenDate) {
+      let startDate = `${item.chosenDate.startDate.year}-${item.chosenDate.startDate.month}-${item.chosenDate.startDate.date}`;
+      let endDate = `${item.chosenDate.endDate.year}-${item.chosenDate.endDate.month}-${item.chosenDate.endDate.date}`;
+      try {
+        const result = await getUseServiceWithStartDateAndEndDate(
+          item.chosenCus.CustomerId,
+          startDate,
+          endDate
+        );
+        setRenderDataInSer(result.recordset);
+        console.log(result.recordset);
+        // if (result.rowsAffected[0] > 0) {
+        //   setCusInfo(item.chosenCus);
+        //   setAllOrderRoom(result.recordset);
+        //   setIsHaveCustomer(true);
+        // } else {
+        //   alert("Không tìm thấy bill");
+        // }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+  const handleFindServiceForBillAfter = async (item) => {
+    try {
+      const servicePros = item.map(async (ser) => {
+        try {
+          const res = await getServiceInfoWithServiceId(ser.ServiceId);
+          console.log(res);
+          return res.recordset[0];
+        } catch (e) {
+          console.log(e);
+          return null;
+        }
+      });
+      const data = await Promise.all(servicePros);
+      setRenderDataInSerAfter(data);
+      console.log(data);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -146,7 +202,18 @@ export const Bill = () => {
       });
 
       const data = await Promise.all(promises);
+      setRenderDataInCus(data);
       console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleGetAllRoom = async () => {
+    try {
+      const data = await getAllRoom();
+      setAllRoom(data.recordset);
+      console.log(data.recordset);
     } catch (e) {
       console.log(e);
     }
@@ -169,13 +236,82 @@ export const Bill = () => {
     });
     setChosenRoom({ RoomId: item.RoomId });
   };
+
+  const handleGetAllRoomType = async () => {
+    try {
+      const data = await getAllRoomType();
+
+      console.log(data);
+      setAllRoomType(data);
+    } catch (e) {}
+  };
+  const handleGetPriceWithRoomTypeId = (RoomTypeId) => {
+    let result = 0;
+    allRoomType.forEach((room) => {
+      console.log(room);
+      if (room.RoomTypeId == RoomTypeId) {
+        result = room.Price;
+      }
+    });
+    return result;
+  };
+
+  function tinhKhoangCachNgay(CheckInDate, ExpectedCheckOutDate) {
+    // Chuyển đổi chuỗi ngày thành đối tượng Date
+    const checkIn = new Date(CheckInDate);
+    const expectedCheckOut = new Date(ExpectedCheckOutDate);
+
+    // Tính toán số mili giây giữa hai ngày
+    const khoangCachMiliGiay = Math.abs(expectedCheckOut - checkIn);
+
+    // Chuyển đổi khoảng cách từ mili giây sang ngày
+    const khoangCachNgay = khoangCachMiliGiay / (1000 * 60 * 60 * 24);
+
+    return khoangCachNgay;
+  }
+  const handleGettotalRoom = () => {
+    console.log(allOrderRoomAfter);
+    console.log(renderDataInSer);
+    console.log(allRoomType);
+    console.log(allRoom);
+    allOrderRoomAfter.forEach((room) => {
+      console.log(room);
+    });
+  };
+
   //   ================END OF FUNCTION============
   // ============START USEEFFECT===============
   useEffect(() => {
     getCusInfo(1004);
     console.log(stringToDate("2024-05-10T00:00:00.000Z"));
+    handleGetAllRoomType();
+    handleGetAllRoom();
     // handleGetAllOrderRoomWithStartAndEndDate(1002,startdate,enddate)
   }, []);
+
+  useEffect(() => {
+    console.log(renderDataInSer);
+    if (renderDataInSer.length > 0) {
+      handleFindServiceForBillAfter(renderDataInSer);
+    }
+  }, [renderDataInSer]);
+
+  useEffect(() => {
+    console.log(allOrderRoomAfter);
+    if (
+      allOrderRoomAfter.length > 0 &&
+      renderDataInSer.length > 0 &&
+      allRoomType.length > 0 &&
+      allRoom.length > 0
+    ) {
+      handleGettotalRoom();
+    }
+    console.log(renderDataInSerAfter);
+  }, [allOrderRoomAfter, renderDataInSerAfter, allRoomType, allRoom]);
+
+  useEffect(() => {
+    console.log(chosenDate);
+  }, [chosenDate]);
 
   useEffect(() => {
     console.log(chosenRoom);
@@ -287,6 +423,46 @@ export const Bill = () => {
                 })}
             </div>
           </div>
+          <div
+            style={{
+              width: "80%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                width: "5vw",
+                padding: "0.2vw",
+                border: "1px solid White",
+                textAlign: "center",
+                borderRadius: "1vw",
+                cursor: "pointer",
+                marginRight: "1vw",
+              }}
+              onClick={() => {
+                console.log(`log`);
+              }}
+            >
+              <p>Thanh toán</p>
+            </div>
+            <div
+              style={{
+                width: "5vw",
+                padding: "0.2vw",
+                border: "1px solid White",
+                textAlign: "center",
+                borderRadius: "1vw",
+                cursor: "pointer",
+                marginRight: "1vw",
+              }}
+              onClick={() => {
+                console.log(`log`);
+              }}
+            >
+              {<p>{total} đ</p>}
+            </div>
+          </div>
         </div>
         {/* ====================END OF ROOM CONTAINER=========== */}
       </div>
@@ -310,12 +486,70 @@ export const Bill = () => {
         {/* ============START OF CUSTOMER DIV========= */}
         <div
           style={{
-            width: "50%",
+            width: "90%",
             display: "flex",
             marginTop: "1vw",
             minHeight: "10vh",
           }}
-        ></div>
+        >
+          <div
+            style={{
+              width: "50%",
+              maxHeight: "30vh",
+              display: "block",
+              // overflow: "scroll",
+              overflowY: "scroll",
+              // marginBottom: "1vw",
+            }}
+          >
+            <div>
+              <p style={{ fontSize: "1vw" }}>Customer In Room</p>
+            </div>
+            {renderDataInCus.length > 0
+              ? renderDataInCus.map((item, index) => {
+                  return (
+                    <CustomerInfoWithPLusIcon
+                      key={index}
+                      item={item}
+                      mode={"watch"}
+                      onAddCustomer={(item) => {
+                        console.log("handle nothing");
+                      }}
+                    />
+                  );
+                })
+              : null}
+          </div>
+          <div
+            style={{
+              width: "50%",
+              maxHeight: "30vh",
+              display: "block",
+              // overflow: "scroll",
+              overflowY: "scroll",
+              // marginBottom: "1vw",
+            }}
+          >
+            <div>
+              <p style={{ fontSize: "1vw" }}> Services</p>
+            </div>
+            {renderDataInSerAfter.length > 0
+              ? renderDataInSerAfter.map((item, index) => {
+                  console.log(item);
+                  return (
+                    <ServiceInfoWithPlusIcon
+                      key={index}
+                      item={item}
+                      mode={"watch"}
+                      onAddCustomer={(item) => {
+                        console.log("handle nothing");
+                      }}
+                    />
+                  );
+                })
+              : null}
+          </div>
+        </div>
         {/* ============END OF CUSTOMER DIV========= */}
       </div>
 
@@ -350,6 +584,7 @@ export const Bill = () => {
       onFindBill={(item) => {
         console.log(item);
         handleFindBill(item);
+        handleFindServiceForBill(item);
       }}
     />
   );
