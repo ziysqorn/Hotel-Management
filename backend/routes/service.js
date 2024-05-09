@@ -24,7 +24,7 @@ router.get("/", get);
 router.get("/query", getWithQuery);
 router.post("/add", AddService);
 router.post("/edit", EditService);
-router.post("/delete", deleteService);
+router.get("/delete", deleteService);
 
 router.get("/getAllUseService", getAllUseService);
 router.get("/getUseService", getUseService);
