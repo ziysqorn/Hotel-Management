@@ -1,42 +1,42 @@
 import sql from "mssql";
 import { config } from "./config.js";
 
-// const config = {
-//   server: "localhost",
-//   port: 1433,
-//   database: "hotel_management",
-//   user: "sa",
-//   password: "Sigma1207",
-//   options: {
-//     encrypt: true, // Bật mã hóa
-//     trustServerCertificate: true, // Tin tưởng chứng chỉ máy chủ
-//   },
-// };
+let pool; // Biến để lưu trữ pool kết nối
 
-// const config = {
-//   server: "localhost\\CSSQL05",
-//   port: 1433,
-//   database: "hotel_management",
-//   user: "sa",
-//   password: "123456",
-//   options: {
-//     encrypt: false, // Bật mã hóa
-//     trustServerCertificate: true,
-//     trustedConnection: true // Tin tưởng chứng chỉ máy chủ
-//   },
-// };
-// test ignore stuff
+// Hàm để khởi tạo pool kết nối
+async function initialize() {
+  try {
+    pool = await sql.connect(config);
+    console.log("Database connected.");
+  } catch (err) {
+    console.error("Error connecting to database:", err);
+    throw err;
+  }
+}
+
+// Hàm để đóng pool kết nối
+async function close() {
+  try {
+    await pool.close();
+    console.log("Database connection closed.");
+  } catch (err) {
+    console.error("Error closing database connection:", err);
+    throw err;
+  }
+}
+
+// Hàm để thực hiện truy vấn
 async function db(queryString, parameters = []) {
   try {
-    // Kết nối đến cơ sở dữ liệu
-    await sql.connect(config);
+    // Kiểm tra xem pool kết nối đã được khởi tạo chưa
+    if (!pool) {
+      await initialize();
+    }
+
     console.log(`Execute query ${queryString}`);
 
     // Thực thi truy vấn
-    const result = await sql.query(queryString, ...parameters);
-
-    // Đóng kết nối sau khi thực thi truy vấn
-    await sql.close();
+    const result = await pool.request().query(queryString, ...parameters);
 
     // Trả về kết quả
     return result;
@@ -45,4 +45,5 @@ async function db(queryString, parameters = []) {
     throw err;
   }
 }
+
 export default db;
