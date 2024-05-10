@@ -43,7 +43,7 @@ export const Service_Info = () => {
     });
   };
   
-  const [editFormVisible, setEditFormVisible] = useState(false);
+  const [editFormVisible, setEditFormVisible] = useState();
 
   const [editedItem, setEditedItem] = useState({
     id:"",
@@ -54,7 +54,7 @@ export const Service_Info = () => {
 
   const handleChange = (e, fieldName) => {
     const { value } = e.target;
-    setServiceData((prevData) => ({
+    setEditedItem((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
@@ -74,8 +74,13 @@ export const Service_Info = () => {
     setShowDeleteConfirmation(true);
   };
   
-  const handleEditService = async (id, name, des) => {
-    console.log(editedItem.name);
+  const handleEditService = async () => {
+    console.log({
+      ServiceId: editedItem.id,
+      Name: editedItem.name,
+      Description: editedItem.description,
+      Price: editedItem.price,
+    });
     try {
       const res = await axios.post(`http://localhost:4000/api/service/edit`, {
         // Dữ liệu cần chỉnh sửa
@@ -207,7 +212,7 @@ export const Service_Info = () => {
             /> */}
             <input
               type="text" 
-              // value={serviceData.name} onChange={(e)=>handleChange(e, 'name')}
+              value={editedItem.name} onChange={(e)=>handleChange(e, 'name')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: "10vh", top: "18vh", color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -216,7 +221,7 @@ export const Service_Info = () => {
             />
             <input
               type="text"
-              // value={serviceData.description} onChange={(e)=>handleChange(e, 'description')}
+              value={editedItem.description} onChange={(e)=>handleChange(e, 'description')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: "10vh", top: "30vh", color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -224,7 +229,7 @@ export const Service_Info = () => {
             />
             <input
               type="text"
-              // value={serviceData.price} onChange={(e)=>handleChange(e, 'price')}
+              value={editedItem.price} onChange={(e)=>handleChange(e, 'price')}
               style={{
                 width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: "10vh", top: "42vh", color: 'white', fontSize: 20,background: '#111111', borderRadius:10
               }}
@@ -287,7 +292,7 @@ export const Service_Info = () => {
        <FontAwesomeIcon icon={faTrashAlt} className="icon"  onClick={() => {handleDeleteClick(); setDeleteId(item.ServiceId)}} />
     </div>
     <div>
-      <FontAwesomeIcon icon={faEdit} className="icon"  onClick={() => {handleEditClick(); setEditedItem(item.ServiceId,item.Name, item.Description, item.Price) }} />
+      <FontAwesomeIcon icon={faEdit} className="icon"  onClick={() => {handleEditClick(); setEditedItem({id:item.ServiceId,name:item.Name, description:item.Description, price:item.Price}); }} />
     </div>
   </div>)
  }):null}
