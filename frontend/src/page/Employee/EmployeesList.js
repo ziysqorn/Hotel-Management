@@ -14,6 +14,13 @@ export const EmployeesList = () => {
   const [EditWindow, setEditWindow] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null); // Thêm state để lưu thông tin của nhân viên được chọn
   
+  const formatDate = (datetime) => {
+    const date = new Date(datetime);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0, nên cần cộng thêm 1
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   const fetchEmployees = async () => {
     try {
       const response = await axios.get("http://localhost:4000/api/employee/"); //get employee
@@ -113,7 +120,7 @@ export const EmployeesList = () => {
                 >
                   <FontAwesomeIcon icon={faCalendar} />
                   <div style={{ fontSize: "13px", marginLeft: "3%" }}>
-                    {employee.FristDay}
+                    {formatDate(employee.FirstDay)}
                   </div>
                 </div>
               </div>

@@ -33,7 +33,10 @@ export const getWithQuery = async (req, res) => {
 export const get = async (req, res) => {
   try {
     const data = await db(
-      "SELECT FullName, PersonalId, Phone,  Address, position,  CONVERT(VARCHAR, DAY(FristDay)) + '/' + CONVERT(VARCHAR, MONTH(FristDay)) + '/' + CONVERT(VARCHAR, YEAR(FristDay)) AS FristDay FROM Employee"
+      `SELECT FullName, PersonalId, Phone,  Address, position, 
+        CONVERT (date, BirthDay) as BirthDay,  
+        CONVERT (date, FristDay) as FirstDay 
+        FROM Employee`
     );
     res.json(data);
   } catch (err) {
@@ -41,15 +44,15 @@ export const get = async (req, res) => {
   }
 };
 export const getTotalEmployees = async (req, res) => {
-    try {
-      const result = await db("SELECT COUNT(*) AS TotalEmployees FROM Employee");
-      const totalEmployees = result.recordset[0].TotalEmployees;
-      res.json({ totalEmployees });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
+  try {
+    const result = await db("SELECT COUNT(*) AS TotalEmployees FROM Employee");
+    const totalEmployees = result.recordset[0].TotalEmployees;
+    res.json({ totalEmployees });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 //Thêm nhân viên
 export const AddEmployee = async (req, res) => {
   let { item } = req.body;
@@ -217,15 +220,15 @@ export const getUserQuery = async (req, res) => {
 };
 
 export const getTotalUsers = async (req, res) => {
-    try {
-      const result = await db("SELECT COUNT(*) AS TotalUsers FROM Users");
-      const totalUsers = result.recordset[0].TotalUsers;
-      res.json({ totalUsers });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
+  try {
+    const result = await db("SELECT COUNT(*) AS TotalUsers FROM Users");
+    const totalUsers = result.recordset[0].TotalUsers;
+    res.json({ totalUsers });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 // login user backend
 export const LoginUser = async (req, res) => {
   let { item } = req.body;
