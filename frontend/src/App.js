@@ -12,10 +12,28 @@ import { EmployeesPage } from "./page/Employee/EmployeesPage.js";
 import { myAppColor } from "./colors";
 import { OrderRoom } from "./page/Room/OrderRoom/OrderRoom.js";
 import { Bill } from "./page/Room/Bill/Bill";
+import { LoginPage } from "./page/LoginPage";
+import { login } from "./component/apicalls";
 export const MainContext = React.createContext("undefined");
 
 function App() {
   const [context, setContext] = useState();
+  const [isLogin, setIsLogin] = useState(false);
+
+  const handleLogin = async (item) => {
+    try {
+      // 123-456-789 ,password1
+      const data = await login(item.username, item.password);
+      console.log(data);
+      if (data.rowsAffected > 0) {
+        setIsLogin(true);
+        localStorage.setItem("UserInfo", JSON.stringify(data.recordset[0]));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     // console.log(this.context);
     setContext({ customerInfo: { customerId: 1 } });
@@ -23,8 +41,12 @@ function App() {
       console.log("reset for no retion");
       localStorage.setItem("OrdersInfo", "[]");
     }
+    if (localStorage.getItem("UserInfo")) {
+      console.log("user is here");
+      setIsLogin(true);
+    }
   }, []);
-  return (
+  return isLogin ? (
     <MainContext.Provider value={[context, setContext]}>
       <div
         className="App"
@@ -36,7 +58,12 @@ function App() {
           flexDirection: "column",
         }}
       >
-        <TopNavBar />
+        <TopNavBar
+          handleLogout={() => {
+            setIsLogin(false);
+            localStorage.setItem("UserInfo", "");
+          }}
+        />
 
         <div style={{ display: "flex" }}>
           <LeftNavBar />
@@ -62,6 +89,13 @@ function App() {
         </div>
       </div>
     </MainContext.Provider>
+  ) : (
+    <LoginPage
+      handleLogin={(item) => {
+        console.log(item);
+        handleLogin(item);
+      }}
+    />
   );
 }
 

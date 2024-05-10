@@ -20,6 +20,8 @@ import {
   ReadRoomType,
   DeleteRoomType,
   getOrderRoomWithStartDateEndDateCustomerId,
+  ReadBill,
+  CreateBill,
 } from "../controllers/room.js";
 const router = express.Router();
 // room
@@ -52,5 +54,8 @@ router.post("/CreateRoomType", CreateRoomType);
 router.post("/UpdateRoomType", UpdateRoomType);
 router.get("/ReadRoomType", ReadRoomType);
 router.post("/DeleteRoomType", DeleteRoomType);
+
+router.get("/ReadBill", ReadBill);
+router.post("/CreateBill", CreateBill);
 
 export default router;

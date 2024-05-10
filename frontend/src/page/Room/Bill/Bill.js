@@ -271,12 +271,43 @@ export const Bill = () => {
   }
   const handleGettotalRoom = () => {
     console.log(allOrderRoomAfter);
-    console.log(renderDataInSer);
+    console.log(renderDataInSerAfter);
     console.log(allRoomType);
     console.log(allRoom);
+    let finalList = [];
     allOrderRoomAfter.forEach((room) => {
       console.log(room);
+      allRoom.forEach((roomInfo) => {
+        if (roomInfo.RoomId == room.RoomId) {
+          allRoomType.forEach((type) => {
+            if (type.RoomTypeId == roomInfo.RoomTypeId) {
+              finalList.push({
+                ...roomInfo,
+                ...type,
+                num: tinhKhoangCachNgay(
+                  room.CheckInDate,
+                  room.ExpectedCHeckOutDate
+                ),
+              });
+            }
+          });
+        }
+      });
     });
+
+    console.log(finalList);
+    let totals = 0;
+    finalList.forEach((item) => {
+      console.log(item.Price * item.num);
+      totals += item.Price * item.num;
+      console.log(totals);
+    });
+
+    renderDataInSerAfter.forEach((item) => {
+      totals += item.Price;
+    });
+    setTotal(totals);
+    console.log(totals);
   };
 
   //   ================END OF FUNCTION============
@@ -286,7 +317,6 @@ export const Bill = () => {
     console.log(stringToDate("2024-05-10T00:00:00.000Z"));
     handleGetAllRoomType();
     handleGetAllRoom();
-    // handleGetAllOrderRoomWithStartAndEndDate(1002,startdate,enddate)
   }, []);
 
   useEffect(() => {

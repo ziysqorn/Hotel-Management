@@ -1,6 +1,24 @@
 import axios from "axios";
 import { apiInfo } from "../apivar";
 
+export const login = async (username, password) => {
+  try {
+    const {data} = await axios.post(
+      `http://localhost:4000/api/employee/employ/loginuser`,
+      {
+        item: {
+          Phone: username,
+          Password: password,
+        },
+      }
+    );
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getAllOrderRoomWithRoomId = async (RoomId) => {
   try {
     const response = await axios.get(

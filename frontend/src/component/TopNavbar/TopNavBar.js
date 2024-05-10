@@ -8,10 +8,12 @@ import { MainContext } from "../../App.js";
 import "./style.css";
 import { Navigate, useNavigate } from "react-router-dom";
 // import Fonta
-export const TopNavBar = () => {
+export const TopNavBar = ({ ...props }) => {
   const [isHover, setIsHover] = useState([false, false, false]);
   const { context, setContext } = useContext(MainContext);
   const navigate = useNavigate();
+
+  const [isPersonalWindowOpen, setIsPersonalWindowOpen] = useState(false);
   // useParams(()=>{
   //   console.log("sthgn change");
   // })
@@ -135,9 +137,14 @@ export const TopNavBar = () => {
           onMouseLeave={() => {
             setIsHover([false, false, false]);
           }}
+          onClick={() => {
+            console.log("handle open detail");
+            setIsPersonalWindowOpen(!isPersonalWindowOpen)
+          }}
           style={{
             width: "62px",
             height: "50%",
+            position: "relative",
             backgroundColor: myAppColor.Black.IconBackground,
             display: "flex",
             justifyContent: "center",
@@ -156,8 +163,41 @@ export const TopNavBar = () => {
             icon={faUser}
           />
         </div>
+        {isPersonalWindowOpen ? <PersonalWindow handleLogout={()=>props.handleLogout()} /> : null}
       </div>
       {/* end of top nav  */}
+    </div>
+  );
+};
+
+const PersonalWindow = ({...props}) => {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: "10vw",
+        height: "10vh",
+        background: "#141414",
+        top: "3.5vw",
+        right: "-3vw",
+        borderRadius: "1vw",
+        zIndex: 10,
+        opacity: "1",
+        display: "flex",
+        flexDirection: "column",
+        transform: "translateX(-40%)",
+      }}
+    >
+      <div
+        style={{ flex: 1, cursor: "pointer" }}
+        onClick={() => {
+          props.handleLogout();
+        }}
+      >
+        <p style={{ fontSize: "1vw", fontWeight: 600, color: "white" }}>
+          Logout
+        </p>
+      </div>
     </div>
   );
 };

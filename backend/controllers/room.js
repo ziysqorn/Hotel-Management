@@ -425,4 +425,45 @@ export const DeleteRoomType = async (req, res) => {
   }
 };
 
+export const ReadBill = async (req, res) => {
+  try {
+    const data = await db(`SELECT * FROM Bill`);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
+export const CreateBill = async (req, res) => {
+  let { item } = req.body;
+  console.log(item);
+  let finalQ = `INSERT INTO BIll
+  (CheckInDate,CheckOutDate,CustomerId,UserId,Status,TotalPrice)
+  VALUES
+  ('${item.CheckInDate}','${item.CheckOutDate}',${item.CustomerId},${item.UserId},${item.Status},${item.TotalPrice});`;
+  console.log(finalQ);
+  try {
+    const data = await db(`SELECT * FROM Bill`);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const UpdateBill = async (req, res) => {
+  let { item } = req.body;
+  let finalQ = `UPDATE BIll
+  SET CheckInDate='${item.CheckInDate}',
+      CheckOutDate='${item.CheckOutDate}',
+      CustomerId=${item.CustomerId},
+      UserId=${item.UserId},
+      Status=${item.Status},
+      TotalPrice=${item.TotalPrice}
+  WHERE BillId = ${item.BillId};`;
+  console.log(finalQ);
+  try {
+    const data = await db(`SELECT * FROM Bill`);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
