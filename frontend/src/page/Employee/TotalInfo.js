@@ -6,8 +6,10 @@ import { AddEmployeeModal } from "./Modal/AddEmployee";
 import "./Design.css";
 
 export const Total_Info = () => {
-  const [totalEmployees, setTotalEmployees] = useState(0); //đếm tổng sô nhân viên
+  const [totalEmployees, setTotalEmployees] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
+  const [isAddEmployOpen, setIsAddEmployOpen] = useState(false);
+  const [deleteWindow, setdeleteWindow] = useState(false);
   useEffect(() => {
     const fetchTotalEmployees = async () => {
       try {
@@ -35,8 +37,7 @@ export const Total_Info = () => {
     fetchTotalUsers();
   }, []);
 
-  const [isAddEmployOpen, setIsAddEmployOpen] = useState(false);
-  const [deleteWindow, setdeleteWindow] = useState(false);
+  
   return (
     <div
       className="Top-info"
