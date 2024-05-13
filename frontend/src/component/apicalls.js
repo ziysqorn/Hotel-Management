@@ -3,7 +3,7 @@ import { apiInfo } from "../apivar";
 
 export const login = async (username, password) => {
   try {
-    const {data} = await axios.post(
+    const { data } = await axios.post(
       `http://localhost:4000/api/employee/employ/loginuser`,
       {
         item: {
@@ -268,5 +268,32 @@ export const getAllRoom = async () => {
     return data;
   } catch (e) {
     return e;
+  }
+};
+
+export const CreateBill = async (
+  CusId,
+  UserId,
+  Status,
+  TotalPrice,
+  StartDate,
+  EndDate
+) => {
+  try {
+    const { data } = axios.post(`http://localhost:4000/api/room/CreateBill`, {
+      item: {
+        CheckInDate: StartDate,
+        CheckOutDate: EndDate,
+        CustomerId: CusId,
+        UserId: UserId,
+        Status: Status,
+        TotalPrice: TotalPrice,
+      },
+      // console.log();
+    });
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
   }
 };

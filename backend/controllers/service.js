@@ -89,8 +89,9 @@ export const EditService = async (req, res) => {
 //Xóa dịch vụ --Đậu --Khang duyệt http://localhost:4000/api/service/delete?ServiceId=1004
 export const deleteService = async (req, res) => {
   let { ServiceId } = req.query;
+  
   let finalQ = `DELETE FROM Service WHERE ServiceId = ${ServiceId}`;
-  // res.json(finalQ)
+
   try {
     const data = await db(finalQ);
     res.json(data);

@@ -5,98 +5,114 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 export const Service_Info = () => {
-  
-  const [apiData,setApiData] = useState([])
+  const [apiData, setApiData] = useState([]);
   // const [deleteItem, setDeleteItem] = useState(null);
 
-  const fetchData =async ()=>{
+  const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/api/service`, {
-      });
-      let item = res.data
+      const res = await axios.get(`http://localhost:4000/api/service`, {});
+      let item = res.data;
       console.log(res.data.rowsAffected[0]);
-      setApiData(res.data.recordset)
+      setApiData(res.data.recordset);
     } catch (e) {
       console.log(e);
-    } 
-  }
-  useEffect(()=>{
-    fetchData()
+    }
+  };
+  useEffect(() => {
+    fetchData();
     console.log("jsjjsjsj");
-  },[])
+  }, []);
 
   const handleDeleteCancel = () => {
     // Ẩn popup xác nhận xóa nếu người dùng hủy
     setShowDeleteConfirmation(false);
   };
 
-
   const handleCloseForm = () => {
-    setEditFormVisible (false); // Ẩn form khi nhấn nút "Cancel"
+    setEditFormVisible(false); // Ẩn form khi nhấn nút "Cancel"
   };
 
   const handleDeleteData = () => {
     // Xóa dữ liệu trên các input ở đây
     const inputs = document.querySelectorAll('.editForm input[type="text"]');
-    inputs.forEach(input => {
-      input.value = ''; // Xóa giá trị của input
+    inputs.forEach((input) => {
+      input.value = ""; // Xóa giá trị của input
     });
   };
 
-  const handleDeleteConfirm =()=>{
+  const [editFormVisible, setEditFormVisible] = useState();
 
-  }
-  const handleDeleteClick = ()=>{
-
-  }
-  
-  const [editFormVisible, setEditFormVisible] = useState(false);
   const [editedItem, setEditedItem] = useState({
+    id: "",
     name: "",
     description: "",
     price: "",
   });
 
-  const [serviceData, setServiceData] = useState({
-    // id:'',
-    name: '',
-    description: '',
-    price:'',
-    //Thêm các trường dữ liệu khác ở đây nếu cần
-  });
-  
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // State để hiển thị popup xác nhận xóa
-  
-  const handleEditClick = () => {
-    // Set dữ liệu của item cần chỉnh sửa vào state editedItem
-    setEditFormVisible(true);
-  };
-
   const handleChange = (e, fieldName) => {
     const { value } = e.target;
-    setServiceData((prevData) => ({
+    setEditedItem((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
   };
- 
-  const sendEditedData = async (id,name,des) => {
-    try {
-      const res = await axios.post(`http://localhost:4000/api/service/edit`,{
-        item :{
-              ServiceId: serviceData.id,
-              Name: serviceData.name,
-              Description: serviceData.description,
-              Price: serviceData.price,
-        }
-      }
-      
-      )
-    }catch(error){
-      console.log('loi khi sưa dich vu',error)
-    }
-  }
 
+  const handleEditClick = (id) => {
+    const itemToEdit = apiData.find((item) => item.id === id);
+    if (itemToEdit) {
+      setEditedItem(itemToEdit);
+      setEditFormVisible(true);
+    } else {
+      console.log("Không tìm thấy dịch vụ cần sửa");
+    }
+  };
+  const handleDeleteClick = (id) => {
+    // Hiện popup xác nhận xóa
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleEditService = async () => {
+    console.log({
+      ServiceId: editedItem.id,
+      Name: editedItem.name,
+      Description: editedItem.description,
+      Price: editedItem.price,
+    });
+    try {
+      const res = await axios.post(`http://localhost:4000/api/service/edit`, {
+        // Dữ liệu cần chỉnh sửa
+        item: {
+          ServiceId: editedItem.id,
+          Name: editedItem.name,
+          Description: editedItem.description,
+          Price: editedItem.price,
+        },
+      });
+      console.log("Kết quả sau khi chỉnh sửa:", res.data);
+      // Cập nhật lại state hoặc thực hiện các hành động khác sau khi chỉnh sửa thành công
+    } catch (error) {
+      console.log("Lỗi khi chỉnh sửa dịch vụ:", error);
+    }
+  };
+
+  const [deleteId, setDeleteId] = useState();
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // State để hiển thị popup xác nhận xóa
+
+  const handleDeleteConfirm = async () => {
+    console.log(deleteId);
+    try {
+      const res = await axios.get(`http://localhost:4000/api/service/delete`, {
+        params: { ServiceId: deleteId },
+      });
+      console.log("Kết quả sau khi xóa:", res.data);
+      // Cập nhật lại state hoặc thực hiện các hành động khác sau khi xóa thành công
+      fetchData(); // Cập nhật lại dữ liệu sau khi xóa
+      setShowDeleteConfirmation(false); // Ẩn popup xác nhận xóa
+    } catch (error) {
+      console.log("Lỗi khi xóa dịch vụ:", error);
+    }
+  };
 
   return (
     <div
@@ -112,15 +128,45 @@ export const Service_Info = () => {
     >
       {/* Popup xác nhận xóa */}
       {showDeleteConfirmation && (
-        <div className="delete-confirmation">
-        <p>Bạn có chắc chắn muốn xóa không?</p>
-        <button className="button1" onClick={()=>{handleDeleteConfirm()}}>
-          Yes
-        </button>
-        <button className="button2" onClick={handleDeleteCancel}>
-          No
-        </button>
-      </div>
+        <div
+          className="delete-confirmation"
+          style={{ textAlign: "center", fontSize: 30 }}
+        >
+          <p>Bạn có chắc chắn muốn xóa không?</p>
+          <button
+            className="button1"
+            style={{
+              width: "7vw",
+              height: "7vh",
+              left: "80%",
+              top: "5%",
+              background: "green",
+              borderRadius: 10,
+              fontSize: 20,
+            }}
+            onClick={() => {
+              handleDeleteConfirm();
+            }}
+          >
+            Yes
+          </button>
+          <button
+            className="button2"
+            style={{
+              width: "7vw",
+              height: "7vh",
+              right: "9vh",
+              background: "red",
+              borderRadius: 10,
+              fontSize: 20,
+            }}
+            onClick={() => {
+              handleDeleteCancel();
+            }}
+          >
+            No
+          </button>
+        </div>
       )}
 
       {/* Form sửa chữa */}
@@ -145,13 +191,15 @@ export const Service_Info = () => {
               }}
             />
             <button
-            onClick={()=>{sendEditedData()}}
+              onClick={() => {
+                handleEditService();
+              }}
               style={{
                 width: "15vw",
                 position: "absolute",
                 height: "8vh",
-                right: 280,
-                top: 476,
+                right: "0vh",
+                top: "58vh",
                 color: "white",
                 background: "#00868D",
                 fontSize: 30,
@@ -161,9 +209,20 @@ export const Service_Info = () => {
               Edit
             </button>
             <button
-            onClick={()=>{handleDeleteData()}}  
+              onClick={() => {
+                handleDeleteData();
+              }}
               style={{
-                width: "15vw",position: 'absolute', height: "8vh", left: 400, top: 476, color: 'white',background: '#2E2E2E', fontSize: 30,border: '2px #3F3F3F solid', borderRadius:10
+                width: "15vw",
+                position: "absolute",
+                height: "8vh",
+                left: "45vh",
+                top: "58vh",
+                color: "white",
+                background: "#2E2E2E",
+                fontSize: 30,
+                border: "2px #3F3F3F solid",
+                borderRadius: 10,
               }}
             >
               Delete
@@ -178,38 +237,70 @@ export const Service_Info = () => {
              
             /> */}
             <input
-              type="text" 
-              value={serviceData.name} onChange={(e)=>handleChange(e, 'name')}
+              type="text"
+              value={editedItem.name}
+              onChange={(e) => handleChange(e, "name")}
               style={{
-                width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 200, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
+                width: "36vw",
+                height: "8vh",
+                fontFamily: "Montserrat",
+                fontWeight: "500",
+                position: "absolute",
+                left: "10vh",
+                top: "18vh",
+                color: "white",
+                fontSize: 20,
+                background: "#111111",
+                borderRadius: 10,
               }}
               placeholder="Service name"
-             
             />
             <input
               type="text"
-              value={serviceData.description} onChange={(e)=>handleChange(e, 'description')}
+              value={editedItem.description}
+              onChange={(e) => handleChange(e, "description")}
               style={{
-                width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 280, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
+                width: "36vw",
+                height: "8vh",
+                fontFamily: "Montserrat",
+                fontWeight: "500",
+                position: "absolute",
+                left: "10vh",
+                top: "30vh",
+                color: "white",
+                fontSize: 20,
+                background: "#111111",
+                borderRadius: 10,
               }}
               placeholder="Description"
             />
             <input
               type="text"
-              value={serviceData.price} onChange={(e)=>handleChange(e, 'price')}
+              value={editedItem.price}
+              onChange={(e) => handleChange(e, "price")}
               style={{
-                width: "36vw", height: "8vh",fontFamily: 'Montserrat', fontWeight: '500',position: 'absolute', left: 80, top: 360, color: 'white', fontSize: 20,background: '#111111', borderRadius:10
+                width: "36vw",
+                height: "8vh",
+                fontFamily: "Montserrat",
+                fontWeight: "500",
+                position: "absolute",
+                left: "10vh",
+                top: "42vh",
+                color: "white",
+                fontSize: 20,
+                background: "#111111",
+                borderRadius: 10,
               }}
               placeholder="Price"
-             
             />
 
             <div
               style={{
-                left: 55,
-                top: 59,
+                left: "8vh",
+                top: "7vh",
                 position: "absolute",
                 color: "white",
+
                 fontSize: 30,
                 fontFamily: "Montserrat",
                 fontWeight: "500",
@@ -219,51 +310,95 @@ export const Service_Info = () => {
               Edit Service
             </div>
           </div>
-          <div onClick={()=>{handleCloseForm()}} style={{ width:"0vw", height: "0vh", left: "110%", top: 90, position: 'absolute', color: 'white', fontSize: 25, cursor: 'pointer' }}>X</div>
+          <div
+            onClick={() => {
+              handleCloseForm();
+            }}
+            style={{
+              width: "0vw",
+              height: "0vh",
+              left: "110%",
+              top: "12vh",
+              position: "absolute",
+              color: "white",
+              fontSize: 25,
+              cursor: "pointer",
+            }}
+          >
+            X
+          </div>
         </div>
       )}
-    
- {apiData.length>0?
- apiData.map(function(item,index) {
-  return(<div
-      key={index}
-    className="Row1"
-    style={{
-      width: 1228,
-      height: 76,
-      background: "#111111",
-      borderRadius: 5,
-      marginTop: "1%",
-      marginLeft: "10%",
-    }}
-  >
-    <div
-      style={{
-        width: 51,
-        color: "white",
-        fontSize: 24,
-        alignItems: "center",
-        fontWeight: "400",
-        padding: "1.5%",
-      }}
-    >
-    {index+1}
-    </div>
-    <div
-      style={{ width: 444, color: "white", fontSize: 24, padding: "1.5%" }}
-    >
-     {item.Name}
-    </div>
-    <div style={{ width: 121, color: "white", fontSize: 24 }}>{`${item.Price}`}đ</div>
-    <div>
-       <FontAwesomeIcon icon={faTrashAlt} className="icon"  onClick={() => handleDeleteClick(item)} />
-    </div>
-    <div>
-      <FontAwesomeIcon icon={faEdit} className="icon"  onClick={() => handleEditClick()} />
-    </div>
-  </div>)
- }):null}
 
+      {apiData.length > 0
+        ? apiData.map(function (item, index) {
+            return (
+              <div
+                key={index}
+                className="Row1"
+                style={{
+                  width: 1228,
+                  height: 76,
+                  background: "#111111",
+                  borderRadius: 5,
+                  marginTop: "1%",
+                  marginLeft: "10%",
+                }}
+              >
+                <div
+                  style={{
+                    width: 51,
+                    color: "white",
+                    fontSize: 24,
+                    alignItems: "center",
+                    fontWeight: "400",
+                    padding: "1.5%",
+                  }}
+                >
+                  {index + 1}
+                </div>
+                <div
+                  style={{
+                    width: 444,
+                    color: "white",
+                    fontSize: 24,
+                    padding: "1.5%",
+                  }}
+                >
+                  {item.Name}
+                </div>
+                <div style={{ width: 121, color: "white", fontSize: 24 }}>
+                  {`${item.Price}`}đ
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
+                    className="icon"
+                    onClick={() => {
+                      handleDeleteClick();
+                      setDeleteId(item.ServiceId);
+                    }}
+                  />
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    className="icon"
+                    onClick={() => {
+                      handleEditClick();
+                      setEditedItem({
+                        id: item.ServiceId,
+                        name: item.Name,
+                        description: item.Description,
+                        price: item.Price,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })
+        : null}
     </div>
   );
 };

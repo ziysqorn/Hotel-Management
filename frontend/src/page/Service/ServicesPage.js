@@ -24,6 +24,7 @@ export const ServicesPage = ({ onSearch, ...props }) => {
       input.value = ""; // Xóa giá trị của input
     });
   };
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [formData, setFormData] = useState({
     // id:"",
@@ -137,11 +138,11 @@ export const ServicesPage = ({ onSearch, ...props }) => {
           +Add Service
         </div>
       </div>
-
+{/* showAddForm */}
       {showAddForm && (
         <div
           className="showAdd"
-          style={{ width: "60vw", height: "60vh",background:"white", position: "absolute" }}
+          style={{ width: "60vw", height: "60vh", position: "absolute" }}
         >
           <div
             className="showAdd"
@@ -166,8 +167,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 width: "15vw",
                 position: "absolute",
                 height: "8vh",
-                right: 280,
-                top: 476,
+                right: "0vh",
+                top: "58vh",
                 color: "white",
                 background: "#00868D",
                 fontSize: 30,
@@ -182,8 +183,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 width: "15vw",
                 position: "absolute",
                 height: "8vh",
-                left: 400,
-                top: 476,
+                left: "45vh",
+                top: "58vh",
                 color: "white",
                 background: "#2E2E2E",
                 fontSize: 30,
@@ -204,8 +205,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 fontFamily: "Montserrat",
                 fontWeight: "500",
                 position: "absolute",
-                left: 80,
-                top: 150,
+                left: "10vh",
+                top: "18vh",
                 color: "white",
                 fontSize: 20,
                 background: "#111111",
@@ -223,8 +224,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 fontFamily: "Montserrat",
                 fontWeight: "500",
                 position: "absolute",
-                left: 80,
-                top: 250,
+                left: "10vh",
+                top: "30vh",
                 color: "white",
                 fontSize: 20,
                 background: "#111111",
@@ -242,8 +243,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 fontFamily: "Montserrat",
                 fontWeight: "500",
                 position: "absolute",
-                left: 80,
-                top: 350,
+                left: "10vh",
+                top: "42vh",
                 color: "white",
                 fontSize: 20,
                 background: "#111111",
@@ -257,7 +258,7 @@ export const ServicesPage = ({ onSearch, ...props }) => {
                 width: "0vw",
                 height: "0vh",
                 left: "110%",
-                top: 50,
+                top: "7vh",
                 position: "absolute",
                 color: "white",
                 fontSize: 25,
@@ -271,8 +272,8 @@ export const ServicesPage = ({ onSearch, ...props }) => {
        </div> */}
             <div
               style={{
-                left: 55,
-                top: 59,
+                left: "8vh",
+                top: "7vh",
                 position: "absolute",
                 color: "white",
                 fontSize: 30,

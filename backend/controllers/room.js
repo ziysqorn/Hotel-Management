@@ -426,8 +426,17 @@ export const DeleteRoomType = async (req, res) => {
 };
 
 export const ReadBill = async (req, res) => {
+  let { BillId, CustomerId, UserId, CheckInDate, CheckOutDate } = req.query;
+  let finalQ = `SELECT * FROM Bill WHERE BIllId IS NOT NULL `;
+
+  if (CustomerId) {
+    finalQ += `AND CustomerId = ${CustomerId} `;
+  }
+
+  finalQ += ";";
+
   try {
-    const data = await db(`SELECT * FROM Bill`);
+    const data = await db(finalQ);
     res.json(data);
   } catch (e) {
     console.log(e);
@@ -441,9 +450,9 @@ export const CreateBill = async (req, res) => {
   (CheckInDate,CheckOutDate,CustomerId,UserId,Status,TotalPrice)
   VALUES
   ('${item.CheckInDate}','${item.CheckOutDate}',${item.CustomerId},${item.UserId},${item.Status},${item.TotalPrice});`;
-  console.log(finalQ);
+  // console.log(finalQ);
   try {
-    const data = await db(`SELECT * FROM Bill`);
+    const data = await db(finalQ);
     res.json(data);
   } catch (e) {
     console.log(e);
@@ -462,6 +471,18 @@ export const UpdateBill = async (req, res) => {
   console.log(finalQ);
   try {
     const data = await db(`SELECT * FROM Bill`);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const DeleteBill = async (req, res) => {
+  let { item } = req.body;
+  let finalQ = `DELETE FROM Bill WHERE BillId=${item.BillId};`;
+  console.log(finalQ);
+  try {
+    const data = await db(finalQ);
     res.json(data);
   } catch (e) {
     console.log(e);

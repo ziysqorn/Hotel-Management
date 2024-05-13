@@ -21,6 +21,7 @@ import {
   getRoomInfoWithRoomId,
   getAllRoomType,
   getAllRoom,
+  CreateBill,
 } from "../../../component/apicalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -29,6 +30,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { MonthCalendar } from "../../../component/Searchbar/MonthCalender";
+import { UsersInfo } from "../../Employee/UserInfo";
 
 export const Bill = () => {
   const navigate = useNavigate();
@@ -269,6 +271,58 @@ export const Bill = () => {
 
     return khoangCachNgay;
   }
+
+  const handleCreateBill = async () => {
+    try {
+      console.log(allOrderRoomAfter);
+      let startDate = new Date(allOrderRoom[0].CheckInDate).getTime();
+      let endDate = new Date(allOrderRoom[0].ExpectedCHeckOutDate).getTime();
+
+      let finalStart = 0;
+      let finalEnd = 0;
+      allOrderRoom.forEach((item) => {
+        let tempDate = new Date(item.CheckInDate).getTime();
+        let tempEndDate = new Date(item.ExpectedCHeckOutDate).getTime();
+        console.log(tempDate, tempEndDate);
+        if (startDate >= tempDate) {
+          startDate = tempDate;
+          finalStart = item.CheckInDate;
+        }
+
+        if (endDate <= tempEndDate) {
+          endDate = tempDate;
+          finalEnd = item.ExpectedCHeckOutDate;
+        }
+      });
+      const data = await CreateBill(
+        cusInfo.CustomerId,
+        JSON.parse(localStorage.getItem("UserInfo")).UserId,
+        1,
+        total,
+        finalStart,
+        finalEnd
+      );
+      console.log(data);
+      if (data.rowsAffected[0]) {
+        if (window.confirm("Thanh Toán thành công") == true) {
+          navigate("/rooms");
+        }
+      }
+
+      console.log(
+        finalEnd,
+        finalStart,
+        total,
+        cusInfo,
+        1,
+        // status,
+        JSON.parse(localStorage.getItem("UserInfo"))
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleGettotalRoom = () => {
     console.log(allOrderRoomAfter);
     console.log(renderDataInSerAfter);
@@ -335,7 +389,15 @@ export const Bill = () => {
       allRoom.length > 0
     ) {
       handleGettotalRoom();
+    } else if (
+      allOrderRoomAfter.length > 0 &&
+      // renderDataInSer.length > 0 &&
+      allRoomType.length > 0 &&
+      allRoom.length > 0
+    ) {
+      handleGettotalRoom();
     }
+
     console.log(renderDataInSerAfter);
   }, [allOrderRoomAfter, renderDataInSerAfter, allRoomType, allRoom]);
 
@@ -439,10 +501,6 @@ export const Bill = () => {
                         numofmen={item.allCusomter.length}
                         startDate={`${startDate.date}/${startDate.month}/${startDate.year}`}
                         endDate={`${endDate.date}/${endDate.month}/${endDate.year}`}
-                        // handleRemoveRoomInfo={() => {
-                        //   handleClearAllOrderRoom(item);
-                        //   console.log(item);
-                        // }}
                         handleChangeRoomInfo={() => {
                           handleChangeRoomInfo(item);
                           console.log(item);
@@ -471,7 +529,7 @@ export const Bill = () => {
                 marginRight: "1vw",
               }}
               onClick={() => {
-                console.log(`log`);
+                handleCreateBill();
               }}
             >
               <p>Thanh toán</p>
@@ -555,9 +613,7 @@ export const Bill = () => {
               width: "50%",
               maxHeight: "30vh",
               display: "block",
-              // overflow: "scroll",
               overflowY: "scroll",
-              // marginBottom: "1vw",
             }}
           >
             <div>
