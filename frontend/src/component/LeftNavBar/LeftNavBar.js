@@ -13,8 +13,8 @@ import { faFaceAngry } from "@fortawesome/free-regular-svg-icons";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 export const LeftNavBar = () => {
   const [selectedList, setSeletectList] = useState([
-    true,
     false,
+    true,
     false,
     false,
     false,
@@ -62,7 +62,7 @@ export const LeftNavBar = () => {
         flexDirection: "column",
       }}
     >
-      <Link
+      {/* <Link
         style={{ textDecoration: "none" }}
         to={"/analytics"}
         onClick={() => {
@@ -97,7 +97,7 @@ export const LeftNavBar = () => {
             Analytics
           </p>
         </div>
-      </Link>
+      </Link> */}
 
       <Link
         style={{ textDecoration: "none" }}
@@ -208,7 +208,7 @@ export const LeftNavBar = () => {
               fontWeight: 600,
             }}
           >
-            Analytics
+            Service
           </p>
         </div>
       </Link>
