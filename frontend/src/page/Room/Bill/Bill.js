@@ -22,10 +22,12 @@ import {
   getAllRoomType,
   getAllRoom,
   CreateBill,
+  getAllBillWithCusId,
 } from "../../../component/apicalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendar,
+  faEye,
   faSearch,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -666,13 +668,17 @@ export const Bill = () => {
       {/* ==========END OF POP UP windows========= */}
     </div>
   ) : (
-    <AllCustomerDiv
-      onFindBill={(item) => {
-        console.log(item);
-        handleFindBill(item);
-        handleFindServiceForBill(item);
-      }}
-    />
+    <div style={{ display: "flex" }}>
+      {/* left container  */}
+      <AllCustomerDiv
+        onFindBill={(item) => {
+          console.log(item);
+          handleFindBill(item);
+          handleFindServiceForBill(item);
+        }}
+      />
+      <AllPayBills />
+    </div>
   );
 };
 
@@ -924,6 +930,265 @@ const AllCustomerDiv = ({ ...props }) => {
         />
       )}
       {/* =======END OF CALENDER======= */}
+    </div>
+  );
+};
+
+const AllPayBills = ({ ...props }) => {
+  const [allCus, setAllCus] = useState([]);
+  const [cusVal, setCusVal] = useState();
+  const [chosenCus, setChosenCus] = useState();
+  const [allBill, setAllBill] = useState([]);
+  const getAllCustomerInfoWithPhoneNum = async (item) => {
+    try {
+      const data = await getAllCusomterWithPhoneNum(item);
+      console.log(data);
+      setAllCus(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleGetBillWithCusId = async (cusId) => {
+    try {
+      const data = await getAllBillWithCusId(cusId);
+      setAllBill(data.recordset);
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "50%",
+        alignItems: "center",
+        // justifyContent: "center",
+        // background:"white",
+        flexDirection: "column",
+        display: "flex",
+
+        ...OrderRoomStyles.BodyContainer,
+      }}
+    >
+      {/* start of top nav */}
+      <div
+        style={{
+          minHeight: "7vh",
+          // border: "1px solid white",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center ",
+        }}
+      >
+        <div>
+          <p style={{ fontSize: "1vw", fontWeight: 600 }}>Already have bill</p>
+        </div>
+      </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "40%",
+            height: "2vw",
+            display: "flex",
+            alignItems: "center",
+            background: "#111111",
+            paddingLeft: "0.5vw",
+            borderRadius: "0.5vw",
+          }}
+        >
+          <FontAwesomeIcon
+            style={{
+              fontWeight: 600,
+              fontSize: "1vw",
+              marginRight: "0.5vw",
+              cursor: "pointer",
+            }}
+            icon={faSearch}
+            onClick={() => {
+              getAllCustomerInfoWithPhoneNum(cusVal);
+            }}
+          />
+          <input
+            value={cusVal}
+            style={{
+              width: "100%",
+              fontSize: "0.8vw",
+              backgroundColor: "#111111",
+              outline: "none",
+              textDecoration: "none",
+              border: "none",
+              color: "white",
+            }}
+            placeholder="Search..."
+            onChange={(e) => {
+              setCusVal(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+
+      {chosenCus ? (
+        <div
+          style={{
+            width: "60%",
+            maxHeight: "30vh",
+            margin: "2vh auto ",
+          }}
+        >
+          <CustomerInfoWithTrashIcon
+            key={-1}
+            item={chosenCus}
+            onDeleteCustomer={() => {
+              // console.log(`handle dele`, item);
+              setChosenCus(null);
+            }}
+          />
+        </div>
+      ) : null}
+
+      <div
+        style={{
+          width: "60%",
+          maxHeight: "30vh",
+          overflowY: "scroll",
+          margin: "2vh auto ",
+        }}
+      >
+        {allCus.length > 0
+          ? allCus.map((item, index) => {
+              return (
+                <CustomerInfoWithPLusIcon
+                  key={index}
+                  item={item}
+                  onAddCustomer={() => {
+                    console.log(`handle set userinfo`, chosenCus);
+                    setChosenCus(item);
+                  }}
+                />
+              );
+            })
+          : null}
+      </div>
+      <div
+        style={{
+          width: "5vw",
+          padding: "0.2vw",
+          border: "1px solid White",
+          textAlign: "center",
+          borderRadius: "1vw",
+          // marginRight: "1vw",
+          margin: "0 auto",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          console.log(`handle search`);
+          // props.onFindBill({ chosenDate, chosenCus });
+          handleGetBillWithCusId(chosenCus.CustomerId);
+          console.log(chosenCus);
+        }}
+      >
+        <p style={{ fontSize: "0.5vw", fontWeight: 500 }}>Find Bill</p>
+      </div>
+
+      {/* start of all Bill list */}
+
+      {allBill.length > 0 ? (
+        <div
+          style={{
+            width: "80%",
+            maxHeight: "30vh",
+            overflowY: "scroll",
+            margin: "2vh auto ",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              minHeight: "3vh",
+              background: "#111111",
+              borderRadius: "0.5vw",
+              display: "flex",
+              fontSize: "0.8vw",
+              alignItems: "center",
+              marginBottom: "0.5vw",
+
+              // paddingLeft:"1vw"
+            }}
+          >
+            <p style={{ flex: 2, marginLeft: "1vw" }}>CheckIndate</p>
+            <p style={{ flex: 2, marginLeft: "1vw" }}>CheckOutDate</p>
+            <p
+              style={{
+                flex: 1,
+                marginLeft: "1vw",
+              }}
+            >
+              Status
+            </p>
+            <p style={{ flex: 1 }}>TotalPrice</p>
+
+            <div
+              style={{
+                marginRight: "1vw",
+                fontWeight: 700,
+              }}
+            ></div>
+          </div>
+
+          {allBill.map((item, index) => {
+            return (
+              <div
+                key={index}
+                style={{
+                  width: "100%",
+                  minHeight: "3vh",
+                  background: "#111111",
+                  borderRadius: "0.5vw",
+                  display: "flex",
+                  fontSize: "0.8vw",
+                  alignItems: "center",
+                  marginBottom: "0.5vw",
+
+                  // paddingLeft:"1vw"
+                }}
+              >
+                <p style={{ flex: 2, marginLeft: "1vw" }}>
+                  {item.CheckInDate ? item.CheckInDate : ""}
+                </p>
+                <p style={{ flex: 2, marginLeft: "1vw" }}>
+                  {item.CheckOutDate ? item.CheckOutDate : ""}
+                </p>
+                <p
+                  style={{
+                    flex: 1,
+                    marginLeft: "1vw",
+                    color: item.Status ? "green" : "red",
+                  }}
+                >
+                  {item.Status ? "paid" : "unpaid"}
+                </p>
+                <p style={{ flex: 1 }}>{item.TotalPrice}</p>
+
+                <FontAwesomeIcon
+                  icon={faEye}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

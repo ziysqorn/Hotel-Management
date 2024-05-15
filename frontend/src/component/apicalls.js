@@ -297,3 +297,20 @@ export const CreateBill = async (
     console.log(e);
   }
 };
+
+export const getAllBillWithCusId = async (cusId) => {
+  try {
+    const { data } = await axios.get(
+      "http://localhost:4000/api/room/ReadBill",
+      {
+        params: {
+          CustomerId: cusId,
+        },
+      }
+    );
+    return data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
