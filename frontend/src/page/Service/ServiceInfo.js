@@ -4,26 +4,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-export const Service_Info = () => {
+export const Service_Info = ({...props}) => {
   
-  const [apiData,setApiData] = useState([])
-  // const [deleteItem, setDeleteItem] = useState(null);
+  // const [apiData,setApiData] = useState([])
+  // // const [deleteItem, setDeleteItem] = useState(null);
 
-  const fetchData =async ()=>{
-    try {
-      const res = await axios.get(`http://localhost:4000/api/service`, {
-      });
-      let item = res.data
-      console.log(res.data.rowsAffected[0]);
-      setApiData(res.data.recordset)
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  useEffect(()=>{
-    fetchData()
-    console.log("jsjjsjsj");
-  },[])
+
+  // const fetchData =async ()=>{
+  //   try {
+  //     const res = await axios.get(`http://localhost:4000/api/service`, {
+  //     });
+  //     let item = res.data
+  //     console.log(res.data.rowsAffected[0]);
+  //     setApiData(res.data.recordset)
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+  // useEffect(()=>{
+  //   fetchData()
+  //   console.log("jsjjsjsj");
+  // },[])
 
   const handleDeleteCancel = () => {
     // Ẩn popup xác nhận xóa nếu người dùng hủy
@@ -54,6 +55,9 @@ export const Service_Info = () => {
 
   const handleChange = (e, fieldName) => {
     const { value } = e.target;
+    if (fieldName === 'price' && isNaN(value)) {
+      return;
+    }
     setEditedItem((prevData) => ({
       ...prevData,
       [fieldName]: value,
@@ -61,7 +65,7 @@ export const Service_Info = () => {
   };
 
   const handleEditClick = (id) => {
-    const itemToEdit = apiData.find(item => item.id === id);
+    const itemToEdit = props.apiData.find(item => item.id === id);
     if (itemToEdit) {
       setEditedItem(itemToEdit);
       setEditFormVisible(true);
@@ -93,6 +97,7 @@ export const Service_Info = () => {
       });
       console.log('Kết quả sau khi chỉnh sửa:', res.data);
       // Cập nhật lại state hoặc thực hiện các hành động khác sau khi chỉnh sửa thành công
+      handleCloseForm();
     } catch (error) {
       console.log('Lỗi khi chỉnh sửa dịch vụ:', error);
     }
@@ -256,8 +261,8 @@ export const Service_Info = () => {
         </div>
       )}
     
- {apiData.length>0?
- apiData.map(function(item,index) {
+ {props.apiData.length>0?
+ props.apiData.map(function(item,index) {
   return(<div
       key={index}
     className="Row1"

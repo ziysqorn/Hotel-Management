@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { myAppColor } from "../../colors";
 import "./style.css";
 import axios from "axios";
@@ -6,9 +6,79 @@ import ServiceList from "../../component/ServiceList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Service_Info } from "./ServiceInfo";
 
-export const ServicesPage = ({ onSearch, ...props }) => {
-  // const [showAddForm, setShowAddForm] = useState(false);
 
+const fetchServiceNames = async (searchQuery) => {
+  try {
+    // Gọi backend với tham số tìm kiếm
+    const response = await axios.get('http://localhost:4000/api/service/query', {
+      params: {
+        Name: searchQuery // Truyền tham số tìm kiếm
+      }
+    });
+    console.log(response.data.recordset)
+    // Lấy danh sách các tên dịch vụ từ phản hồi của backend
+    // const serviceNames = response.data.map(service => service.Name);
+     return response.data.recordset;
+  } catch (error) {
+    console.error('Error fetching service names:', error);
+    return [];
+  }
+};
+
+
+
+
+
+
+
+// const [successMessage, setSuccessMessage] = useState("");
+export const ServicesPage = ({ onSearch, ...props }) => {
+  const [apiData,setApiData] = useState([])
+  // const [deleteItem, setDeleteItem] = useState(null);
+
+  const handleSearch = async (searchQuery) => {
+    try{
+      const serviceNames = await fetchServiceNames(searchQuery);
+      // Xử lý danh sách tên dịch vụ tại đây
+      console.log('Service names:', serviceNames);
+      setApiData(serviceNames)
+      // Ví dụ: cập nhật state để hiển thị danh sách tên dịch vụ
+    }
+    catch (e) {
+      console.error('Error fetching service names:', error);
+      return [];
+    }
+    
+  };
+  
+  const handleSearchInputChange = (e) => {
+    const searchQuery = e.target.value;
+    // Gọi hàm tìm kiếm với giá trị nhập vào
+    handleSearch(searchQuery);
+  };
+  const fetchData =async ()=>{
+    try {
+      const res = await axios.get(`http://localhost:4000/api/service`, {
+      });
+      let item = res.data
+      console.log(res.data.rowsAffected[0]);
+      setApiData(res.data.recordset)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  useEffect(()=>{
+    fetchData()
+    console.log("jsjjsjsj");
+  },[])
+  // const [showAddForm, setShowAddForm] = useState(false);
+  const handleEnterPress = (e) => {
+    if (e.key === 'Enter') {
+      // Gọi hàm tìm kiếm khi nhấn Enter
+      handleSearch(e.target.value);
+    }
+    
+  };
   const removePword = (item) => {
     return item.slice(1);
   };
@@ -54,6 +124,9 @@ export const ServicesPage = ({ onSearch, ...props }) => {
 
   const handleChange = (e, fieldName) => {
     const { value } = e.target;
+    if (fieldName === 'price' && isNaN(value)) {
+      return;
+    }
     setServiceData((prevData) => ({
       ...prevData,
       [fieldName]: value,
@@ -70,9 +143,9 @@ export const ServicesPage = ({ onSearch, ...props }) => {
               Description: serviceData.description,
               Price: serviceData.price,
         }
-      }
-      
+      }  
       )
+    handleCloseForm();
     }catch(error){
       console.log('loi khi them dich vu',error)
     }
@@ -115,7 +188,9 @@ export const ServicesPage = ({ onSearch, ...props }) => {
               borderRadius: 3,
               border: "1px solid #ccc",
             }}
-            onChange={(e) => onSearch(e.target.value)}
+            // onChange={(e) => onSearch(e.target.value)}
+            onChange={handleSearchInputChange}
+            onKeyPress={handleEnterPress}
           />
         </div>
 
@@ -140,6 +215,10 @@ export const ServicesPage = ({ onSearch, ...props }) => {
           +Add Service
         </div>
       </div>
+      
+
+      
+
 
       {showAddForm && (
        <div className="showAdd" style={{width: "60vw", height: "60vh", position:"absolute"}}>
@@ -160,7 +239,7 @@ export const ServicesPage = ({ onSearch, ...props }) => {
        </div>
       )}
 
-      <Service_Info />
+      <Service_Info apiData={apiData}/>
     </div>
   );
 };
