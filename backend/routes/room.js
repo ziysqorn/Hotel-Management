@@ -23,7 +23,8 @@ import {
   ReadBill,
   CreateBill,
   UpdateBill,
-  DeleteBill
+  ReadBillJoinCustomer,
+  DeleteBill,
 } from "../controllers/room.js";
 const router = express.Router();
 // room
@@ -57,6 +58,7 @@ router.post("/UpdateRoomType", UpdateRoomType);
 router.get("/ReadRoomType", ReadRoomType);
 router.post("/DeleteRoomType", DeleteRoomType);
 
+router.get("/ReadBillJoinCustomer", ReadBillJoinCustomer);
 router.get("/ReadBill", ReadBill);
 router.post("/CreateBill", CreateBill);
 router.post("/UpdateBill", UpdateBill);

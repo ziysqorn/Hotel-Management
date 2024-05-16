@@ -23,6 +23,8 @@ import {
   getAllRoom,
   CreateBill,
   getAllBillWithCusId,
+  UpdateBill,
+  ReadBillJoinCustomer,
 } from "../../../component/apicalls";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -52,6 +54,7 @@ export const Bill = () => {
   const [allRoomType, setAllRoomType] = useState([]);
   const [total, setTotal] = useState(0);
   const [allRoom, setAllRoom] = useState([]);
+  const [billInfo, setBillInfo] = useState();
   // ============END OF VARIABLE===============
 
   //   ================START OF FUNCTION============
@@ -305,9 +308,24 @@ export const Bill = () => {
         finalEnd
       );
       console.log(data);
-      if (data.rowsAffected[0]) {
-        if (window.confirm("Thanh Toán thành công") == true) {
+      // console.log(data.response.data);
+      // console.log(JSON.parse(data.response));
+      // if (window.confirm("Thanh Toán thành công") == true) {
+      //   navigate("/rooms");
+      // }
+      if (data?.rowsAffected[0]) {
+        alert("thanh toán thành công");
+        navigate("/rooms");
+      }
+
+      if (data[0].Status == 0) {
+        const work = await UpdateBill({
+          ...data[0],
+          Status: 1,
+        });
+        if (work) {
           navigate("/rooms");
+          return;
         }
       }
 
@@ -364,6 +382,24 @@ export const Bill = () => {
     });
     setTotal(totals);
     console.log(totals);
+  };
+
+  const handleGetPaidBillDetail = async (item, chosenCus) => {
+    console.log(item);
+    try {
+      const data = await getOrderRoomWithCustomerIdStartDateEndDate(
+        item.CustomerId,
+        item.CheckInDate,
+        item.CheckOutDate
+      );
+      if (data.rowsAffected[0] > 0) {
+        setCusInfo(chosenCus);
+        setAllOrderRoom(data.recordset);
+        setIsHaveCustomer(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //   ================END OF FUNCTION============
@@ -505,7 +541,6 @@ export const Bill = () => {
                         endDate={`${endDate.date}/${endDate.month}/${endDate.year}`}
                         handleChangeRoomInfo={() => {
                           handleChangeRoomInfo(item);
-                          console.log(item);
                         }}
                       />
                     )
@@ -531,10 +566,10 @@ export const Bill = () => {
                 marginRight: "1vw",
               }}
               onClick={() => {
-                handleCreateBill();
+                if (!billInfo?.Status) handleCreateBill();
               }}
             >
-              <p>Thanh toán</p>
+              <p>{!billInfo?.Status ? "Thanh toán" : "Đã được thanh toán"}</p>
             </div>
             <div
               style={{
@@ -668,16 +703,169 @@ export const Bill = () => {
       {/* ==========END OF POP UP windows========= */}
     </div>
   ) : (
-    <div style={{ display: "flex" }}>
-      {/* left container  */}
-      <AllCustomerDiv
-        onFindBill={(item) => {
+    <div style={{}}>
+      <div style={{ display: "flex" }}>
+        {/* left container  */}
+        <AllCustomerDiv
+          onFindBill={(item) => {
+            console.log(item);
+            handleFindBill(item);
+            handleFindServiceForBill(item);
+          }}
+        />
+        <AllPayBills
+          onOpenBillDetail={(item, chosenCus) => {
+            console.log(item);
+            setBillInfo(item);
+            handleGetPaidBillDetail(item, chosenCus);
+          }}
+        />
+      </div>
+      <div
+        style={{
+          width: "80%",
+          border: "1px solid white",
+          margin: "1vw auto",
+          borderRadius: "1vw",
+        }}
+      ></div>
+      <AllBills
+        onOpenBillDetail={(item, chosenCus) => {
           console.log(item);
-          handleFindBill(item);
-          handleFindServiceForBill(item);
+          setBillInfo(item);
+          handleGetPaidBillDetail(item, chosenCus);
         }}
       />
-      <AllPayBills />
+    </div>
+  );
+};
+
+const AllBills = ({ ...props }) => {
+  const [allBill, setAllBill] = useState([]);
+
+  const handleGetAllBilljoinCus = async () => {
+    try {
+      const data = await ReadBillJoinCustomer();
+      console.log(data.recordset);
+      setAllBill(data.recordset);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    handleGetAllBilljoinCus();
+  }, []);
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        minHeight: "20vh",
+        marginTop: "2vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        color: "white",
+      }}
+    >
+      <p style={{ fontWeight: 500, fontSize: "1vw" }}>All Bills</p>
+      <div
+        style={{
+          width: "80%",
+          minHeight: "3vh",
+          background: "#111111",
+          borderRadius: "0.5vw",
+          display: "flex",
+          fontSize: "0.8vw",
+          alignItems: "center",
+          marginBottom: "0.5vw",
+
+          // paddingLeft:"1vw"
+        }}
+      >
+        <p style={{ flex: 2, marginLeft: "1vw" }}>Phone Num</p>
+        <p style={{ flex: 2, marginLeft: "1vw" }}>CheckIndate</p>
+        <p style={{ flex: 2, marginLeft: "1vw" }}>CheckOutDate</p>
+        <p
+          style={{
+            flex: 1,
+            marginLeft: "1vw",
+          }}
+        >
+          Status
+        </p>
+        <p style={{ flex: 1 }}>TotalPrice</p>
+
+        <div
+          style={{
+            marginRight: "1vw",
+            fontWeight: 700,
+          }}
+        ></div>
+      </div>
+      {allBill.map((item, index) => {
+        return (
+          <div
+            key={index}
+            style={{
+              width: "80%",
+              minHeight: "3vh",
+              background: "#111111",
+              borderRadius: "0.5vw",
+              display: "flex",
+              fontSize: "0.8vw",
+              alignItems: "center",
+              marginBottom: "0.5vw",
+            }}
+          >
+            <p style={{ flex: 2, marginLeft: "1vw" }}>
+              {item.Phone ? item.Phone : ""}
+            </p>
+            <p style={{ flex: 2, marginLeft: "1vw" }}>
+              {item.CheckInDate ? item.CheckInDate : ""}
+            </p>
+            <p style={{ flex: 2, marginLeft: "1vw" }}>
+              {item.CheckOutDate ? item.CheckOutDate : ""}
+            </p>
+            <p
+              style={{
+                flex: 1,
+                marginLeft: "1vw",
+                color: item.Status ? "green" : "red",
+              }}
+            >
+              {item.Status ? "paid" : "unpaid"}
+            </p>
+            <p style={{ flex: 1 }}>{item.TotalPrice}</p>
+
+            <FontAwesomeIcon
+              icon={faEye}
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                console.log(`handle fin bill`, item);
+                console.log({
+                  CustomerId: item.CustomerId[0],
+                  FullName: item.FullName,
+                  PersonalId: item.PersonalId,
+                  Phone: item.Phone,
+                  Address: item.Address,
+                  Type: 0,
+                });
+                props.onOpenBillDetail(item, {
+                  CustomerId: item.CustomerId[0],
+                  FullName: item.FullName,
+                  PersonalId: item.PersonalId,
+                  Phone: item.Phone,
+                  Address: item.Address,
+                  Type: 0,
+                });
+              }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -1070,6 +1258,7 @@ const AllPayBills = ({ ...props }) => {
                   key={index}
                   item={item}
                   onAddCustomer={() => {
+                    console.log(item);
                     console.log(`handle set userinfo`, chosenCus);
                     setChosenCus(item);
                   }}
@@ -1157,8 +1346,6 @@ const AllPayBills = ({ ...props }) => {
                   fontSize: "0.8vw",
                   alignItems: "center",
                   marginBottom: "0.5vw",
-
-                  // paddingLeft:"1vw"
                 }}
               >
                 <p style={{ flex: 2, marginLeft: "1vw" }}>
@@ -1182,6 +1369,10 @@ const AllPayBills = ({ ...props }) => {
                   icon={faEye}
                   style={{
                     cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    console.log(`handle fin bill`, item);
+                    props.onOpenBillDetail(item, chosenCus);
                   }}
                 />
               </div>

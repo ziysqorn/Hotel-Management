@@ -425,6 +425,19 @@ export const DeleteRoomType = async (req, res) => {
   }
 };
 
+export const ReadBillJoinCustomer = async (req, res) => {
+  try {
+    const data = await db(`SELECT *
+    FROM Bill
+        JOIN Customer ON Bill.CustomerId = Customer.CustomerId
+    ORDER BY Bill.CheckinDate DESC;
+    `);
+    res.json(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const ReadBill = async (req, res) => {
   let { BillId, CustomerId, UserId, CheckInDate, CheckOutDate } = req.query;
   let finalQ = `SELECT * FROM Bill WHERE BIllId IS NOT NULL `;
@@ -452,8 +465,15 @@ export const CreateBill = async (req, res) => {
   ('${item.CheckInDate}','${item.CheckOutDate}',${item.CustomerId},${item.UserId},${item.Status},${item.TotalPrice});`;
   // console.log(finalQ);
   try {
-    const data = await db(finalQ);
-    res.json(data);
+    let vaildation = `SELECT * FROM Bill WHERE CheckInDate = '${item.CheckInDate}'AND CheckOutDate='${item.CheckOutDate}' and CustomerId= ${item.CustomerId} `;
+
+    const { recordset } = await db(vaildation);
+
+    if (recordset.length == 0) {
+      const data = await db(finalQ);
+      return res.json(data);
+    }
+    res.json(recordset);
   } catch (e) {
     console.log(e);
   }
@@ -470,7 +490,7 @@ export const UpdateBill = async (req, res) => {
   WHERE BillId = ${item.BillId};`;
   console.log(finalQ);
   try {
-    const data = await db(`SELECT * FROM Bill`);
+    const data = await db(finalQ);
     res.json(data);
   } catch (e) {
     console.log(e);

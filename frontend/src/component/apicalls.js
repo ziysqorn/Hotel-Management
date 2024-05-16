@@ -280,21 +280,25 @@ export const CreateBill = async (
   EndDate
 ) => {
   try {
-    const { data } = axios.post(`http://localhost:4000/api/room/CreateBill`, {
-      item: {
-        CheckInDate: StartDate,
-        CheckOutDate: EndDate,
-        CustomerId: CusId,
-        UserId: UserId,
-        Status: Status,
-        TotalPrice: TotalPrice,
-      },
-      // console.log();
-    });
+    const { data } = await axios.post(
+      `http://localhost:4000/api/room/CreateBill`,
+      {
+        item: {
+          CheckInDate: StartDate,
+          CheckOutDate: EndDate,
+          CustomerId: CusId,
+          UserId: UserId,
+          Status: Status,
+          TotalPrice: TotalPrice,
+        },
+        // console.log();
+      }
+    );
     console.log(data);
     return data;
   } catch (e) {
     console.log(e);
+    return e;
   }
 };
 
@@ -312,5 +316,33 @@ export const getAllBillWithCusId = async (cusId) => {
   } catch (e) {
     console.log(e);
     return null;
+  }
+};
+
+export const UpdateBill = async (info) => {
+  try {
+    const { data } = await axios.post(
+      "http://localhost:4000/api/room/ReadBill",
+      {
+        item: {
+          ...info,
+        },
+      }
+    );
+    console.log(data);
+    return data;
+  } catch (e) {
+    return e;
+  }
+};
+
+export const ReadBillJoinCustomer = async () => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4000/api/room/ReadBillJoinCustomer`
+    );
+    return data;
+  } catch (e) {
+    return e;
   }
 };
