@@ -20,7 +20,9 @@ export const UsersLists = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/employee/employ/getUser"); // Gọi API để lấy danh sách người dùng
+        const response = await axios.get(
+          "http://localhost:4000/api/employee/employ/getUser"
+        ); // Gọi API để lấy danh sách người dùng
         setUsers(response.data.recordset);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -73,7 +75,16 @@ export const UsersLists = () => {
                 }}
               >
                 {user.image ? (
-                  <img src={user.image} alt="Avatar" style={{ marginLeft: "7%", borderRadius: "50%", width: "30px", height: "30px" }} />
+                  <img
+                    src={user.image}
+                    alt="Avatar"
+                    style={{
+                      marginLeft: "7%",
+                      borderRadius: "50%",
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  />
                 ) : (
                   <FontAwesomeIcon
                     icon={faUserCircle}
@@ -88,9 +99,7 @@ export const UsersLists = () => {
                   }}
                 >
                   <span>{user.FullName}</span>
-                  <div
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <FontAwesomeIcon
                       icon={faArrowRightToBracket}
                       style={{
@@ -105,7 +114,10 @@ export const UsersLists = () => {
                   </div>
                 </div>
               </div>
-              <div className="user-actions" style={{ display: "flex", width: "10%" }}>
+              <div
+                className="user-actions"
+                style={{ display: "flex", width: "10%" }}
+              >
                 <FontAwesomeIcon
                   icon={faPenToSquare}
                   className="faPenToSquare"

@@ -3,7 +3,7 @@ import { UsersBox } from "./UsersBox";
 import { Employee_Box } from "./EmployeeBox";
 import { Roles_Box } from "./RolesBox";
 
-export const UsersInfo = () => {
+export const UsersInfo = ({ employees, fetchEmployees }) => {
   return (
     <div
       className="Bottom-info"
@@ -16,7 +16,7 @@ export const UsersInfo = () => {
       }}
     >
       <UsersBox />
-      <Employee_Box />
+      <Employee_Box employees={employees} fetchEmployees={fetchEmployees} />
       <Roles_Box />
     </div>
   );

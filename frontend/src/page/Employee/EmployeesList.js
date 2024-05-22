@@ -9,8 +9,7 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const EmployeesList = () => {
-  const [employees, setEmployees] = useState([]);
+export const EmployeesList = ({ employees }) => {
   const [EditWindow, setEditWindow] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null); // Thêm state để lưu thông tin của nhân viên được chọn
   
@@ -21,18 +20,6 @@ export const EmployeesList = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-  const fetchEmployees = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/api/employee/"); //get employee
-      setEmployees(response.data.recordset);
-    } catch (error) {
-      console.error("Error fetching employees:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
 
   const handleEdit = (employee) => {
     setSelectedEmployee(employee); // Lưu thông tin của nhân viên được chọn

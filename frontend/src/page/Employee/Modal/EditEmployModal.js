@@ -1,4 +1,5 @@
 import "animate.css";
+import axios from "axios";
 import "./ModalStyle.css";
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
@@ -14,6 +15,7 @@ export const EditEmployModal = ({
   EditEmployIsOpen,
   EditEmployOnClose,
   employeeInfo,
+  fetchEmployees
 }) => {
   const [selectedBirthday, setSelectedBirthday] = useState(null);
   const [selectedFirstDay, setSelectedFirstDay] = useState(null);
@@ -38,11 +40,24 @@ export const EditEmployModal = ({
       setImage(employeeInfo.image || "null");
     }
   }, [employeeInfo]);
-
+  const handleEditEmployee = async () => {
+    try {
+      await axios.post("http://localhost:4000/api/employee/Edit", {
+        item: {
+          EmployeeId: employeeInfo.EmployeeId,
+          Phone: phone,
+          Address: address,
+          Position: position
+        }
+      });
+      EditEmployOnClose(false);
+      fetchEmployees();
+    } catch (error) {
+      console.error("Error editing employee:", error);
+    }
+  };
   if (!EditEmployIsOpen) return null;
 
-  console.log("selectedBirthday:", selectedBirthday);
-  console.log("selectedFirstDay:", selectedFirstDay);
   return (
     <div
       className="animate__animated animate__zoomIn"
@@ -270,7 +285,7 @@ export const EditEmployModal = ({
               background: "#00ADB5",
               justifyContent: "center",
             }}
-            onClick={() => EditEmployOnClose(false)}
+            onClick={() => handleEditEmployee()}
           >
             Proceed
           </div>

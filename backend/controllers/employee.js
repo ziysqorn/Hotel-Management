@@ -2,9 +2,12 @@ import db from "../db.js";
 
 //get with query
 export const getWithQuery = async (req, res) => {
-  let { employid, rolesid, fullname, position } = req.query;
+  let { employid, rolesid, fullname, position, query } = req.query;
   let FinalQuery =
-    "SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)";
+    `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
+    CONVERT (date, BirthDay) as BirthDay,  
+    CONVERT (date, FristDay) as FirstDay 
+    FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)`;
 
   if (employid) {
     FinalQuery += ` AND EmployeeId = ${employid}`;
@@ -17,6 +20,9 @@ export const getWithQuery = async (req, res) => {
   }
   if (position) {
     FinalQuery += ` AND Employee.position LIKE '%${position}%'`;
+  }
+  if (query) {
+    FinalQuery += ` AND (Employee.FullName LIKE '%${query}%' OR Employee.position LIKE '%${query}%')`;
   }
   FinalQuery += `;`;
   console.table(FinalQuery);
@@ -33,7 +39,7 @@ export const getWithQuery = async (req, res) => {
 export const get = async (req, res) => {
   try {
     const data = await db(
-      `SELECT FullName, PersonalId, Phone,  Address, position, 
+      `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
         CONVERT (date, BirthDay) as BirthDay,  
         CONVERT (date, FristDay) as FirstDay 
         FROM Employee`

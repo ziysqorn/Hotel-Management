@@ -1,10 +1,31 @@
 import React from "react";
 import "./Design.css";
+import { useState } from "react";
+import axios from "axios";
 import { EmployeesList } from "./EmployeesList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faFilter } from "@fortawesome/free-solid-svg-icons";
 
-export const Employee_Box = () => {
+export const Employee_Box = ({ employees, fetchEmployees }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/employee/query?query=${searchTerm}`
+      );
+      setFilteredEmployees(response.data.recordset);
+    } catch (error) {
+      console.error("Error searching employees:", error);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <div
       className="Employee-box"
@@ -61,11 +82,15 @@ export const Employee_Box = () => {
             type="text"
             style={{
               background: "black",
+              color: "white",
               border: "none",
               width: "100%",
               borderRadius: 5,
             }}
             placeholder="Search ..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div
@@ -101,7 +126,7 @@ export const Employee_Box = () => {
           </select>
         </div>
       </div>
-      <EmployeesList />
+      <EmployeesList employees={filteredEmployees.length > 0 ? filteredEmployees : employees} />
     </div>
   );
 };
