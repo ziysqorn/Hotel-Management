@@ -265,6 +265,7 @@ export const Bill = () => {
 
   function tinhKhoangCachNgay(CheckInDate, ExpectedCheckOutDate) {
     // Chuyển đổi chuỗi ngày thành đối tượng Date
+    console.log(CheckInDate, ExpectedCheckOutDate);
     const checkIn = new Date(CheckInDate);
     const expectedCheckOut = new Date(ExpectedCheckOutDate);
 
@@ -290,15 +291,20 @@ export const Bill = () => {
         let tempEndDate = new Date(item.ExpectedCHeckOutDate).getTime();
         console.log(tempDate, tempEndDate);
         if (startDate >= tempDate) {
+          console.log(startDate);
+          console.log(item.CheckInDate);
           startDate = tempDate;
           finalStart = item.CheckInDate;
         }
 
         if (endDate <= tempEndDate) {
-          endDate = tempDate;
+          console.log(item.ExpectedCHeckOutDate);
+          console.log(endDate);
+          endDate = tempEndDate;
           finalEnd = item.ExpectedCHeckOutDate;
         }
       });
+
       const data = await CreateBill(
         cusInfo.CustomerId,
         JSON.parse(localStorage.getItem("UserInfo")).UserId,
@@ -392,6 +398,15 @@ export const Bill = () => {
         item.CheckInDate,
         item.CheckOutDate
       );
+      console.log(data);
+      const result = await getUseServiceWithStartDateAndEndDate(
+        item.CustomerId,
+        item.CheckInDate,
+        item.CheckOutDate
+      );
+      console.log(result);
+      setRenderDataInSer(result.recordset);
+      console.log(result.recordset);
       if (data.rowsAffected[0] > 0) {
         setCusInfo(chosenCus);
         setAllOrderRoom(data.recordset);
@@ -733,7 +748,10 @@ export const Bill = () => {
         onOpenBillDetail={(item, chosenCus) => {
           console.log(item);
           setBillInfo(item);
-          handleGetPaidBillDetail(item, chosenCus);
+          handleGetPaidBillDetail(
+            { ...item, CustomerId: item.CustomerId[0] },
+            chosenCus
+          );
         }}
       />
     </div>

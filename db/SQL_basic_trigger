@@ -1,0 +1,213 @@
+CREATE TRIGGER trg_UpdateTimestamp_Customers
+ON customers
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE customers
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Suppliers
+ON suppliers
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE suppliers
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Brands
+ON brands
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE brands
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Categories
+ON categories
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE categories
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Warehouse
+ON warehouse
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE warehouse
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+
+CREATE TRIGGER trg_UpdateTimestamp_Shipping_units
+ON shipping_units
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE shipping_units
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Products
+ON products
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE products
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+
+CREATE TRIGGER trg_UpdateTimestamp_Product_images
+ON product_images
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE product_images
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Orders
+ON orders
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE orders
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Promotions
+ON promotions
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE promotions
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Comments
+ON comments
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE comments
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+CREATE TRIGGER trg_UpdateTimestamp_Order_detail
+ON order_detail
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE order_detail
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Products_in_stock
+ON products_in_stock
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE products_in_stock
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+
+
+
+CREATE TRIGGER trg_UpdateTimestamp_Products_with_promotions
+ON products_with_promotions
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE products_with_promotions
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+CREATE TRIGGER trg_UpdateTimestamp_Brand_supplier
+ON brand_supplier
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE brand_supplier
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+CREATE TRIGGER trg_UpdateTimestamp_Revenue
+ON revenue
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE revenue
+    SET updateAt = GETDATE()
+    FROM customers t
+        INNER JOIN inserted i ON t.id = i.id;
+END;
+GO
+
+
+
+
+
+
+
+
+
+
+
+

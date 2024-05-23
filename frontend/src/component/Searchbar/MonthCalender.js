@@ -28,7 +28,7 @@ export const MonthCalendar = ({
   const navigate = useNavigate();
   const [context, setContext] = useContext(MainContext);
   // mode relate
-  const [totalCost, setTotalCost] = useState(5000000);
+  const [totalCost, setTotalCost] = useState(0);
   const [ocupieData, setOcupieData] = useState([]);
 
   // Tính số ngày trong tháng
@@ -39,6 +39,20 @@ export const MonthCalendar = ({
   });
   const [isChoseDate, setIsChoseDate] = useState([true, false]);
   const [roomInfo, setRoomInfo] = useState();
+
+  function tinhKhoangCachNgay(CheckInDate, ExpectedCheckOutDate) {
+    // Chuyển đổi chuỗi ngày thành đối tượng Date
+    const checkIn = new Date(CheckInDate);
+    const expectedCheckOut = new Date(ExpectedCheckOutDate);
+
+    // Tính toán số mili giây giữa hai ngày
+    const khoangCachMiliGiay = Math.abs(expectedCheckOut - checkIn);
+
+    // Chuyển đổi khoảng cách từ mili giây sang ngày
+    const khoangCachNgay = khoangCachMiliGiay / (1000 * 60 * 60 * 24);
+
+    return khoangCachNgay;
+  }
 
   function getDaysInMonthAndDayOfWeek(year, month) {
     const daysInMonth = new Date(year, month, 0).getDate(); // Số ngày trong tháng
@@ -231,6 +245,27 @@ export const MonthCalendar = ({
   useEffect(() => {
     getRoomInfo();
   }, [item]);
+
+  useEffect(() => {
+    console.log(choseDay);
+    if (choseDay.startDate.date && choseDay.endDate.date&&mode=="detail") {
+      let start = new Date(
+        choseDay.startDate.year,
+        choseDay.startDate.month,
+        choseDay.startDate.date
+      );
+      let end = new Date(
+        choseDay.endDate.year,
+        choseDay.endDate.month,
+        choseDay.endDate.date
+      );
+      console.log(start, end);
+      console.log(tinhKhoangCachNgay(start.toString(), end.toString()));
+      setTotalCost(
+        tinhKhoangCachNgay(start.toString(), end.toString()) * roomInfo.Price
+      );
+    }
+  }, [choseDay]);
 
   // useEffect(() => {
   //   console.log(roomInfo);

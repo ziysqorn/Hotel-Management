@@ -1,0 +1,143 @@
+CREATE TABLE customers (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    phone_number        VARCHAR(10),
+    address             NVARCHAR(50),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE suppliers (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    phone_number        VARCHAR(10),
+    address             NVARCHAR(50),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE brands (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE categories (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE warehouse (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    address             NVARCHAR(50),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE shipping_units (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    cost                DECIMAL(18, 2),
+    method              BIT,            -- 1 h?a t?c, 0 b�nh th??ng
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE products (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    unit_price          DECIMAL(18, 2),
+    state               BIT,            -- 1 c�n h�ng, 0 h?t h�ng
+    warranty_period     NVARCHAR(10),
+    description         NVARCHAR(MAX),
+    supplier_id         INT             NOT NULL FOREIGN KEY REFERENCES suppliers(id),
+    brand_id            INT             NOT NULL FOREIGN KEY REFERENCES brands(id),
+    category_id         INT             NOT NULL FOREIGN KEY REFERENCES categories(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE product_images (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    image               NVARCHAR(MAX),
+    product_id          INT             NOT NULL FOREIGN KEY REFERENCES products(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE orders (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    state               BIT,            -- 1 ?� giao, 0 ch?a giao
+    delivery_date       DATE,
+    customer_id         INT             NOT NULL FOREIGN KEY REFERENCES customers(id),
+    shipping_unit_id    INT             NOT NULL FOREIGN KEY REFERENCES shipping_units(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE promotions (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    name                NVARCHAR(50),
+    accompanying_gifts  NVARCHAR(50),
+    order_id            INT             NOT NULL FOREIGN KEY REFERENCES orders(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE comments (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    date_created        DATE,
+    content             NVARCHAR(MAX),
+    product_id          INT             NOT NULL FOREIGN KEY REFERENCES products(id),
+    customer_id         INT             NOT NULL FOREIGN KEY REFERENCES customers(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE order_detail (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    amount              INT,
+    product_id          INT             NOT NULL FOREIGN KEY REFERENCES products(id),
+    order_id            INT             NOT NULL FOREIGN KEY REFERENCES orders(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE products_in_stock (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    import_date         DATE,
+    amount              INT,
+    product_id          INT             NOT NULL FOREIGN KEY REFERENCES products(id),
+    warehouse_id        INT             NOT NULL FOREIGN KEY REFERENCES warehouse(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE products_with_promotions (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    product_id          INT             NOT NULL FOREIGN KEY REFERENCES products(id),
+    promotion_id        INT             NOT NULL FOREIGN KEY REFERENCES promotions(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE brand_supplier (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    supplier_id         INT             NOT NULL FOREIGN KEY REFERENCES suppliers(id),
+    brand_id            INT             NOT NULL FOREIGN KEY REFERENCES brands(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
+
+CREATE TABLE revenue (
+    id                  INT             IDENTITY(1,1) PRIMARY KEY,
+    month               INT,
+    order_id            INT             NOT NULL FOREIGN KEY REFERENCES orders(id),
+    warehouse_id        INT             NOT NULL FOREIGN KEY REFERENCES warehouse(id),
+    createAt            DATETIME        DEFAULT GETDATE(),
+    updateAt            DATETIME        DEFAULT GETDATE()
+);
