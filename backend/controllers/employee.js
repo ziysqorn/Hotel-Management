@@ -2,9 +2,12 @@ import db from "../db.js";
 
 //get with query
 export const getWithQuery = async (req, res) => {
-  let { employid, rolesid, fullname, position } = req.query;
+  let { employid, rolesid, fullname, position, query } = req.query;
   let FinalQuery =
-    "SELECT * FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)";
+    `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
+    CONVERT (date, BirthDay) as BirthDay,  
+    CONVERT (date, FristDay) as FirstDay 
+    FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)`;
 
   if (employid) {
     FinalQuery += ` AND EmployeeId = ${employid}`;
@@ -17,6 +20,9 @@ export const getWithQuery = async (req, res) => {
   }
   if (position) {
     FinalQuery += ` AND Employee.position LIKE '%${position}%'`;
+  }
+  if (query) {
+    FinalQuery += ` AND (Employee.FullName LIKE '%${query}%' OR Employee.position LIKE '%${query}%')`;
   }
   FinalQuery += `;`;
   console.table(FinalQuery);
@@ -33,7 +39,10 @@ export const getWithQuery = async (req, res) => {
 export const get = async (req, res) => {
   try {
     const data = await db(
-      "SELECT FullName, PersonalId, Phone,  Address, position,  CONVERT(VARCHAR, DAY(FristDay)) + '/' + CONVERT(VARCHAR, MONTH(FristDay)) + '/' + CONVERT(VARCHAR, YEAR(FristDay)) AS FristDay FROM Employee"
+      `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
+        CONVERT (date, BirthDay) as BirthDay,  
+        CONVERT (date, FristDay) as FirstDay 
+        FROM Employee`
     );
     res.json(data);
   } catch (err) {
@@ -41,15 +50,15 @@ export const get = async (req, res) => {
   }
 };
 export const getTotalEmployees = async (req, res) => {
-    try {
-      const result = await db("SELECT COUNT(*) AS TotalEmployees FROM Employee");
-      const totalEmployees = result.recordset[0].TotalEmployees;
-      res.json({ totalEmployees });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
+  try {
+    const result = await db("SELECT COUNT(*) AS TotalEmployees FROM Employee");
+    const totalEmployees = result.recordset[0].TotalEmployees;
+    res.json({ totalEmployees });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 //Thêm nhân viên
 export const AddEmployee = async (req, res) => {
   let { item } = req.body;
@@ -155,7 +164,8 @@ export const getUser = async (req, res) => {
     const data = await db(`SELECT 
                                 e.FullName, 
                                 e.Phone, 
-                                e.PersonalId, 
+                                e.PersonalId,
+                                e.image,
                                 e.BirthDay, 
                                 e.FristDay, 
                                 e.Address, 
@@ -216,15 +226,15 @@ export const getUserQuery = async (req, res) => {
 };
 
 export const getTotalUsers = async (req, res) => {
-    try {
-      const result = await db("SELECT COUNT(*) AS TotalUsers FROM Users");
-      const totalUsers = result.recordset[0].TotalUsers;
-      res.json({ totalUsers });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
+  try {
+    const result = await db("SELECT COUNT(*) AS TotalUsers FROM Users");
+    const totalUsers = result.recordset[0].TotalUsers;
+    res.json({ totalUsers });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 // login user backend
 export const LoginUser = async (req, res) => {
   let { item } = req.body;

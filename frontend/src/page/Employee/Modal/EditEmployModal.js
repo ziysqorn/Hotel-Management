@@ -1,6 +1,7 @@
 import "animate.css";
+import axios from "axios";
 import "./ModalStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import React from "react";
 import {
@@ -10,9 +11,51 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
+export const EditEmployModal = ({
+  EditEmployIsOpen,
+  EditEmployOnClose,
+  employeeInfo,
+  fetchEmployees
+}) => {
   const [selectedBirthday, setSelectedBirthday] = useState(null);
   const [selectedFirstDay, setSelectedFirstDay] = useState(null);
+  const [fullName, setFullName] = useState("null");
+  const [personalId, setPersonalId] = useState("null");
+  const [phone, setPhone] = useState("null");
+  const [address, setAddress] = useState("null");
+  const [position, setPosition] = useState("null");
+  const [rolesId, setRolesId] = useState("null");
+  const [image, setImage] = useState("null");
+
+  useEffect(() => {
+    if (employeeInfo) {
+      setSelectedBirthday(new Date(employeeInfo.BirthDay));
+      setSelectedFirstDay(new Date(employeeInfo.FirstDay));
+      setFullName(employeeInfo.FullName || "null");
+      setPersonalId(employeeInfo.PersonalId || "null");
+      setPhone(employeeInfo.Phone || "null");
+      setAddress(employeeInfo.Address || "null");
+      setPosition(employeeInfo.position || "null");
+      setRolesId(employeeInfo.RolesId || "null");
+      setImage(employeeInfo.image || "null");
+    }
+  }, [employeeInfo]);
+  const handleEditEmployee = async () => {
+    try {
+      await axios.post("http://localhost:4000/api/employee/Edit", {
+        item: {
+          EmployeeId: employeeInfo.EmployeeId,
+          Phone: phone,
+          Address: address,
+          Position: position
+        }
+      });
+      EditEmployOnClose(false);
+      fetchEmployees();
+    } catch (error) {
+      console.error("Error editing employee:", error);
+    }
+  };
   if (!EditEmployIsOpen) return null;
 
   return (
@@ -64,10 +107,12 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
 
         <input
           type="text"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginTop: "3%",
             marginBottom: "3%",
             background: "#111111",
@@ -89,7 +134,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           }}
         >
           <DatePicker
-            selected={selectedBirthday}
+            selected={selectedBirthday || new Date()}
             onChange={(date) => setSelectedBirthday(date)}
             dateFormat="dd/MM/yyyy"
             placeholderText="   Birthday                                           //"
@@ -97,7 +142,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           />
           <FontAwesomeIcon
             icon={faCalendar}
-            style={{ color: "white", width: "10%" }}
+            style={{ color: "darkgray", width: "10%" }}
           />
         </div>
         <div
@@ -111,9 +156,11 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
         >
           <input
             type="text"
+            value={personalId}
+            onChange={(e) => setPersonalId(e.target.value)}
             style={{
               width: "80%",
-              color: "white",
+              color: "darkgray",
               background: "#111111",
               marginRight: "3%",
               height: "100%",
@@ -124,9 +171,11 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           />
           <input
             type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
             style={{
               width: "20%",
-              color: "white",
+              color: "darkgray",
               background: "#111111",
               height: "100%",
               border: "none",
@@ -137,10 +186,12 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
         </div>
         <input
           type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -150,10 +201,12 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
         />
         <input
           type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -174,7 +227,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           }}
         >
           <DatePicker
-            selected={selectedFirstDay}
+            selected={selectedFirstDay || new Date()}
             onChange={(date) => setSelectedFirstDay(date)}
             dateFormat="dd/MM/yyyy"
             placeholderText="   Firstday                                            //"
@@ -182,15 +235,17 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
           />
           <FontAwesomeIcon
             icon={faCalendar}
-            style={{ color: "white", width: "10%" }}
+            style={{ color: "darkgray", width: "10%" }}
           />
         </div>
         <input
           type="text"
+          value={rolesId}
+          onChange={(e) => setRolesId(e.target.value)}
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "5%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -200,10 +255,12 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
         />
         <input
           type="text"
+          value={position}
+          onChange={(e) => setPosition(e.target.value)}
           style={{
             width: "90%",
             height: "7%",
-            color: "white",
+            color: "darkgray",
             marginBottom: "3%",
             background: "#111111",
             border: "solid #111111 1px",
@@ -228,7 +285,7 @@ export const EditEmployModal = ({ EditEmployIsOpen, EditEmployOnClose }) => {
               background: "#00ADB5",
               justifyContent: "center",
             }}
-            onClick={() => EditEmployOnClose(false)}
+            onClick={() => handleEditEmployee()}
           >
             Proceed
           </div>

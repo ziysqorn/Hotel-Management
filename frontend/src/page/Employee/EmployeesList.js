@@ -9,22 +9,23 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const EmployeesList = () => {
-  const [employees, setEmployees] = useState([]);
+export const EmployeesList = ({ employees }) => {
   const [EditWindow, setEditWindow] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // Thêm state để lưu thông tin của nhân viên được chọn
+  
+  const formatDate = (datetime) => {
+    const date = new Date(datetime);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0, nên cần cộng thêm 1
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/employee/"); //get employee
-        setEmployees(response.data.recordset);
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-      }
-    };
+  const handleEdit = (employee) => {
+    setSelectedEmployee(employee); // Lưu thông tin của nhân viên được chọn
+    setEditWindow(true); // Mở modal chỉnh sửa
+  };
 
-    fetchEmployees();
-  }, []);
   return (
     <div
       className="employees-list"
@@ -73,7 +74,7 @@ export const EmployeesList = () => {
                   icon={faEye}
                   className="faEye"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setEditWindow(true)}
+                  onClick={() => handleEdit(employee)}
                 />
               </div>
               <div
@@ -107,7 +108,9 @@ export const EmployeesList = () => {
                   }}
                 >
                   <FontAwesomeIcon icon={faCalendar} />
-                  <div style={{ marginLeft: "3%" }}>{employee.FristDay}</div>
+                  <div style={{ fontSize: "13px", marginLeft: "3%" }}>
+                    {formatDate(employee.FirstDay)}
+                  </div>
                 </div>
               </div>
             </li>
@@ -118,6 +121,7 @@ export const EmployeesList = () => {
       <EditEmployModal
         EditEmployIsOpen={EditWindow}
         EditEmployOnClose={() => setEditWindow(false)}
+        employeeInfo={selectedEmployee}
       />
     </div>
   );
