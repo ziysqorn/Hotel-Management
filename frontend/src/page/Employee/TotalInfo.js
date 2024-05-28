@@ -37,16 +37,15 @@ export const Total_Info = () => {
     fetchTotalUsers();
   }, []);
 
-  
   return (
     <div
       className="Top-info"
-      style={{ width: "75vw", height: "15vh", display: "flex" }}
+      style={{ width: "100%", height: "15vh", display: "flex" }}
     >
       <div
         className="Total-bar"
         style={{
-          width: "56vw",
+          width: "70vw",
           background: "#2E2E2E",
           display: "flex",
           justifyContent: "space-around",
@@ -66,8 +65,8 @@ export const Total_Info = () => {
             borderRadius: 10,
           }}
         >
-          <div style={{ fontSize: "0.9vw",fontWeight:600 }}>Total Employee</div>
-          <div style={{ fontSize: "20px", margin: "2%" }}>{totalEmployees}</div>
+          <div style={{ fontSize: "1vw", fontWeight: 600 }}>Total Employee</div>
+          <div style={{ fontSize: "120%", margin: "2%" }}>{totalEmployees}</div>
         </div>
         <div
           className="Total-User"
@@ -81,8 +80,8 @@ export const Total_Info = () => {
             borderRadius: 10,
           }}
         >
-          <div style={{ fontSize: "0.9vw",fontWeight:600}}>Total Users</div>
-          <div style={{ fontSize: "20px", margin: "2%" }}>{totalUsers}</div>
+          <div style={{ fontSize: "1vw", fontWeight: 600 }}>Total Users</div>
+          <div style={{ fontSize: "120%", margin: "2%" }}>{totalUsers}</div>
         </div>
         <div
           className="Total-Position"
@@ -96,8 +95,8 @@ export const Total_Info = () => {
             borderRadius: 10,
           }}
         >
-          <div style={{ fontSize: "0.9vw",fontWeight:600 }}>Total Position</div>
-          <div style={{ fontSize: "20px", margin: "2%" }}>1500</div>
+          <div style={{ fontSize: "1vw", fontWeight: 600 }}>Total Position</div>
+          <div style={{ fontSize: "120%", margin: "2%" }}>1500</div>
         </div>
       </div>
       <div

@@ -32,17 +32,16 @@ export const EmployeesList = ({ employees }) => {
       style={{ height: "45vh", marginTop: "10px" }}
     >
       {employees.length > 0 ? (
-        <ul style={{ listStyleType: "none", padding: 0, width: "23vw" }}>
+        <ul style={{ listStyleType: "none", padding: 0, width: "100%" }}>
           {employees.map((employee, index) => (
             <li
               key={index} // Sử dụng index làm key, đảm bảo duy nhất
               style={{
                 background: "black",
                 color: "white",
-                alignItems: "center",
                 borderRadius: 5,
                 height: "50%",
-                width: "100%",
+                width: "95%",
                 margin: "5px",
                 padding: "5px",
               }}
@@ -54,7 +53,6 @@ export const EmployeesList = ({ employees }) => {
                   margin: "5px",
                   alignItems: "center",
                   justifyContent: "space-around",
-                  fontSize: "1vw",
                 }}
               >
                 <div
@@ -62,23 +60,24 @@ export const EmployeesList = ({ employees }) => {
                     width: "75%",
                     display: "flex",
                     alignItems: "center",
+                    fontSize: "1.5vw"
                   }}
                 >
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    style={{ marginLeft: "1%", marginRight: "5%" }}
+                    style={{ marginLeft: "1%", marginRight: "5%",  }}
                   />
                   {employee.FullName}
                 </div>
                 <FontAwesomeIcon
                   icon={faEye}
                   className="faEye"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", fontSize: "1.5vw" }}
                   onClick={() => handleEdit(employee)}
                 />
               </div>
               <div
-                style={{ marginLeft: "5%", fontSize: "0.8vw", padding: "2%" }}
+                style={{ marginLeft: 0, fontSize: "1.2vw", padding: "2%" }}
               >
                 {employee.Phone}
               </div>
@@ -88,7 +87,7 @@ export const EmployeesList = ({ employees }) => {
                     padding: "0.2vw",
                     borderRadius: 5,
                     marginLeft: "5%",
-                    fontSize: "0.7vw",
+                    fontSize: "1vw",
                     width: "4.5vw",
                     alignItems: "center",
                     border: "solid #2E2E2E 1px",
@@ -102,13 +101,13 @@ export const EmployeesList = ({ employees }) => {
                     borderRadius: 5,
                     alignItems: "center",
                     marginLeft: "5%",
-                    fontSize: "0.7vw",
+                    fontSize: "1vw",
                     padding: "1%",
                     border: "solid #2E2E2E 1px",
                   }}
                 >
                   <FontAwesomeIcon icon={faCalendar} />
-                  <div style={{ fontSize: "13px", marginLeft: "3%" }}>
+                  <div style={{marginLeft: "3%" }}>
                     {formatDate(employee.FirstDay)}
                   </div>
                 </div>

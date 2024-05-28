@@ -11,24 +11,13 @@ import {
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const UsersLists = () => {
-  const [users, setUsers] = useState([]);
+export const UsersLists = ({users}) => {
+  
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:4000/api/employee/employ/getUser"
-        ); // Gọi API để lấy danh sách người dùng
-        setUsers(response.data.recordset);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
     const interval = setInterval(() => {
       setCurrentTime(
         new Date().toLocaleTimeString([], {
@@ -37,14 +26,11 @@ export const UsersLists = () => {
         })
       );
     }, 60000); // Update every minute (60,000 milliseconds)
-
-    fetchUsers();
-
     return () => clearInterval(interval);
   }, []);
 
   const [deleteWindow, setdeleteWindow] = useState(false);
-
+  console.log("userslist", users[0]);
   return (
     <div
       className="users-list"

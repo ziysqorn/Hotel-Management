@@ -5,13 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { UsersLists } from "./UsersLists";
 
-export const UsersBox = () => {
+export const UsersBox = ({users, fetchUsers}) => {
   const [CUserOpen, setCUserOpen] = useState(false);
+  console.log('Users prop in UsersBox:', users); // Add this line
+
   return (
     <div
       className="Users-box"
       style={{
-        width: "25.5vw",
+        width: "32vw",
         background: "#2E2E2E",
         borderRadius: 10,
       }}
@@ -21,7 +23,7 @@ export const UsersBox = () => {
           color: "white",
           fontSize: "14px",
           fontWeight: "bold",
-          fontSize:"1vw",
+          fontSize: "1vw",
           margin: "3%",
         }}
       >
@@ -41,9 +43,9 @@ export const UsersBox = () => {
           style={{
             borderRadius: 5,
             background: "black",
-            width: "15vw",
+            width: "20vw",
             paddingLeft: "3px",
-            height: "5vh",
+            height: "6vh",
             display: "flex",
             alignItems: "center",
             marginRight: "5px",
@@ -53,7 +55,7 @@ export const UsersBox = () => {
             icon={faSearch}
             style={{
               color: "white",
-              fontSize:"0.7vw",
+              fontSize: "1vw",
               paddingLeft: "5px",
               width: "3vw",
             }}
@@ -65,9 +67,9 @@ export const UsersBox = () => {
               border: "none",
               width: "100%",
               borderRadius: 5,
-              fontSize:"0.7vw",
-              outline:"none",
-              color:"white"
+              fontSize: "1vw",
+              outline: "none",
+              color: "white",
             }}
             placeholder="Search ..."
           />
@@ -79,8 +81,8 @@ export const UsersBox = () => {
             background: "#00FFF5",
             borderRadius: 10,
             padding: "3%",
-            fontSize:"0.8vw",
-            fontWeight:600,
+            fontSize: "1vw",
+            fontWeight: 600,
             cursor: "pointer",
           }}
           onClick={() => setCUserOpen(true)}
@@ -88,11 +90,10 @@ export const UsersBox = () => {
           + Add
         </div>
       </div>
-
-      <UsersLists />
+      <UsersLists users={users} />
       <CreateUserModal
         isCUserOpen={CUserOpen}
-        isCUserClose={() => setCUserOpen (false)}
+        isCUserClose={() => setCUserOpen(false)}
       />
     </div>
   );

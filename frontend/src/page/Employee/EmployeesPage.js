@@ -7,6 +7,7 @@ import { Total_Info } from "./TotalInfo";
 export const EmployeesPage = () => {
   //load ds nhanvien từ file cha
   const [employees, setEmployees] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const fetchEmployees = async () => {
     try {
@@ -17,8 +18,19 @@ export const EmployeesPage = () => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/api/employee/employ/getuser");
+      console.log(response.data.recordset);
+      setUsers(response.data.recordset);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   useEffect(() => {
     fetchEmployees();
+    fetchUsers();
   }, []);
 
   return (
@@ -33,7 +45,12 @@ export const EmployeesPage = () => {
         }}
       >
         <Total_Info />
-        <UsersInfo employees={employees} fetchEmployees={fetchEmployees} /> {/* truyền dữ liệu xuống con */}
+        <UsersInfo
+          employees={employees}
+          fetchEmployees={() => fetchEmployees()}
+          users={users}
+          fetchUsers={() => fetchUsers()}
+        />
       </div>
     </>
   );

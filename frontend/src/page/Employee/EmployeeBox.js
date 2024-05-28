@@ -30,7 +30,7 @@ export const Employee_Box = ({ employees, fetchEmployees }) => {
     <div
       className="Employee-box"
       style={{
-        width: "25.5vw",
+        width: "32vw",
         color: "pink",
         background: "#2E2E2E",
         borderRadius: 10,
@@ -60,9 +60,9 @@ export const Employee_Box = ({ employees, fetchEmployees }) => {
           style={{
             borderRadius: 5,
             background: "black",
-            width: "15vw",
+            width: "18vw",
             paddingLeft: "3px",
-            height: "5vh",
+            height: "6vh",
             display: "flex",
             alignItems: "center",
             marginRight: "5px",
@@ -73,7 +73,7 @@ export const Employee_Box = ({ employees, fetchEmployees }) => {
             icon={faSearch}
             style={{
               color: "white",
-              fontSize: "0.8vw",
+              fontSize: "1vw",
               paddingLeft: "5px",
               width: "5vw",
             }}
@@ -86,7 +86,7 @@ export const Employee_Box = ({ employees, fetchEmployees }) => {
               border: "none",
               width: "100%",
               borderRadius: 5,
-              fontSize: "0.7vw",
+              fontSize: "1vw",
               outline: "none",
               color: "white",
             }}
@@ -130,7 +130,9 @@ export const Employee_Box = ({ employees, fetchEmployees }) => {
           </select>
         </div>
       </div>
-      <EmployeesList employees={filteredEmployees.length > 0 ? filteredEmployees : employees} />
+      <EmployeesList
+        employees={filteredEmployees.length > 0 ? filteredEmployees : employees}
+      />
     </div>
   );
 };

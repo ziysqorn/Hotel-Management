@@ -22,17 +22,17 @@ export const Roles_List = () => {
               alignItems: "center",
               borderRadius: 5,
               height: "7vh",
-              width: "17vw",
+              width: "19vw",
               margin: "5px",
-              fontSize:"0.8vw"
+              fontSize:"1.2vw"
             }}
           >
             <div style={{ width: "11vw", marginLeft: "5%" }}>{item}</div>
-            <div className="user-actions" style={{ display: "flex" }}>
+            <div className="user-actions" style={{ display: "flex",  }}>
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 className="faPenToSquare"
-                style={{ paddingRight: "50%", cursor: "pointer" }}
+                style={{ paddingRight: "60%", cursor: "pointer" }}
                 onClick={() => setEditRolesOpen(true)}
               />
               <FontAwesomeIcon

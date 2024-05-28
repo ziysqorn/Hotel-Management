@@ -10,7 +10,7 @@ export const Roles_Box = () => {
     <div
       className="Roles-Box"
       style={{
-        width: "18vw",
+        width: "20vw",
         borderRadius: 10,
         background: "#2E2E2E",
       }}
@@ -33,7 +33,7 @@ export const Roles_Box = () => {
             background: "#00FFF5",
             borderRadius: 10,
             padding: "3%",
-            fontSize:"0.8vw",
+            fontSize:"1vw",
             fontWeight:600,
             width: "30%",
             margin: "3%",
