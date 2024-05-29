@@ -9,6 +9,8 @@ export const Total_Info = () => {
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const [isAddEmployOpen, setIsAddEmployOpen] = useState(false);
+  const [deleteMode, setDeleteMode] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
   const [deleteWindow, setdeleteWindow] = useState(false);
   useEffect(() => {
     const fetchTotalEmployees = async () => {
@@ -141,8 +143,11 @@ export const Total_Info = () => {
             alignItems: "center",
             cursor: "pointer",
           }}
-          mode="delete-employee"
-          onClick={() => setdeleteWindow(true)}
+          onClick={() => {
+            setdeleteWindow(true);
+            setDeleteMode("employee");
+            setSelectedId(null);
+          }}
         >
           Remove Employees
         </div>
@@ -154,6 +159,8 @@ export const Total_Info = () => {
       <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
+        deleteMode={() => deleteMode()}
+        selectedId={selectedId}
       />
     </div>
   );

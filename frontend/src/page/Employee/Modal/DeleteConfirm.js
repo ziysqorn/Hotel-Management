@@ -1,5 +1,24 @@
 import React from "react";
-export const DeleteConfirm = ({ isDelWindowOpen, onDelWindowClose }) => {
+import axios from "axios";
+export const DeleteConfirm = ({
+  isDelWindowOpen,
+  onDelWindowClose,
+  deleteMode,
+  selectedId,
+}) => {
+  const handleDelete = async () => {
+    try {
+      {
+        await axios.post("http://localhost:4000/api/employee/employ/deleteUser", {
+          item: { UserId: selectedId },
+        });
+        console.log("Deleted user with ID:", selectedId);
+      }
+      onDelWindowClose();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
   if (!isDelWindowOpen) return null;
   return (
     <div
@@ -28,7 +47,7 @@ export const DeleteConfirm = ({ isDelWindowOpen, onDelWindowClose }) => {
           style={{
             fontSize: "150%",
             display: "flex",
-            padding: '5%',
+            padding: "5%",
             justifyContent: "center",
           }}
         >
@@ -62,9 +81,9 @@ export const DeleteConfirm = ({ isDelWindowOpen, onDelWindowClose }) => {
             color: "white",
             background: "#3E3E3E",
             padding: "3%",
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
-          onClick={() => onDelWindowClose(false)}
+          onClick={() => handleDelete()}
         >
           Yes
         </div>
@@ -77,7 +96,7 @@ export const DeleteConfirm = ({ isDelWindowOpen, onDelWindowClose }) => {
             fontWeight: "bold",
             background: "#B0B0B0",
             padding: "3%",
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
           onClick={() => onDelWindowClose(false)}
         >

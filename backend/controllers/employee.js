@@ -146,7 +146,7 @@ export const UpdateUser = async (req, res) => {
 
 //delete user
 export const DeleteUser = async (req, res) => {
-  let { item } = await db(FinalQuery);
+  let { item } = req.body;
   let FinalQuery = `DELETE FROM Users WHERE UserId = ${item.UserId}`;
   console.table(FinalQuery);
   try {

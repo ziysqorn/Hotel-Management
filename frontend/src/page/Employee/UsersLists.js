@@ -11,8 +11,7 @@ import {
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const UsersLists = ({users}) => {
-  
+export const UsersLists = ({ users }) => {
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
   );
@@ -30,7 +29,8 @@ export const UsersLists = ({users}) => {
   }, []);
 
   const [deleteWindow, setdeleteWindow] = useState(false);
-  console.log("userslist", users[0]);
+  const [deleteMode, setDeleteMode] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
   return (
     <div
       className="users-list"
@@ -114,7 +114,11 @@ export const UsersLists = ({users}) => {
                   icon={faTrashCan}
                   className="faTrashCan"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setdeleteWindow(true)}
+                  onClick={() => {
+                    setdeleteWindow(true);
+                    setDeleteMode("user");
+                    setSelectedId(user.UserId);
+                  }}
                 />
               </div>
             </li>
@@ -124,6 +128,8 @@ export const UsersLists = ({users}) => {
       <DeleteConfirm
         isDelWindowOpen={deleteWindow}
         onDelWindowClose={() => setdeleteWindow(false)}
+        deleteMode={() => deleteMode()}
+        selectedId={selectedId}
       />
     </div>
   );
