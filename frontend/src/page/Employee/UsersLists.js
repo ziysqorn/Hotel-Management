@@ -37,7 +37,7 @@ export const UsersLists = ({users}) => {
       style={{ justifyContent: "center", height: "45vh", marginTop: "10px" }}
     >
       {users.length > 0 ? (
-        <ul style={{ listStyleType: "none", width: "24vw", padding: 0 }}>
+        <ul style={{ listStyleType: "none", width: "95%", padding: 0 }}>
           {users.map((user, index) => (
             <li
               key={index}
@@ -74,7 +74,7 @@ export const UsersLists = ({users}) => {
                 ) : (
                   <FontAwesomeIcon
                     icon={faUserCircle}
-                    style={{ marginLeft: "7%" }}
+                    style={{ marginLeft: "7%", fontSize: "1.8vw" }}
                   />
                 )}
                 <div
@@ -102,7 +102,7 @@ export const UsersLists = ({users}) => {
               </div>
               <div
                 className="user-actions"
-                style={{ display: "flex", width: "10%" }}
+                style={{ display: "flex", width: "10%", fontSize: "1.2vw" }}
               >
                 <FontAwesomeIcon
                   icon={faPenToSquare}

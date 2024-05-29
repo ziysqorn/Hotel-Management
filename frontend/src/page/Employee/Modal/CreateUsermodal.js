@@ -1,8 +1,25 @@
 import React from "react";
+import { useState } from "react";
+import axios from "axios";
 import { faX, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const CreateUserModal = ({ isCUserOpen, isCUserClose }) => {
+export const CreateUserModal = ({ isCUserOpen, isCUserClose, fetchUsers }) => {
+  const [employeeId, setEmployeeId] = useState("");
+  const handleCreateUser = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/employee/employ/createUser",
+        { item: { EmployeeId: employeeId } }
+      );
+      alert(response.data); // Thông báo thành công
+      isCUserClose();
+      fetchUsers(); // Cập nhật danh sách người dùng
+    } catch (error) {
+      console.error("Error creating user:", error);
+      alert("Failed to create user");
+    }
+  };
   if (!isCUserOpen) return null;
   return (
     <div
@@ -64,6 +81,8 @@ export const CreateUserModal = ({ isCUserOpen, isCUserClose }) => {
             </div>
             <input
               type="text"
+              value={employeeId}
+              onChange={(e) => setEmployeeId(e.target.value)}
               style={{
                 width: "100%",
                 height: "90%",
@@ -108,7 +127,7 @@ export const CreateUserModal = ({ isCUserOpen, isCUserClose }) => {
               background: "#00ADB5",
               justifyContent: "center",
             }}
-            onClick={() => isCUserClose(false)}
+            onClick={() => handleCreateUser()}
           >
             Proceed
           </div>

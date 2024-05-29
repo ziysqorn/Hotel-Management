@@ -1,14 +1,35 @@
 import React from "react";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { CreateUserModal } from "./Modal/CreateUsermodal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { UsersLists } from "./UsersLists";
 
-export const UsersBox = ({users, fetchUsers}) => {
+export const UsersBox = ({ users, fetchUsers }) => {
   const [CUserOpen, setCUserOpen] = useState(false);
-  console.log('Users prop in UsersBox:', users); // Add this line
+  const [searchUser, setSearchUser] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/employee/employ/userquery?userQuery=${searchUser}`
+      );
+      setFilteredUsers(response.data.recordset);
+    } catch (error) {
+      console.error("Error searching users:", error);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
   return (
     <div
       className="Users-box"
@@ -72,6 +93,9 @@ export const UsersBox = ({users, fetchUsers}) => {
               color: "white",
             }}
             placeholder="Search ..."
+            value={searchUser}
+            onChange={(e) => setSearchUser(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -90,10 +114,11 @@ export const UsersBox = ({users, fetchUsers}) => {
           + Add
         </div>
       </div>
-      <UsersLists users={users} />
+      <UsersLists users={filteredUsers.length > 0 ? filteredUsers : users} />
       <CreateUserModal
         isCUserOpen={CUserOpen}
         isCUserClose={() => setCUserOpen(false)}
+        fetchUsers={fetchUsers}
       />
     </div>
   );

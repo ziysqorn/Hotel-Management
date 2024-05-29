@@ -3,8 +3,7 @@ import db from "../db.js";
 //get with query
 export const getWithQuery = async (req, res) => {
   let { employid, rolesid, fullname, position, query } = req.query;
-  let FinalQuery =
-    `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
+  let FinalQuery = `SELECT EmployeeId, FullName, PersonalId, Phone,  Address, position, 
     CONVERT (date, BirthDay) as BirthDay,  
     CONVERT (date, FristDay) as FirstDay 
     FROM Employee WHERE NOT(Employee.EmployeeId IS NULL)`;
@@ -120,8 +119,7 @@ export const DeleteEmployee = async (req, res) => {
 //tạo tk user
 export const CreateUser = async (req, res) => {
   let { item } = req.body;
-  let FinalQuery = ` EXEC CreateUserForEmployee @EmployeeId = ${item.EmployeeId} ;
-                    SELECT * FROM Users WHERE EmployeeId = ${item.EmployeeId}`;
+  let FinalQuery = ` EXEC CreateUserForEmployee @EmployeeId = ${item.EmployeeId} ;`;
   console.table(FinalQuery);
   try {
     const data = await db(FinalQuery);
@@ -184,7 +182,8 @@ export const getUser = async (req, res) => {
 
 // Get user with query
 export const getUserQuery = async (req, res) => {
-  let { userid, userRolesid, userFullname, userPosition } = req.query;
+  let { userid, userRolesid, userFullname, userPosition, userQuery } =
+    req.query;
   let FinalQuery = `SELECT 
                         e.FullName, 
                         e.Phone, 
@@ -212,6 +211,9 @@ export const getUserQuery = async (req, res) => {
   }
   if (userPosition) {
     FinalQuery += ` AND e.position LIKE '%${userPosition}%'`;
+  }
+  if (userQuery) {
+    FinalQuery += ` AND (e.FullName LIKE '%${userQuery}%' OR e.position LIKE '%${userQuery}%')`;
   }
   FinalQuery += `;`;
   console.table(FinalQuery);

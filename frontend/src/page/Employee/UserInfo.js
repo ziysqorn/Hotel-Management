@@ -4,7 +4,6 @@ import { Employee_Box } from "./EmployeeBox";
 import { Roles_Box } from "./RolesBox";
 
 export const UsersInfo = ({ employees, fetchEmployees, users, fetchUsers }) => {
-  console.log("Users prop in UsersInfo:", users); // Add this line
   return (
     <div
       className="Bottom-info"
